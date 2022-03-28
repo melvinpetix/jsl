@@ -1,13 +1,14 @@
 #!groovy
 
 def call(String snapshot){
-  node("${env.jenkins_agent}"){  
+  node("${env.jenkins_agent}"){
     def now = "${new Date().format('yyyyMMdd')}"  
     if(!params.SNAPSHOT || params.SNAPSHOT == 'none' ){
       currentBuild.description = "update"
       interactiveShell() 
       return
     } 
+    deleteDir()
     
     println "UNIFIED SNAPSHOT[ ${now} ] : ${params.SNAPSHOT}"
 
