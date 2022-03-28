@@ -70,8 +70,8 @@ def mastertemplateBuild(body){
     }
   
     if(env.generate == 'true'){  
-    stage 'generate'
-    env.GENERATE_TO.tokenize(",").each{ j->      
+      stage 'generate'
+      env.GENERATE_TO.tokenize(",").each{ j->      
       run "${j}", "cd ${FEEDS_DIR}; script /dev/null | sh feeds.sh"                 
       shout 'screen', "${j}", "mastertemplate_\$(date +%Y-%m-%d)"  
     }
@@ -90,6 +90,7 @@ def mastertemplateBuild(body){
     )
 
   }
+ }
 }
 
 def flexClone(body){
