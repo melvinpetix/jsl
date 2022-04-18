@@ -17,12 +17,14 @@ def sendTeamsNotif(String buildStatus, String webhookUrl) {
   sh "curl -X POST -H \'Content-Type: application/json\'\
   -d \'{\"text\": \"${message}\"}\' ${webhookUrl}" 
 }
+return this;
+
 
 def gitCheckout(String giturl, String repo, String branchName) {
   git branch: branchName, 
     credentialsId: 'prd-private-gitlab', 
     url: 'git@' + giturl + ':' + repo   
-    sh 'chmod 600 snp.key; chmod 775 *.sh; chmod +x *.sh; chmod 600 +'     
+    //sh 'chmod 600 snp.key; chmod 775 *.sh; chmod +x *.sh; chmod 600 +'     
 }
 
 def execute(Map config){
@@ -46,6 +48,7 @@ def execute(Map config){
     parallel command
   } else { sh script: "${args} ${config.server} ${config.cmd}" }
 }
+return this;
   
 
 def interactiveShell() {
