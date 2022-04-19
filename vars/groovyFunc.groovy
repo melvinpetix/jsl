@@ -39,7 +39,7 @@ def execute(Map config){
   def args = "ssh -F + "
   
   if(config.stage){
-    stage "config.stage"
+    stage "$config.stage"
   }
    
   if(!config.server){
