@@ -1,5 +1,5 @@
-def call(String configFile='./dir/test.yaml'){
-  Map jobCfg = readFile file: configFile
+def call(String name){
+  Map jobCfg = readFile file: "${WORKSPACE}/${name}.yaml"
   return jobCfg
  }
 
