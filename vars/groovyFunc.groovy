@@ -1,8 +1,3 @@
-def jobConfig(config){
-  Map jobConfig = readYaml(config.yaml)
-  return jobConfig
-}
-
 def sendTeamsNotif(String buildStatus, String webhookUrl) {
   def now = "${new Date().format('yyyyMMdd')}"  
   
