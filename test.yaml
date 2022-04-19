@@ -1,4 +1,3 @@
-stage: test
 server: csendrepo01
 cmd: 
     hostname
