@@ -7,17 +7,19 @@ def sendTeamsNotif(String buildStatus, String webhookUrl) {
   def now = "${new Date().format('yyyyMMdd')}"  
   
   def message
-
+  def emoji
+  
   if (buildStatus == 'STARTED' || buildStatus == 'in-progress') {
-    emoji = "⚡"
+    buildStatus = buildStatus + " " + "⚡"
   } else if (buildStatus == 'FAILED') {
-    buildStatus = buildStatus + " " + err
-    emoji = "❌"
+    buildStatus = buildStatus + " " + err + "❌"
   } else if (buildStatus == 'SUCCESS'){
-    emoji = "👍"
-  }     
-
-  message = "🚀 Unified-Notifier\ntask: ${params.SNAPSHOT}\nstatus: ${buildStatus} ${emoji}"
+    buildStatus = buildStatus + " " + "👍"
+  } else{
+    buildStatus = buildStatus
+  }
+  
+  message = "🚀 Unified-Notifier\ntask: ${params.SNAPSHOT}\nstatus: ${buildStatus}"
 
   sh "curl -X POST -H \'Content-Type: application/json\'\
   -d \'{\"text\": \"${message}\"}\' ${webhookUrl}" 
@@ -75,8 +77,8 @@ def interactiveShell() {
 def taskRunner(stageName, Closure stageCmd){
   try{ stage(stageName){ stageCmd() }  
   } catch(err){ 
-    sendTeamsNotif("${stageName} Failed with the ff. error:\n ${err}", "${webops}") 
     error stageName + "!! " + "Failed with the ff. error:\n" + err 
+    sendTeamsNotif("FAILED", "${webops}") 
   }
 } 
 
