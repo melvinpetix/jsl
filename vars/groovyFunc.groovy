@@ -30,10 +30,6 @@ def gitCheckout(String giturl, String repo, String branchName) {
 def execute(Map config){
   def command = [:]
   
-  if(config.stage){
-    stage "$config.stage"
-  }
-
   if(!config.server){
     echo 'local[SHELL]'
     res = sh script: config.cmd, 
