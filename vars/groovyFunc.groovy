@@ -15,7 +15,7 @@ def sendTeamsNotif(String buildStatus, String webhookUrl) {
     emoji = "❌"
   } else if (buildStatus == 'SUCCESS'){
     emoji = "👍"
-  }
+  }     
 
   message = "🚀 Unified-Notifier\ntask: ${params.SNAPSHOT}\nstatus: ${buildStatus} ${emoji}"
 
@@ -74,7 +74,10 @@ def interactiveShell() {
 
 def taskRunner(stageName, Closure stageCmd){
   try{ stage(stageName){ stageCmd() }  
-  } catch(err){ error stageName + "!! " + "Failed with the ff. error:\n" + err }
+  } catch(err){ 
+    sendTeamsNotif("${stageName} Failed with the ff. error:\n ${err}", "${webops}") 
+    error stageName + "!! " + "Failed with the ff. error:\n" + err 
+  }
 } 
 
 
