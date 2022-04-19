@@ -36,6 +36,7 @@ def gitCheckout(String giturl, String repo, String branchName) {
 
 def execute(Map config){
   def command = [:]
+  def args = "ssh -F + "
   
   if(config.stage){
     stage "config.stage"
