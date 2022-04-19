@@ -56,7 +56,7 @@ def execute(Map config){
       command[s] = {sh script: "${args} ${s} ${config.cmd}" } 
     } 
     parallel command
-  } else { sh script: "${args} ${config.server} '${config.cmd}'" }
+  } else { sh script: "${args} ${config.server} ${config.cmd}" }
 }
 
 def interactiveShell() {
