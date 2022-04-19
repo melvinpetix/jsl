@@ -51,10 +51,10 @@ def execute(Map config){
   def slist = config.server.toString().split(',')
   if(slist.size() > 1){ 
     slist.each{ s-> command[s] = { 
-      sh script: "${args} ${s} ${config.cmd}" } 
+      sh script: "${args} ${s} " + config.cmd } 
     } 
     parallel command
-  } else { sh script: "${args} ${config.server} ${config.cmd}" }
+  } else { sh script: "${args} ${config.server} '${config.cmd}'" }
 }
 return this;
   
