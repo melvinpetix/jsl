@@ -40,8 +40,7 @@ def execute(Map config){
   if(config.stage){
     stage("config.stage"){ block() }
   }
-    
-  
+   
   if(!config.server){
     echo 'local[SHELL]'
     res = sh script: config.cmd, 
