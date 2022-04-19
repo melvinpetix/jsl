@@ -38,7 +38,7 @@ def execute(Map config){
   def command = [:]
   
   if(config.stage){
-    stage("config.stage"){ block() }
+    stage "config.stage"
   }
    
   if(!config.server){
