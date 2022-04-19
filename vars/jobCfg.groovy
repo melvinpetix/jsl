@@ -1,4 +1,5 @@
-def call(String configFile){
-  def yaml = readYaml file: "${WORKSPACE}" + "/" + configfile + '.yaml'
+def call(String configFile='./dir/config.yml'){
+  def yaml = readYaml file: configFile
   return yaml
  }
+
