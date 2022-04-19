@@ -1,5 +1,5 @@
 def call(String configFile='./dir/config.yml'){
-  def yaml = readFile file: configFile
-  return yaml
+  Map jobCfg = readFile file: configFile
+  return jobCfg
  }
 
