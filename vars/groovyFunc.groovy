@@ -48,16 +48,16 @@ def execute(Map config){
     returnStdout: false
     return res 
   } 
+  
   def slist = config.server.toString().split(',')
   if(slist.size() > 1){ 
-    slist.each{ s-> command[s] = { 
-      sh script: "${args} ${s} ${config.cmd}" } 
+    for(i in slist){
+    def s = i 
+      command[s] = {sh script: "${args} ${s} ${config.cmd}" } 
     } 
     parallel command
   } else { sh script: "${args} ${config.server} '${config.cmd}'" }
 }
-return this;
-  
 
 def interactiveShell() {
   timeout(time: 10, unit: 'MINUTES') {
