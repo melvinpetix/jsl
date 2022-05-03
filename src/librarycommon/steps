@@ -1,6 +1,0 @@
-package librarycommon;
-
-class Step {
-    List<String> commands = [];
-    String name;
-}
