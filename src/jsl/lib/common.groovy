@@ -538,7 +538,7 @@ def sendNotification(buildStatus, msgText = "", enabledNotifications = [], notif
  */
 
 def cutOrDie(cmd, index) {
-    def common = new com.mirantis.mk.Common()
+    def common = new jsl.lib.Common()
     def output
     try {
         output = sh(script: cmd, returnStdout: true)
@@ -960,7 +960,7 @@ def printStageMap(stageMap, baseColor = "white") {
  * @param body Command to be in stage block.
  * */
 def stageWrapper(stageMap, currentStage, target, interactive = true, Closure body) {
-    def common = new com.mirantis.mk.Common()
+    def common = new jsl.lib.Common()
     def banner = []
 
     printCurrentStage(stageMap, currentStage)
@@ -995,7 +995,7 @@ def stageWrapper(stageMap, currentStage, target, interactive = true, Closure bod
   */
 
 def checkRemoteBinary(LinkedHashMap config, List extraScmExtensions = []) {
-    def common = new com.mirantis.mk.Common()
+    def common = new jsl.lib.Common()
     def res = [:]
     res['MirrorRoot'] = config.get('globalMirrorRoot', env["BIN_MIRROR_ROOT"] ? env["BIN_MIRROR_ROOT"] : "http://mirror.mirantis.com/")
     // Reclass-like format's. To make life eazy!
