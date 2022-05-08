@@ -1,5 +1,0 @@
-server: csendrepo01
-cmd: 
-    hostname
-    df -h
-    whoami
