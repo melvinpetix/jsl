@@ -50,8 +50,3 @@ def call(){
     }  
   }
 }
-def gitCheckout(String repo, String credentialsId, String branch='master') {
-  checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], 
-  userRemoteConfigs: [[credentialsId: credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
-  sh "chmod +x *.sh; chmod 600 *.key; chmod 600 +" 
-}
