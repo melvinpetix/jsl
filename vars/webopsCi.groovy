@@ -23,7 +23,7 @@ def call(){
     list stepsA = j.steps
     list enV = j.environment
     
-    if(userInput == MASTER_TEMPLATE){
+    if(userInput == 'test_mt'){
      def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
      writeFile file:'snapshot.txt', text: "${snapshot}"
      snaplist = readFile("$workspace/snapshot.txt") 
