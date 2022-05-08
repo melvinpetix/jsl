@@ -28,13 +28,10 @@ def call(){
      writeFile file:'snapshot.txt', text: "${snapshot}"
      snaplist = readFile("$workspace/snapshot.txt") 
      def snapshot_date = input(id: 'snap', message: 'snapshot', parameters: [
-     [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: '']])
-      if(!j.snapshot_date){
-        j.snapshot_date << [snapshot_date: "${snapshot_date}"]
-      }
-      println j.snapshot_date
-     }
+     [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: '']])  
+    }
      
+    println "${snapshot_date}"
 
     if(j.notification){
       common.sendTeamsNotif("${BUILD_TRIGGER_BY}", j.project_name, j.notification.webhook)
