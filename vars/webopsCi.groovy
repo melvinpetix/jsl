@@ -3,22 +3,21 @@ import com.webops.*;
 def common = new com.webops.Common()
 
 node("${env.jenkins_agent}"){  
-    def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
-    def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
+  def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
+  def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
 
-    deleteDir()
+  deleteDir()
   
-    stage('checkout'){
-      git branch: 'main', url: 'https://oauth:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git'
-      sh 'chmod 600 snp.key; chmod 600 +'   
-  }
-  
+    
+  git branch: 'main', url: 'https://oauth:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git'
+  sh 'chmod 600 snp.key; chmod 600 +'   
+    
   stage('define task'){
-    def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
-    writeFile file:'task.txt', text: "${folders}"
-    tasklist = readFile("$workspace/task.txt") 
-    userInput = input(id: 'tasklist', message: 'task', parameters: [
-    [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
+   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
+   writeFile file:'task.txt', text: "${folders}"
+   tasklist = readFile("$workspace/task.txt") 
+   userInput = input(id: 'tasklist', message: 'task', parameters: [
+   [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
   }
   def j = jobCfg("$workspace/runbook/${userInput}.yml")
   list stepsA = j.steps
