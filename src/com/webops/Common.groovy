@@ -35,6 +35,9 @@ def dumpYAML(Map map) {
 }
 
 def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
+  wrap([$class: 'BuildUser']) {
+    user = env.BUILD_USER
+  }
   def now = "${new Date().format('yyyyMMdd')}"  
   
   def emoji
@@ -43,7 +46,7 @@ def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
     emoji = "❌" } else { emoji = "🚀" }
 
   sh "curl -X POST -H \'Content-Type: application/json\'\
-  -d \'{\"title\": \"${emoji} Unified-Notifier :  ${jobName}\", \"text\": \"${buildStatus}\"}\' ${webhookUrl}" 
+    -d \'{\"title\": \"${emoji} Unified-Notifier :  ${jobName}\", \"text\": \"${buildStatus} ${user}\"}\' ${webhookUrl}" 
 }
 
 def execute(Map config){
