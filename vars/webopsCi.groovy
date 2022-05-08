@@ -1,3 +1,6 @@
+import com.webops.*;
+def common = new com.webops.Common()
+  
 def call(){
   
   node("${env.jenkins_agent}"){  
