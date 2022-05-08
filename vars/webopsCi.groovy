@@ -18,10 +18,18 @@ def call(){
      tasklist = readFile("$workspace/task.txt") 
      userInput = input(id: 'tasklist', message: 'task', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
-    }
+    
     def j = jobCfg("$workspace/runbook/${userInput}.yml")
     list stepsA = j.steps
     list enV = j.environment
+    
+    if(userInput == MASTER_TEMPLATE){
+     def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
+     writeFile file:'snapshot.txt', text: "${snapshot}"
+     snaplist = readFile("$workspace/snapshot.txt") 
+     userInput = input(id: 'snap', message: 'snapshot', parameters: [
+     [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: 'snaplist']])     
+    }
 
     if(j.notification){
       common.sendTeamsNotif("${BUILD_TRIGGER_BY}", j.project_name, j.notification.webhook)
@@ -57,4 +65,5 @@ def call(){
       }
     }  
   }
+}
 }
