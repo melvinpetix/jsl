@@ -30,7 +30,7 @@ def call(){
      def snapshot_date = input(id: 'snap', message: 'snapshot', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: '']])
       if(!j.snapshot_date){
-        j.snapshot_date << [snapshot_date: "${snapshot_date}"
+        j.snapshot_date << [snapshot_date: "${snapshot_date}"]
       }
       println j.snapshot_date
      }
