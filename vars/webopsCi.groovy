@@ -38,6 +38,7 @@ def call(){
               def server = j.server."${k}"
               sh"""#!/bin/bash +x\n\
               export TERM=xterm-256color\n\
+              export snapshot_date="${snapshot_date}"\n\
               ssh -F + ${server} '${command}'
               """ 
             }                      
