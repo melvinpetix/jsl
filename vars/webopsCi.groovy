@@ -27,7 +27,7 @@ def call(){
      def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
      writeFile file:'snapshot.txt', text: "${snapshot}"
      snaplist = readFile("$workspace/snapshot.txt") 
-     userInput = input(id: 'snap', message: 'snapshot', parameters: [
+     def snapshot_date = input(id: 'snap', message: 'snapshot', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: 'snaplist']])     
     }
 
