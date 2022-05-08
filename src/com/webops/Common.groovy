@@ -35,9 +35,7 @@ def dumpYAML(Map map) {
 }
 
 def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
-  wrap([$class: 'BuildUser']) {
-    user = env.BUILD_USER
-  }
+    
   def now = "${new Date().format('yyyyMMdd')}"  
   
   def emoji
