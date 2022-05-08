@@ -1,8 +1,8 @@
 import com.webops.*;
-def common = new com.webops.Common()
 
 def call(){
   node("${env.jenkins_agent}"){  
+    def common = new com.webops.Common()
     def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
     def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
 
