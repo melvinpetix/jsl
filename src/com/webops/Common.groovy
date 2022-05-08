@@ -34,7 +34,7 @@ def dumpYAML(Map map) {
   return yaml.dump(map)
 }
 
-def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
+def sendTeamsNotif(String buildStatus, String jobName, String user, String webhookUrl) {
     
   def now = "${new Date().format('yyyyMMdd')}"  
   
