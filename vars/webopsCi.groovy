@@ -1,32 +1,50 @@
-@Library('https://github.com/melvinpetix/jsl@main')_
-
 def call(){
     
-    stage('define task'){
-        deleteDir()
+  node("${env.jenkins_agent}"){  
+  
+  stage('checkout'){
+      git branch: 'main', url: 'https://oauth:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git'
+      sh 'chmod 600 snp.key; chmod 600 +'   
+  }
+  
+  stage('define task'){
+    def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
+    writeFile file:'task.txt', text: "${folders}"
+    tasklist = readFile("$workspace/task.txt") 
+    userInput = input(id: 'tasklist', message: 'task', parameters: [
+    [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
+  }
+  def j = jobCfg("$workspace/runbook/${userInput}.yml")
+  list stepsA = j.steps
+  list enV = j.environment
 
-        git branch: 'main', url: 'https://oauth:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git'
-        sh 'chmod 600 snp.key; chmod 600 +'   
-        def folders = sh(returnStdout: true, script: "ls $workspace/task").replaceAll('.yml',"")
-        writeFile file:'task.txt', text: "${folders}"
-        tasklist = readFile("$workspace/task.txt") 
-        userInput = input(id: 'tasklist', message: 'task', parameters: [
-        [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
-        def j = jobCfg("$workspace/task/${userInput}.yml")
-        def shArgs = "ssh -F + "
-        list stepsA = j.steps
-        stepsA.collect{k,v->           
-            stage("${k}"){
-                v.each{command->
-                    j.server.each{x->   
-                    sh"""#!/bin/bash
-                    set +x  
-                    export TERM=xterm-256color 
-                    ssh -F + -tt ${x} '${command}'
-                    """
-                    }
-                }
+  if(j.environment){
+    enV.collect{a,b->
+      withEnv(["${a}=${b}"]){
+        stepsA.collect{k,v->
+          stage("${k}"){
+            v.each{command->
+              sh "ssh -F + ${server} '${command}'"
             }
-        }   
+          }
+        }
+      }   
     }
+  } else{
+    stepsA.collect{k,v->
+      stage("${k}"){
+        v.each{command->
+          if(!j.server){
+             sh script: "${command}"
+          } else {
+            def server = j.server."${k}"
+            sh"""#!/bin/bash +x\n\
+            export TERM=xterm-256color\n\
+            ssh -F + ${server} '${command}'
+            """ 
+          }                      
+        }
+      }   
+    }
+  }  
 }
