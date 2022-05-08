@@ -29,7 +29,26 @@ def call(){
      snaplist = readFile("$workspace/snapshot.txt") 
      def snapshot_date = input(id: 'snap', message: 'snapshot', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${snaplist}", description: '', name: 'snaplist']])     
-    }
+    
+     withEnv(["snapshot_date=${snapshot_date}"]){
+          stepsA.collect{k,v->
+            stage("${k}"){
+              v.each{command->
+                if(!j.server){
+                  sh script: "${command}"
+                } else {
+                 def server = j.server."${k}"
+                 sh"""#!/bin/bash +x\n\
+                 export TERM=xterm-256color\n\
+                 ssh -F + ${server} '${command}'
+                 """ 
+               }                              
+              }
+            }
+          }
+       }
+      }
+     
 
     if(j.notification){
       common.sendTeamsNotif("${BUILD_TRIGGER_BY}", j.project_name, j.notification.webhook)
