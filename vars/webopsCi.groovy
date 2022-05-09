@@ -28,7 +28,7 @@ def call(){
          params = input(id: 'String1', message: '', parameters: [
          [$class: 'StringParameterDefinition', description: '', name: '', trim: 'true' ]])  
       }
-      if(j.parameters == 'choice){
+      if(j.parameters == 'choice'){
          params = input(id: 'String1', message: '', parameters: [
          [$class: 'ChoiceParameterDefinition', choices: j.choices, description: '', name: '']])   
       }
