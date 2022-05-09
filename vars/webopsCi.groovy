@@ -68,7 +68,7 @@ def call(){
               v.each{command->
                 sh"""#!/bin/bash +x
                 export TERM=xterm-256color
-                export params=${params}
+                export params="${params}"
                 ssh -F + ${server} '${command}'
                 """ 
               }
@@ -86,7 +86,7 @@ def call(){
               def server = j.server."${k}"
               sh"""#!/bin/bash +x
               export TERM=xterm-256color
-              export params=${params}
+              export params="${params}"
               ssh -F + ${server} '${command}'
               """ 
             }                      
