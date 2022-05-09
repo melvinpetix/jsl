@@ -30,7 +30,7 @@ def call(){
        println j.parameters.name
        if(j.parameters.type == 'string'){
         params = input(id: 'String1', message: '', parameters: [
-           [$class: 'StringParameterDefinition', description: '', name: "${j.parameter.name}", trim: 'true' ]])  
+           [$class: 'StringParameterDefinition', description: '', name: '', trim: 'true' ]])  
         }
       }
       /*
