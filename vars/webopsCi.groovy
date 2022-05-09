@@ -117,19 +117,26 @@ def call(){
               export snapshot_date="${params}"
               ${command}
               """ 
+            }
+            def server = j.server."${k}"
+            if(server.size() > 1){ 
+              server.each{s->
+                 sh"""#!/bin/bash +x
+                 export TERM=xterm-256color
+                 export snapshot_date="${params}"
+                 ssh -F + ${s} "${command}"
+                 """ 
+              }                      
             } else {
-              def server = j.server."${k}"
-               sh"""#!/bin/bash +x
+              sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${params}"
               ssh -F + ${server} "${command}"
               """ 
-            }                      
+            }   
           }
-        }   
+        }  
       }
-    }  
+    }
   }
 }
-}
-
