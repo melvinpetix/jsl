@@ -114,7 +114,11 @@ def call(){
         stage("${k}"){
           v.each{command->
             if(!j.server || !j.server."${k}" || j.server."${k}" == 'local'){
-               sh script: command
+               sh"""#!/bin/bash +x
+              export TERM=xterm-256color
+              export snapshot_date="${params}"
+              ${command}
+              """ 
             } else {
               def server = j.server."${k}"
               sh"""#!/bin/bash +x
