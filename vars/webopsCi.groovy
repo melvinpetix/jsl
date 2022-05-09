@@ -125,7 +125,7 @@ def call(){
               sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${params}"
-              ssh -F + ${s} "${command}"
+              ssh -F + ${s} '${command}'
               """ 
             }                      
           }
