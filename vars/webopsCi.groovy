@@ -119,7 +119,6 @@ def call(){
               """ 
             } else {
               def server = j.server."${k}"
-              server.each{s->
                sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${params}"
@@ -133,4 +132,4 @@ def call(){
   }
 }
 }
-}
+
