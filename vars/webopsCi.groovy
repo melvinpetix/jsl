@@ -76,7 +76,7 @@ def call(){
               sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${snapshot_date}"
-              ssh -F + ${server} ${command}
+              ssh -F + ${server} "${command}"
               """ 
             }                      
           }
@@ -100,7 +100,7 @@ def call(){
                 sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${params}"
-              ssh -F + ${server} ${command}
+              ssh -F + ${server} "${command}"
               """ 
               }
             }
@@ -118,7 +118,7 @@ def call(){
               sh"""#!/bin/bash +x
               export TERM=xterm-256color
               export snapshot_date="${params}"
-              ssh -F + ${server} ${command}
+              ssh -F + ${server} "${command}"
               """ 
             }                      
           }
