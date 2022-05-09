@@ -19,10 +19,16 @@ def call(){
      userInput = input(id: 'tasklist', message: 'task', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
     
-    def j = jobCfg("$workspace/runbook/${userInput}.yml")
-    list stepsA = j.steps
-    list enV = j.environment
-    
+      def j = jobCfg("$workspace/runbook/${userInput}.yml")
+      list stepsA = j.steps
+      list enV = j.environment
+      def params = ''
+      
+      if(j.parameters == 'string'){
+         params = input(id: 'String1', message: '', parameters: [
+         [$class: 'StringParameterDefinition', description: '', name: '', trim: 'true' ]])  
+      }
+   /*   
     if(userInput == 'test_mt'){
      def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
      writeFile file:'snapshot.txt', text: "${snapshot}"
@@ -47,7 +53,7 @@ def call(){
       }
     }
 
-     
+    */ 
    // println "${snapshot_date}"
 
     if(j.notification){
@@ -60,7 +66,11 @@ def call(){
           stepsA.collect{k,v->
             stage("${k}"){
               v.each{command->
-                sh "ssh -F + ${server} '${command}'"
+                sh"""#!/bin/bash +x
+                export TERM=xterm-256color
+                export params=${params}
+                ssh -F + ${server} '${command}'
+                """ 
               }
             }
           }
@@ -74,8 +84,9 @@ def call(){
                sh script: "${command}"
             } else {
               def server = j.server."${k}"
-              sh"""#!/bin/bash +x\n\
-              export TERM=xterm-256color\n\
+              sh"""#!/bin/bash +x
+              export TERM=xterm-256color
+              export params=${params}
               ssh -F + ${server} '${command}'
               """ 
             }                      
