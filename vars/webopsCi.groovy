@@ -24,13 +24,15 @@ def call(){
       list enV = j.environment
       def params = ''
       
-      if(j.parameters){
-        j.params.collect{k,v->
-         k = input(id: 'String1', message: v, parameters: [
+      if(j.parameters == 'string'){
+         params = input(id: 'String1', message: '', parameters: [
          [$class: 'StringParameterDefinition', description: '', name: '', trim: 'true' ]])  
-         params = "${k}"
-       }
       }
+      if(j.parameters == 'choice){
+         params = input(id: 'String1', message: '', parameters: [
+         [$class: 'ChoiceParameterDefinition', choices: j.choices, description: '', name: '']])   
+      }
+
    /*   
     if(userInput == 'test_mt'){
      def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
