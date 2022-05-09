@@ -114,7 +114,7 @@ def call(){
         stage("${k}"){
           v.each{command->
             if(!j.server || !j.server."${k}" || j.server."${k}" == 'local'){
-               sh script: "${command}"
+               sh script: command
             } else {
               def server = j.server."${k}"
               sh"""#!/bin/bash +x
