@@ -113,7 +113,7 @@ def call(){
       stepsA.collect{k,v->
         stage("${k}"){
           v.each{command->
-            if(!j.server){
+            if(!j.server || !j.server."${k}" || j.server."${k}" == 'local'){
                sh script: "${command}"
             } else {
               def server = j.server."${k}"
