@@ -23,7 +23,8 @@ def call(){
       list stepsA = j.steps
       list enV = j.environment
       def params = ''
-      
+       
+      /*
       if(j.parameters == 'string'){
          params = input(id: 'String1', message: '', parameters: [
          [$class: 'StringParameterDefinition', description: '', name: '', trim: 'true' ]])  
@@ -32,7 +33,19 @@ def call(){
          params = input(id: 'String1', message: '', parameters: [
          [$class: 'ChoiceParameterDefinition', choices: j.choices, description: '', name: '']])   
       }
+       */
 
+      if(j.parameters){
+        if(j.parameter.type == 'string'){
+           j.parameter.name = input(id: 'String1', message: '', parameters: [
+           [$class: 'StringParameterDefinition', description: '', name: j.parameter.name, trim: 'true' ]])  
+        }
+        else if(j.parameter.type == 'choice'){
+           j.parameter.name = input(id: 'snap', message: 'snapshot', parameters: [
+           [$class: 'ChoiceParameterDefinition', choices: j.parameter.choices, description: '', name: '']])  
+       
+        }
+       }
    /*   
     if(userInput == 'test_mt'){
      def snapshot = sh(returnStdout: true, script: "ssh -F + csendrepo01 'ls /data/ENDECA_DATA_REPO_6.5/FULL/MERGE'").trim()
