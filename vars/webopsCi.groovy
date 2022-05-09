@@ -39,6 +39,8 @@ def call(){
               sh"""#!/bin/bash +x\n\
               export TERM=xterm-256color\n\
               export snapshot_date="${snapshot_date}"\n\
+              echo "${snapshot_date}"
+
               ssh -F + ${server} '${command}'
               """ 
             }                      
