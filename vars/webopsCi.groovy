@@ -18,7 +18,9 @@ def call(){
      tasklist = readFile("$workspace/task.txt") 
      userInput = input(id: 'tasklist', message: 'task', parameters: [
      [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
-    
+    }
+
+    stage("${userInput}"){
       def j = jobCfg("$workspace/runbook/${userInput}.yml")
       list stepsA = j.steps
       list enV = j.environment
@@ -89,8 +91,8 @@ def call(){
 
     if(j.notification){
       common.sendTeamsNotif("${BUILD_TRIGGER_BY}", j.project_name, j.notification.webhook)
-    }
-
+     }
+    
     if(j.environment){
       enV.collect{a,b->
         withEnv(["${a}=${b}"]){
@@ -128,3 +130,4 @@ def call(){
   }
 }
 }
+
