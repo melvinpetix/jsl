@@ -7,7 +7,7 @@ def call(command) {
     int status = sh(script: "${command} 1> $outFile 2> $errFile", returnStatus: true)
     String out = readFile(file: outFile)
     String err = readFile(file: errFile)
-    sh script: "set +x; rm $outFile $errFile", returnStatus: true
+    sh script: "rm $outFile $errFile", returnStatus: true
     def res = new ArrayMap()
     res.put 'out', out
     res.put 'err', err
