@@ -31,4 +31,3 @@ def call(String yamlName) {
         deleteDockerImages(projectConfig);
     }
 }
-C:\Users\mbiscarra\Downloads\wolox-ci-development
