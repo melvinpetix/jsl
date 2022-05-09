@@ -26,6 +26,8 @@ def call(){
        
       if(j.parameters){
        println j.parameters
+       println j.parameters.type
+       println j.parameters.name
       }
       /*
       if(j.parameters == 'string'){
