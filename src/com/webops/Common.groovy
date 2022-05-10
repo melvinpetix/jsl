@@ -49,7 +49,7 @@ def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
 
 def execute(Map config){
   def command = [:]
-  def args = "ssh -F + "
+  def args = "ssh -F + -t "
   if(!config.server){
     echo 'local[SHELL]'
     res = sh script: config.cmd, 
