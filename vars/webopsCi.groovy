@@ -10,7 +10,7 @@ def call(){
     deleteDir()
 
     git branch: 'main', url: 'https://oauth:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git'
-    sh 'chmod 600 snp.key; chmod 600 +'   
+    sh 'chmod 600 .config/*'   
 
     stage('define task'){
       def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
