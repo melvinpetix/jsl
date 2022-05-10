@@ -60,7 +60,7 @@ def execute(Map config){
   if(slist.size() > 1){ 
     for(i in slist){ 
      def s = i.trim()
-     command[s] = { sh script: args + "${s}" + " " + config.cmd } 
+     command[s] = { sh script: args + "${s}" + " " + "config.cmd" } 
     } 
     parallel command
   } else { 
