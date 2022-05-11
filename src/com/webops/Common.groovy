@@ -3,6 +3,13 @@ package com.webops;
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
+import static groovy.io.FileType.FILES
+
+new File('.').eachFileRecurse(FILES) {
+    if(it.name.endsWith('.groovy')) {
+        println it
+    }
+}
 
 @Grab(group='org.yaml', module='snakeyaml', version='1.17')
 import org.yaml.snakeyaml.Yaml
@@ -78,11 +85,25 @@ def run(stageName, Closure stageCmd){
 } 
 
 
-def gitCheckout(String repo, String credentialsId, String branch='master') {
+def gitCheckout(String repoUrl, String repo, String credentialsId, String branch='master') {
   checkout([
     $class: 'GitSCM',
       branches: [[name: "*/${branch}"]],
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
       userRemoteConfigs: [[credentialsId: 
-      credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
+      credentialsId, url: 'git@' + repoUrl + ':' + repo]]])
 }
+
+def gitClone(String Url, String token, String branch='master'){
+    git branch: "*/${branch}", url: 'https://oauth:' + token + '@' + repoUrl + '.git'
+    //                sh 'chmod 600 .config/*'   
+}
+
+def findFileswithExt(String fileExtension, String command){
+    new File('.').eachFileRecurse(FILES) {
+        if(it.name.endsWith(fileExtension)) {
+            sh command
+        }
+    }
+}
+
