@@ -88,14 +88,14 @@ def run(stageName, Closure stageCmd){
 def gitCheckout(String repoUrl, String repo, String credentialsId, String branch='master') {
   checkout([
     $class: 'GitSCM',
-      branches: [[name: "*/${branch}"]],
+      branches: [[name: "${branch}"]],
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
       userRemoteConfigs: [[credentialsId: 
       credentialsId, url: 'git@' + repoUrl + ':' + repo]]])
 }
 
 def gitClone(String repoUrl, String token, String branch='master'){
-    git branch: "*/${branch}", url: 'https://oauth:' + token + '@' + repoUrl
+    git branch: "*${branch}", url: 'https://oauth:' + token + '@' + repoUrl
     //                sh 'chmod 600 .config/*'   
 }
 
