@@ -3,13 +3,7 @@ package com.webops;
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
-import static groovy.io.FileType.FILES
 
-new File('.').eachFileRecurse(FILES) {
-    if(it.name.endsWith('.groovy')) {
-        println it
-    }
-}
 
 @Grab(group='org.yaml', module='snakeyaml', version='1.17')
 import org.yaml.snakeyaml.Yaml
@@ -98,19 +92,3 @@ def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
     sh "find '*.key' -exec chmod 600 {} +"
 }
-
-def findFileswithExt(String fileExtension){
-    def workspace = pwd()
-    new File("${workspace}").eachFileRecurse(FILES) {
-        if(it.name.endsWith('.key')) {
-            sh 'chmod 600 fileExtension'
-        }
-        if(it.name.endsWith('.pub')) {
-            sh 'chmod 600 fileExtension'
-        }   
-         if(it.name.endsWith('.sh')) {
-            sh 'chmod +x fileExtension'
-        }   
-    }
-}
-
