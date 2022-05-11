@@ -1,9 +1,8 @@
-10.10.30.140           ansible_user=root               ansible_ssh_config_file=/home/mbiscarra/.ssh/config
-10.10.75.100
+csendrepo01
+csfeedsbe01
+csntxkvmfeeds01
+cscatbe09
+10.10.30.143
+10.10.30.140
 10.10.74.109
-10.10.30.143            ansible_user=svcEC2             ansible_ssh_pass=
-csendrepo01             ansible_user=svcEC2             ansible_ssh_config_file=+
-csfeedsbe01             ansible_user=root               ansible_ssh_config_file=+
-cskvmfeeds02            ansible_user=root               ansible_ssh_config_file=+
-cscatbe09               ansible_user=svcSnapshot        ansible_ssh_config_file=+
-csntxkvmfeeds01         ansible_user=root               ansible_ssh_config_file=+
+10.10.30.213
