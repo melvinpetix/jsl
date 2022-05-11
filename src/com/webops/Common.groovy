@@ -99,7 +99,7 @@ def gitClone(String repoUrl, String token, String branch='master'){
     //                sh 'chmod 600 .config/*'   
 }
 
-def findFileswithExt(String fileExtension, String command){
+def findFileswithExt(){
     new File('.').eachFileRecurse(FILES) {
         if(it.name.endsWith(.key)) {
             sh 'chmod 600 fileExtension'
