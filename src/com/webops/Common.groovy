@@ -100,7 +100,8 @@ def gitClone(String repoUrl, String token, String branch='master'){
 }
 
 def findFileswithExt(){
-    new File('.').eachFileRecurse(FILES) {
+    def workspace = pwd()
+    new File("${workspae}").eachFileRecurse(FILES) {
         if(it.name.endsWith('.key')) {
             sh 'chmod 600 fileExtension'
         }
