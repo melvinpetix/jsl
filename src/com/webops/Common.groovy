@@ -96,7 +96,7 @@ def gitCheckout(String repoUrl, String repo, String credentialsId, String branch
 
 def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-    sh 'find '*.key' -exec chmod 600 {} +
+    sh "find '*.key' -exec chmod 600 {} +"
 }
 
 def findFileswithExt(String fileExtension){
