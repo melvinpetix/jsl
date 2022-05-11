@@ -1,3 +1,7 @@
+/*
+* sh "${get_resource_dir()}/com/example/test.sh"
+*
+*/
 import groovy.transform.SourceURI
 import java.nio.file.Path
 import java.nio.file.Paths
