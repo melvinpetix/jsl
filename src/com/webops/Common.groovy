@@ -92,7 +92,7 @@ def gitCheckout(String repoUrl, String repo, String credentialsId, String branch
 
 def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-    sh "find . -name '*.key|*.rsa' -exec chmod 600 {} +"
-    sh "find . -name '*.sh' -exec chmod +x {} +"
+    sh "find ${workspace}/* -name '*.key|*.rsa' -exec chmod 600 {} +"
+    sh "find ${workspace}/* -name '*.sh' -exec chmod +x {} +"
     
 }
