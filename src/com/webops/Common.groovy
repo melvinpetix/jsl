@@ -86,12 +86,14 @@ def gitCheckout(String repoUrl, String repo, String credentialsId, String branch
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
       userRemoteConfigs: [[credentialsId: 
       credentialsId, url: 'git@' + repoUrl + ':' + repo]]])
-        sh "chmod 600 config/*.key" 
+        sh "find . -name '*.key' -exec chmod 600 {} +"
+        sh "find . -name '*.rsa' -exec chmod 600 {} +"
+        
 }
 
 def gitClone(String repoUrl, String token, String branch='master'){
-    ws = pwd()
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-        sh "chmod 600 config/*.key" 
+        sh "find . -name '*.key' -exec chmod 600 {} +"
+        sh "find . -name '*.rsa' -exec chmod 600 {} +"
     
 }
