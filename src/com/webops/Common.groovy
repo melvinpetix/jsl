@@ -79,13 +79,13 @@ def run(stageName, Closure stageCmd){
 } 
 
 
-def gitCheckout(String repoUrl, String repo, String credentialsId, String branch='master') {
+def gitCheckout(String repo, String credentialsId, String branch='master') {
   checkout([
     $class: 'GitSCM',
       branches: [[name: "${branch}"]],
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
       userRemoteConfigs: [[credentialsId: 
-      credentialsId, url: 'git@' + repoUrl + ':' + repo]]])
+      credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
         sh "chmod 600 config/*"
 
         
