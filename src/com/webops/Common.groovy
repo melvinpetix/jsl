@@ -87,14 +87,14 @@ def gitCheckout(String repoUrl, String repo, String credentialsId, String branch
       userRemoteConfigs: [[credentialsId: 
       credentialsId, url: 'git@' + repoUrl + ':' + repo]]])
       ws = pwd()
-        sh "find ${ws}/* -name '*.key' -exec chmod 600 {} +"
-        sh "find ${ws}/* -name '*.sh' -exec chmod +x {} +"
+        sh "find \$(pwd)/* -name '*.key' -exec chmod 600 {} +"
+        sh "find \$(pwd)/* -name '*.sh' -exec chmod +x {} +"
 }
 
 def gitClone(String repoUrl, String token, String branch='master'){
     ws = pwd()
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-    sh "find ${ws}/* -name '*.key' -exec chmod 600 {} +"
-    sh "find ${ws}/* -name '*.sh' -exec chmod +x {} +"
+    sh "find \$(pwd)/* -name '*.key' -exec chmod 600 {} +"
+    sh "find \$(pwd)}/* -name '*.sh' -exec chmod +x {} +"
     
 }
