@@ -1,0 +1,69 @@
+Host cscatbe09
+    HostName 10.10.30.213
+    User svcSnapshot
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY force
+    ServerAliveInterval 10
+
+Host csendrepo01
+    HostName 10.10.30.143
+    User svcEC2
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+    ServerAliveInterval 10
+
+Host csfeedsbe01
+    HostName 10.10.30.140
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+    ServerAliveInterval 10
+
+Host cskvmfeeds02
+    HostName 10.10.30.205
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+    ServerAliveInterval 10
+
+Host csntxkvmfeeds01
+    HostName 10.10.74.109
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+    ServerAliveInterval 10
+
+Host csntxfeedsmydb01 
+    HostName 10.10.70.115
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+    ServerAliveInterval 10
+
+Host atlas 
+    HostName 10.10.74.59
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
+
+Host 10.10.75.100 
+    HostName 10.10.75.100
+    User root
+    Port 22
+    StrictHostKeyChecking=no
+    IdentityFile ./id_rsa
+    RequestTTY yes
