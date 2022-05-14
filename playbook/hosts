@@ -1,0 +1,6 @@
+[all]
+10.10.30.143  ansible_user=root ansible_ssh_private_key_file=/root/.ssh/id_rsa
+csfeedsbe01.perfectfitgroup.local ansible_user=root     ansible_ssh_private_key_file=/root/.ssh/id_rsa
+cskvmfeeds02.perfectfitgroup.local ansible_user=root    ansible_ssh_private_key_file=/root/.ssh/id_rsa
+cscatbe09.perfectfitgroup.local ansible_user=svcSnapshot    ansible_ssh_private_key_file=/root/.ssh/id_rsa
+10.10.74.109 ansible_user=root  ansible_ssh_private_key_file=/root/.ssh/id_rsa
