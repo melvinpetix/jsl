@@ -86,13 +86,11 @@ def gitCheckout(String repo, String credentialsId, String branch='master') {
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
       userRemoteConfigs: [[credentialsId: 
       credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
-        sh 'set +x; chmod 600 config/* >/dev/null 2>&1'
-        sh 'set +x; chmod 600 .ssh/* >/dev/null 2>&1'
+      sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
         
 }
 
 def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-        sh 'chmod 600 config/* >/dev/null 2>&1'
-        sh 'chmod 600 .ssh/* 2>&1'
+    sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 }
