@@ -1,9 +1,8 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
 
-
 def call(){
-  node("${env.jenkins_agent}"){  
+  
   def common = new com.webops.Common()
   def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
   def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
@@ -16,11 +15,11 @@ def call(){
   common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
   //common.gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
 
-    stage('define task'){
-      def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
-      writeFile file:'task.txt', text: "${folders}"
-      tasklist = readFile("$workspace/task.txt") 
-      userInput = input(id: 'tasklist', message: 'task', parameters: [
+
+   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
+   writeFile file:'task.txt', text: "${folders}"
+   tasklist = readFile("$workspace/task.txt") 
+   userInput = input(id: 'tasklist', message: 'task', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
 
         /*
@@ -34,9 +33,9 @@ def call(){
             sh "sed -i 's|SNAPSHOT|${snapshot_date}|g' scripts/hotcopy2.sh"
         }
         */  
-    }
+  
 
-    stage("${userInput}"){
+ 
       j = jobCfg("$workspace/runbook/${userInput}.yml")
       list stepsA = j.steps
       list enV = j.environment
@@ -80,6 +79,5 @@ set -x; ${command}"
         }
       }
     }
-  } 
 }
 
