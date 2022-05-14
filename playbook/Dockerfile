@@ -64,7 +64,7 @@ ENV ANSIBLE_LIBRARY /ansible/library
 COPY ssh/* /root/.ssh/*
 RUN chmod 600 /root/.ssh/*
 
-COPY .*.yml /ansible/playbooks 
+COPY .*.yml /ansible/playbooks/
 WORKDIR /ansible/playbooks
 
 ENTRYPOINT ["ansible-playbook"]
