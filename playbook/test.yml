@@ -1,0 +1,27 @@
+---
+- name: hotcopy
+  remote_user: svcEC2
+  hosts: 10.10.30.143
+  tasks:
+      - name: Copy longbow data to Feeds Servers
+        command: sh /home/gsdteam/svcEC2/.hotcopy2.sh --snapdate {{snapshot_date}}
+- name: extract
+  remote_user: root
+  hosts: csfeedsbe01
+  tasks:
+      - name: extract longbow data
+        command: cat /data/feeds_script/generation/usapmastertemplate.sh
+- name: generate
+  remote_user: root
+  hosts: csntxkvmfeeds01
+  tasks:
+      - name: start usap feeds generation
+        command: cat /usr/local/bin/chkexecstatus
+- name: elastic feeds
+  remote_user: svcSnapshot
+  hosts: 10.10.30.213
+  tasks:
+      - name: elastic feeds generation
+        command: statsQl
+      - name: check logs
+        command: tail /tmp/elastic_feeds.logs
