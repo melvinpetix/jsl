@@ -1,9 +1,6 @@
 package com.webops.builder
-/**
- * Project configuration
- */
-class ProjectConfiguration implements Serializable {
 
+class PipelineConfiguration implements Serializable {
     def project_name
     def parameters
     def config
