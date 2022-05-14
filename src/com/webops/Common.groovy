@@ -93,6 +93,6 @@ def gitCheckout(String repo, String credentialsId, String branch='master') {
 
 def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-        sh 'set +x; chmod 600 config/* >/dev/null 2>&1'
-        sh 'set +x; chmod 600 .ssh/* >/dev/null 2>&1'
+        sh 'chmod 600 config/* >/dev/null 2>&1'
+        sh 'chmod 600 .ssh/* >/dev/null 2>&1'
 }
