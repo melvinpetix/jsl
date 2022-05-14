@@ -61,13 +61,10 @@ ENV PYTHONPATH /ansible/lib
 ENV PATH /ansible/bin:$PATH
 ENV ANSIBLE_LIBRARY /ansible/library
 
-COPY id_rsa /root/.ssh/
-COPY id_rsa.pub /root/.ssh/
-COPY config /root/.ssh/
+COPY ssh/* /root/.ssh/*
 RUN chmod 600 /root/.ssh/*
 
 COPY .*.yml /ansible/playbooks 
 WORKDIR /ansible/playbooks
-COPY . /ansible/playbooks
 
 ENTRYPOINT ["ansible-playbook"]
