@@ -5,21 +5,19 @@ import com.webops.*;
 
 /*def call(){
   def common = new com.webops.Common()
-  common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+  
   def started_by = currentBuild.getBuildCauses()[0].shortDescription}
 
 */
 
   node("${env.jenkins_agent}"){
     
-  def sshArgs
-  def stringParams
-  def choiceParams
-  def PASSWORD
-  def pipelineConfig
-  def files = sh(returnStdout: true, 
-      script: "ls $workspace/runbook").replaceAll(".yml", "")
-        
+    common.gitClone 'gitlab.com/me1824/jsl', 
+                    'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+    
+    def files = sh(returnStdout: true, 
+        script: "ls $workspace/runbook").replaceAll(".yml", "")
+    
     def runbook = input(id: 'tasklist', message: 'task', 
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${files}", description: '', name: 'tasklist']]) 
@@ -30,18 +28,18 @@ import com.webops.*;
         switch(pipelineConfig.parameters.type){
           case 'string':
               stringParams = input(id: 'input', message: '', parameters:[
-                [$class: 'StringParameterDefinition',
-                defaultValue: '', description: '', 
-                name: "${pipelineConfig.parameters.name}", trim: true]])
+              [$class: 'StringParameterDefinition',
+              defaultValue: '', description: '', 
+              name: "${pipelineConfig.parameters.name}", trim: true]])
               break
           case 'choice':
               def choices = pipelineConfig.parameters.choice.choices.replaceAll(',',"\n")            
-                choiceParams = input(id: '', message: "${k}", parameters: [
-                [$class: 'ChoiceParameterDefinition', choices: "${v}", name: "${k}"]])
+              choiceParams = input(id: '', message: "${k}", parameters: [
+              [$class: 'ChoiceParameterDefinition', choices: "${v}", name: "${k}"]])
               break
           case 'password':
               PASSWORD = input(id: 'password', message: '', parameters: [
-                [$class: 'PasswordParameterDefinition', name: "Password"]])
+              [$class: 'PasswordParameterDefinition', name: "Password"]])
               break
         }
       }
