@@ -58,8 +58,6 @@ def call(){
       }
    }
 }
-
-  }
 def serversInParallel(Map config){
   def command = [:] 
 
