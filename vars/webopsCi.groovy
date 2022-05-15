@@ -4,11 +4,8 @@ import com.webops.*;
 
 
 def call(){
-    def common = new com.webops.Common()
-    def started_by = currentBuild.getBuildCauses()[0].shortDescription}
-
- 
-stage('parameter definition'){
+    
+    stage('parameter definition'){
     common.gitClone 'gitlab.com/me1824/jsl', 
                     'glpat-GxfR6J-STGecxjDPGz8z', 'main'
     
