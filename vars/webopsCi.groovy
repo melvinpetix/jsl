@@ -11,7 +11,7 @@ def call(String repo, String branch='main'){
   def choiceParams
   def PASSWORD
 
-  gitCheckout(repo, 'prd-private-gitlab', "${branch}")
+  common.gitCheckout(repo, 'prd-private-gitlab', branch)
   
    def j = 
 
