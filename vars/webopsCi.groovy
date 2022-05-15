@@ -7,12 +7,14 @@ def call(){
     def common = new com.webops.Common()
     def started_by = currentBuild.getBuildCauses()[0].shortDescription}
 
+ 
+stage('parameter definition'){
     common.gitClone 'gitlab.com/me1824/jsl', 
-                    'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+                    'glpat-GxfR6J-STGecxjDPGz8z', 'main
     
     def files = sh(returnStdout: true, 
         script: "ls $workspace/runbook").replaceAll(".yml", "")
-    
+  
     def runbook = input(id: 'tasklist', message: 'task', 
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${files}", description: '', name: 'tasklist']]) 
@@ -38,7 +40,7 @@ def call(){
               break
         }
       }
-
+    }
     stage("task: ${runbook}"){
       def command = [:]
       
