@@ -24,7 +24,7 @@ def call(){
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${files}", description: '', name: 'tasklist']]) 
             
-      def pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
+    pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
 
       if(pipelineConfig.parameters){
         switch(pipelineConfig.parameters.type){
