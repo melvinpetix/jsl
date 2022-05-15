@@ -10,7 +10,7 @@ def call(){
  
 stage('parameter definition'){
     common.gitClone 'gitlab.com/me1824/jsl', 
-                    'glpat-GxfR6J-STGecxjDPGz8z', 'main
+                    'glpat-GxfR6J-STGecxjDPGz8z', 'main'
     
     def files = sh(returnStdout: true, 
         script: "ls $workspace/runbook").replaceAll(".yml", "")
