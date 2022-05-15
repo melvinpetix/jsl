@@ -6,9 +6,8 @@ def started_by = "${currentBuild.getBuildCauses()[0].shortDescription}"
 //node("${env.jenkins_agent}"){  
 
 
-def call(){
-  
-  def body = config
+def call(body){
+  def config = body
   def sshArgs
   def stringParams
   def choiceParams
