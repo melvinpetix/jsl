@@ -1,6 +1,6 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
-//node("${env.jenkins_agent}"){  
+
 
 
 def call(body){
@@ -95,3 +95,9 @@ def serversInParallel(Map config){
     sh script: args + "${config.server}" + " " + config.cmd 
   }
 }
+
+
+
+
+
+//node("${env.jenkins_agent}"){  
