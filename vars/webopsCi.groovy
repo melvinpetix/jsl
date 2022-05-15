@@ -61,10 +61,9 @@ def call(body){
                     serversInParallel(server: "${server}", cmd: "${cmd}")
                 }        
             }
-          }
-        }
+         }
       }
-    }
+   }
 }
 
 
