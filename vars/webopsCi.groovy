@@ -1,7 +1,5 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
-
-
 //node("${env.jenkins_agent}"){  
 
 
@@ -17,7 +15,7 @@ def call(body){
   def PASSWORD
   def pipelineConfig
 
-    stage 'parse config'
+  node{
     def files = sh(returnStdout: true, 
       script: "ls $workspace/runbook").replaceAll(".yml", "")
         
@@ -67,7 +65,7 @@ def call(body){
    }
 }
 
-
+  }
 def serversInParallel(Map config){
   def command = [:] 
 
