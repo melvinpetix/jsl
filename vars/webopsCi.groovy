@@ -6,15 +6,13 @@ def common = new com.webops.Common()
 
 def call(Map config){
   def body = config
-  
-  
   def sshArgs
   def stringParams
   def choiceParams
   def PASSWORD
   def j
   //common.gitCheckout("${repo}", 'prd-private-gitlab', "${}")
-  common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+  common.gitClone "${config.repo}", 'glpat-GxfR6J-STGecxjDPGz8z', "${branch}"
    
   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
     writeFile file:'task.txt', text: "${folders}" 
