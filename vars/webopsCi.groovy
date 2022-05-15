@@ -1,7 +1,6 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
-def common = new com.webops.Common()
-def user = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')  
+
 def started_by = "${currentBuild.getBuildCauses()[0].shortDescription}"
 //node("${env.jenkins_agent}"){  
 
@@ -14,6 +13,10 @@ def call(body){
   def PASSWORD
   def pipelineConfig
   
+  def user = currentBuild
+      .getBuildCauses('hudson.model.Cause$UserIdCause')  
+  
+  def common = new com.webops.Common()
   common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
 
     def files = sh(returnStdout: true, 
