@@ -36,19 +36,28 @@ def dumpYAML(Map map) {
 }
 
 def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
- 
+  def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')  
+  def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}\n\
+  ${currentBuild.getBuildCauses()[0].userId}" 
   def now = "${new Date().format('yyyyMMdd')}"  
   
   def emoji
-  
+  def COLOR
+    
   if(currentBuild.result == ('FAILURE')){
-    emoji = "❌" } else { emoji = "🚀" }
+    emoji = "❌"
+    COLOR = "ff0000"
+  } else {
+    emoji = "🚀"
+    COLOR = "00FF00"
+  }
 
-  sh "curl -X POST -H \'Content-Type: application/json\'\
-    -d \'{\"title\": \"${emoji} Unified-Notifier :  ${jobName}\", \"text\": \"${buildStatus}\"}\' ${webhookUrl}" 
+   sh "curl -X POST -H \'Content-Type: application/json\'\
+  -d \'{\"title\": \"${emoji}Unified-Notifier: ${params.SNAPSHOT}\",\
+    \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
 }
 
-def execute(Map config){
+def runParallel(Map config){
   def command = [:]
   def args = "ssh -F + -t "
   if(!config.server){
