@@ -1,92 +1,104 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
-def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
 def common = new com.webops.Common()
+def user = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')  
+def started_by = "${currentBuild.getBuildCauses()[0].shortDescription}
 //node("${env.jenkins_agent}"){  
 
-def call(Map config){
+
+def call(){
+  
   def body = config
   def sshArgs
   def stringParams
   def choiceParams
   def PASSWORD
-  def j
-  //common.gitCheckout("${repo}", 'prd-private-gitlab', "${}")
-  gitClone "${config.repo}", 'glpat-GxfR6J-STGecxjDPGz8z', "${branch}"
-   
-  def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
-    writeFile file:'task.txt', text: "${folders}" 
-  tasklist = readFile("$workspace/task.txt") 
+  def pipelineConfig
+  
+  def sshArgs
+    def stringParams
+    def choiceParams
+    def PASSWORD
 
-  yaml = input(id: 'tasklist', message: 'task', parameters: [
-  [$class: 'ChoiceParameterDefinition', choices: "${tasklist}", description: '', name: 'tasklist']]) 
+    common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+
+    def runbooks = sh(returnStdout: true, 
+      script: "ls $workspace/runbook").replaceAll(".yml", "")
         
-  j = jobCfg(yaml)
+    def runbook = input(id: 'tasklist', message: 'task', 
+        parameters: [[$class: 'ChoiceParameterDefinition', 
+        choices: "${runbooks}", description: '', name: 'tasklist']]) 
+            
+      def pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
 
-  if(j.parameters.string){
-    stringParams = input(id: 'userInput', message: "${j.parameters.string.name}", parameters: [
-      [$class: 'StringParameterDefinition', defaultValue: '', 
-      description: "${j.parameters.string.name}", name: "${j.parameters.string.name}", 
-      trim: true]
-    ]) 
-    println stringParams
-  }
+      if(pipelineConfig.parameters){
+        switch(pipelineConfig.parameters.type){
+          case 'string':
+              stringParams = input(id: 'input', message: '', parameters:[
+                [$class: 'StringParameterDefinition',
+                defaultValue: '', description: '', 
+                name: "${pipelineConfig.parameters.name}", trim: true]])
+              break
+          case 'choice':
+              def choices = pipelineConfig.parameters.choice.choices.replaceAll(',',"\n")            
+                choiceParams = input(id: '', message: "${k}", parameters: [
+                [$class: 'ChoiceParameterDefinition', choices: "${v}", name: "${k}"]])
+              break
+          case 'password':
+              PASSWORD = input(id: 'password', message: '', parameters: [
+                [$class: 'PasswordParameterDefinition', name: "Password"]])
+              break
+        }
+      }
 
-  if(j.parameters.type == 'choice'){
-    def choices = j.parameters.choice.choices.replaceAll(',',"\n")
-      choiceParams = input(id: '', message: "${j.parameters.choice.name}", parameters: [
-      [$class: 'ChoiceParameterDefinition', choices: "${choices}",name: "${j.parameters.choice.name}"]
-    ])  
-    println choiceParams
-  }
-
-  if(j.parameters.password){
-    PASSWORD = input(id: 'password', message: '', parameters: [
-      [$class: 'PasswordParameterDefinition', name: "Password"]
-    ])
-  }
-
-  stage("${userInput}"){
-    List<String> stepsA = j.steps
-    def serverA = j.steps.server
-    
-    if(j.notification){
-      common.sendTeamsNotif("${BUILD_TRIGGER_BY}", j.project_name, j.notification.webhook)
-    }
-    if(!j.steps.server){
-      stepsA.collect{k, v->
-        stage(name: "${k}"){
-          v.each{command->
-            sh command
+    stage("task: ${runbook}"){
+      def command = [:]
+      
+      if(pipelineConfig.notification){
+        common.sendTeamsNotif("${startedby}", pipelineConfig.project_name, pipelineConfig.notification.webhook)
+      }
+ 
+      pipelineConfig.steps.each{step->
+        step.name.collect{name->
+          stage("${name}"){
+            pipelineConfig.steps.command.collect{v->
+                v.each{cmd->
+                    serversInParallel(server: "${server}", cmd: "${cmd}")
+                }        
+            }
           }
         }
       }
-    } else {
-      stepsA.each{step->
-        step.name.collect{stepName->
-          stage("${stepName}"){
-            serverA.each{server->
-              commandA.collect{v->
-                v.each{command->
-sh """#!/bin/bash +x\n
-export "${j.parameters.string.name}"="${stringParams}"\n\
-export "${j.parameters.choice.name}"=${choiceParams}\n\
-export PASSWORD="${PASSWORD}"\n\
-${sshArgs} ${server} "export TERM=xterm-256color;
-set -x; ${command}"
-"""                         }
-                        }
-                    }
-                }
-            }
+    }
+}
+
+
+def serversInParallel(Map config){
+  def command = [:] 
+
+  if(!server || server == 'localhost'){
+    echo 'local[SHELL]'
+    res = config.cmd 
+    returnStdout: false
+    return res 
+  } 
+
+  def serverlist = config.server.toString().split(',')
+
+  if(serverlist.size() > 1){ 
+    for(i in serverlist){ 
+      def s = i.trim()
+        command[s] = { 
+        """#!/bin/bash +x\n\
+              export="\$(cat .env)"
+  ${sshArgs} ${server} "export TERM=xterm-256color;\n\
+  set -x; ${config.cmd}"
+        """ 
         }
-     }
-   }  
+    }   
+    parallel command
+  }
+  else { 
+    sh script: args + "${config.server}" + " " + config.cmd 
+  }
 }
-
-def gitClone(String repoUrl, String token, String branch='master'){
-    git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-    sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
-}
-
-    
