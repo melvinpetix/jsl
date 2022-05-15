@@ -17,12 +17,12 @@ def call(){
   
   common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
 
-    def runbooks = sh(returnStdout: true, 
+    def files = sh(returnStdout: true, 
       script: "ls $workspace/runbook").replaceAll(".yml", "")
         
     def runbook = input(id: 'tasklist', message: 'task', 
         parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${runbooks}", description: '', name: 'tasklist']]) 
+        choices: "${files}", description: '', name: 'tasklist']]) 
             
       def pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
 
