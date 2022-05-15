@@ -2,41 +2,40 @@
 import com.webops.*;
 
 
+node("${env.jenkins_agent}"){  
 
-def call(){
-    
     stage('parameter definition'){
-    common.gitClone 'gitlab.com/me1824/jsl', 
-                    'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+        
+        common.gitClone 'gitlab.com/me1824/jsl', 
+                        'glpat-GxfR6J-STGecxjDPGz8z', 'main'
     
-    def files = sh(returnStdout: true, 
-        script: "ls $workspace/runbook").replaceAll(".yml", "")
+        def files = sh(returnStdout: true, 
+            script: "ls $workspace/runbook").replaceAll(".yml", "")
   
-    def runbook = input(id: 'tasklist', message: 'task', 
-        parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${files}", description: '', name: 'tasklist']]) 
+        def runbook = input(id: 'tasklist', message: 'task', 
+            parameters: [[$class: 'ChoiceParameterDefinition', 
+            choices: "${files}", description: '', name: 'tasklist']]) 
             
-    pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
+        pipelineConfig = jobCfg("$workspace/runbook/${runbook}.yml")
 
-      if(pipelineConfig.parameters){
-        switch(pipelineConfig.parameters.type){
-          case 'string':
-              stringParams = input(id: 'input', message: '', parameters:[
-              [$class: 'StringParameterDefinition',
-              defaultValue: '', description: '', 
-              name: "${pipelineConfig.parameters.name}", trim: true]])
-              break
-          case 'choice':
-              def choices = pipelineConfig.parameters.choice.choices.replaceAll(',',"\n")            
-              choiceParams = input(id: '', message: "${k}", parameters: [
-              [$class: 'ChoiceParameterDefinition', choices: "${v}", name: "${k}"]])
-              break
-          case 'password':
-              PASSWORD = input(id: 'password', message: '', parameters: [
-              [$class: 'PasswordParameterDefinition', name: "Password"]])
-              break
+        if(pipelineConfig.parameters){
+            switch(pipelineConfig.parameters.type){
+                case 'string':
+                    stringParams = input(id: 'input', message: '', parameters:[
+                    [$class: 'StringParameterDefinition',defaultValue: '', description: '', 
+                    name: "${pipelineConfig.parameters.name}", trim: true]])
+                    break
+                case 'choice':
+                    def choices = pipelineConfig.parameters.choice.choices.replaceAll(',',"\n")            
+                    choiceParams = input(id: '', message: "${k}", parameters: [
+                    [$class: 'ChoiceParameterDefinition', choices: "${v}", name: "${k}"]])
+                    break
+                case 'password':
+                    PASSWORD = input(id: 'password', message: '', parameters: [
+                    [$class: 'PasswordParameterDefinition', name: "Password"]])
+                    break
+            }
         }
-      }
     }
     stage("task: ${runbook}"){
       def command = [:]
@@ -91,4 +90,4 @@ def serversInParallel(Map config){
 
 
 
-//node("${env.jenkins_agent}"){  
+//
