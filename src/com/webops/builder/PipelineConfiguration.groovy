@@ -5,7 +5,5 @@ class PipelineConfiguration implements Serializable {
     def parameters
     def config
     def steps
-    //def projectName
-    //def buildNumber
-    def timeout
+
 }
