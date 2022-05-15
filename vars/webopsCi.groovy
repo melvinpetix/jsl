@@ -2,7 +2,7 @@
 import com.webops.*;
 def common = new com.webops.Common()
 def user = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')  
-def started_by = "${currentBuild.getBuildCauses()[0].shortDescription}
+def started_by = "${currentBuild.getBuildCauses()[0].shortDescription}"
 //node("${env.jenkins_agent}"){  
 
 
