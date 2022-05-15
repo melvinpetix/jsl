@@ -3,7 +3,7 @@ import com.webops.*;
 def common = new com.webops.Common()
 //node("${env.jenkins_agent}"){  
 
-def call(yaml, String repo, String branch='main'){ 
+def call(String dir='/path/to/*.yml', String repo, String branch='main'){ 
   def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
   def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
   def sshArgs
