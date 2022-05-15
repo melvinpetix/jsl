@@ -3,15 +3,10 @@ import com.webops.*;
 
 
 
-/*def call(){
-  def common = new com.webops.Common()
-  
-  def started_by = currentBuild.getBuildCauses()[0].shortDescription}
+def call(){
+    def common = new com.webops.Common()
+    def started_by = currentBuild.getBuildCauses()[0].shortDescription}
 
-*/
-
-  node("${env.jenkins_agent}"){
-    
     common.gitClone 'gitlab.com/me1824/jsl', 
                     'glpat-GxfR6J-STGecxjDPGz8z', 'main'
     
