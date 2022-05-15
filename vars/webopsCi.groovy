@@ -3,16 +3,17 @@ import com.webops.*;
 def common = new com.webops.Common()
 //node("${env.jenkins_agent}"){  
 
-def call(String dir='/path/to/*.yml', String repo, String branch='main'){ 
+def call(String repo, String branch='main'){ 
   def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}" 
   def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
   def sshArgs
   def stringParams
   def choiceParams
   def PASSWORD
-  def j
 
-  gitCheckout repo, 'prd-private-gitlab', "${branch}"
+  gitCheckout(repo, 'prd-private-gitlab', "${branch}")
+  
+   def j = 
 
   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
   writeFile file:'task.txt', text: "${folders}"
