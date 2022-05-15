@@ -15,12 +15,7 @@ def call(){
   def PASSWORD
   def pipelineConfig
   
-  def sshArgs
-    def stringParams
-    def choiceParams
-    def PASSWORD
-
-    common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+  common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
 
     def runbooks = sh(returnStdout: true, 
       script: "ls $workspace/runbook").replaceAll(".yml", "")
