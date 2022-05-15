@@ -12,7 +12,7 @@ def call(Map config){
   def PASSWORD
   def j
   //common.gitCheckout("${repo}", 'prd-private-gitlab', "${}")
-  common.gitClone "${config.repo}", 'glpat-GxfR6J-STGecxjDPGz8z', "${branch}"
+  gitClone "${config.repo}", 'glpat-GxfR6J-STGecxjDPGz8z', "${branch}"
    
   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
     writeFile file:'task.txt', text: "${folders}" 
@@ -82,6 +82,11 @@ set -x; ${command}"
         }
      }
    }  
+}
+
+def gitClone(String repoUrl, String token, String branch='master'){
+    git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
+    sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 }
 
     
