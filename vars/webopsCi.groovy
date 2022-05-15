@@ -3,12 +3,11 @@ import com.webops.*;
 
 
 
-def call(body){
+def call(){
   def common = new com.webops.Common()
   common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
   def started_by = currentBuild.getBuildCauses()[0].shortDescription}
 
-  def config = body
   def sshArgs
   def stringParams
   def choiceParams
