@@ -10,13 +10,12 @@ def call(String repo, String branch='main'){
   def stringParams
   def choiceParams
   def PASSWORD
-
-  common.gitCheckout(repo, 'prd-private-gitlab', branch)
-  
-   def j = 
-
+  def j
+  //common.gitCheckout("${repo}", 'prd-private-gitlab', "${}")
+  common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
+   
   def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
-  writeFile file:'task.txt', text: "${folders}"
+    writeFile file:'task.txt', text: "${folders}" 
   tasklist = readFile("$workspace/task.txt") 
 
   yaml = input(id: 'tasklist', message: 'task', parameters: [
