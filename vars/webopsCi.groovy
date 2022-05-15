@@ -17,6 +17,7 @@ def call(body){
   def PASSWORD
   def pipelineConfig
 
+    stage 'parse config'
     def files = sh(returnStdout: true, 
       script: "ls $workspace/runbook").replaceAll(".yml", "")
         
