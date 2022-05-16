@@ -8,10 +8,12 @@ def call(config){
 }
 def gitCheckout(String repo, String branch='main') {
     checkout([$class: 'GitSCM', branches: 
-    [[name: "${main}"]], extensions: [[$class: 'RelativeTargetDirectory', 
-     relativeTargetDir: '.']], serRemoteConfigs: [[credentialsId: 
-    credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
-         sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
-        }
-        else { checkout scm }
-    }
+    [[name: "${main}"]], extensions: [
+    [$class: 'RelativeTargetDirectory',  
+     relativeTargetDir: '.']],            
+    serRemoteConfigs: [[credentialsId: 
+    'prd-private-gitlab', url: 'git@gitlab.usautoparts.io:' + repo]]])
+    sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
+   }  else { checkout scm }
+     
+ }
