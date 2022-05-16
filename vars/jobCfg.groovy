@@ -1,4 +1,4 @@
-def call(String runbook){
-    Map jobCfg = readYaml(file: "${WORKSPACE}/runbook/" + pipeline + ".yml")
+def call(String fileName){
+    Map jobCfg = readYaml(file: "${WORKSPACE}/runbook/" + fileName + ".yml")
     return jobCfg
 }
