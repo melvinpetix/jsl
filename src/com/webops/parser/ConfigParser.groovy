@@ -7,15 +7,9 @@ class ConfigParser {
     static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
         projectConfiguration.buildNumber = env.BUILD_ID;
-        // parse the environment variables and jenkins environment variables to be passed
         projectConfiguration.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
-        // add Build Number environment variables
-        projectConfiguration.environment.add("BUILD_ID=${env.BUILD_ID}");
-        // add SCM environment variables
         projectConfiguration.environment.add("BRANCH_NAME=${env.BRANCH_NAME.replace('origin/','')}");
-        // parse the execution steps
         projectConfiguration.steps = parseSteps(yaml.steps);
-        // parse the necessary services
         projectConfiguration.projectName = parseProjectName(yaml.config);
         return projectConfiguration;
     }
