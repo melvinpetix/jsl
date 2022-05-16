@@ -23,8 +23,8 @@ class ConfigParser {
         }
         return config;
     }
-    static def parseSteps(def yamlSteps) {
-        List<Step> step = yamlSteps.collect { k, v ->
+     static def parseSteps(def yamlSteps) {
+        List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
             v.each {
                 step.commands.add(it);
