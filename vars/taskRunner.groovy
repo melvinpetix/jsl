@@ -1,25 +1,17 @@
 import com.webops.Parser
 import com.webops.PipelineConfiguration
 
-def call(
-    String configFile='./runbook/*.yml',
-    String baseRepository=null,
-    String baseBranch=null) {
-
+def call(config){
     checkoutRepository(baseRepository, baseBranch)
-  
     def yaml = readYaml file: configFile
-
     ProjectConfiguration projectConfig = null
 }
-def checkoutRepository(String repository, String branch='master') {
-     checkout([
-            $class: 'GitSCM',
-            branches: [[name: "*/${branch}"]],
-            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-            userRemoteConfigs: [[url: repository]]])
+def gitCheckout(String repo, String branch='main') {
+    checkout([$class: 'GitSCM', branches: 
+    [[name: "${main}"]], extensions: [[$class: 'RelativeTargetDirectory', 
+     relativeTargetDir: '.']], serRemoteConfigs: [[credentialsId: 
+    credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
+         sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
+        }
+        else { checkout scm }
     }
-    else {
-        checkout scm
-    }
-}
