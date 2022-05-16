@@ -29,8 +29,4 @@ def call(String buildStatus, String jobName, String webhookUrl) {
         "markdown": true}]}'
       """
 }
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
+
