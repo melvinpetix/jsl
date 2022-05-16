@@ -3,8 +3,7 @@ import com.webops.*;
 import com.webops.steps.Step;
 
 def call(ProjectConfiguration projectConfig) {
-  return { variables ->
-  List<Step> stepsA = projectConfig.steps.steps
+  return { ->
      stepsA.each { step ->
          stage(step.name) {
             step.commands.each { command ->
