@@ -1,4 +1,4 @@
-def call(String yamlName) {
-  Map jobCfg = readYaml file: yamlName
+def call(String configFile='./dir/test.yaml'){
+  Map jobCfg = readFile file: configFile
   return jobCfg
-}
+ }
