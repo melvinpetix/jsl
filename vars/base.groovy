@@ -1,4 +1,4 @@
-@Library('webops-ci')
+@Library('github.com/melvinpetix/jsl@dev')_
 import com.webops.*;
 
 def call(ProjectConfiguration projectConfig, def _, def nextClosure) {
