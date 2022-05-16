@@ -2,7 +2,7 @@ import com.webops.Parser
 import com.webops.PipelineConfiguration
 
 def call(config){
-    checkoutRepository(baseRepository, baseBranch)
+    gitCheckout(gitlab.com/me1824/jsl, main)
     def yaml = readYaml file: configFile
     ProjectConfiguration projectConfig = null
 }
