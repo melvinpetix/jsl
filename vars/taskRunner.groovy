@@ -1,9 +1,9 @@
 import com.webops.Parser
 import com.webops.PipelineConfiguration
 
-def call(Map config){
+def call(configFile){
     gitCheckout(gitlab.com/me1824/jsl, main)
-    def yaml = readYaml file: config.file
+    def yaml = readYaml file: configFile
 }
 def gitCheckout(String repo, String branch='main') {
     checkout([$class: 'GitSCM', branches: 
