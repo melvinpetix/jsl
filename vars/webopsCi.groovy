@@ -9,16 +9,4 @@ def call(String yamlName) {
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
     // adds the last step of the build.
     def closure = buildSteps(projectConfig)
-
-    projectConfig.services.each {
-
-        closure = "${it.service.getVar()}"(projectConfig, it.version, closure);
-    }
-
-
-    try {
-        closure([:]);
-    } finally{
-        deleteDockerImages(projectConfig);
-    }
 }
