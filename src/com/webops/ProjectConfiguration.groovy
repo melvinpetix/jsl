@@ -3,7 +3,7 @@ import com.webops.steps.Steps;
 
 class ProjectConfiguration {
     def parameters;
-    Steps steps;
+    Step step;
     def projectName;
         
 }
