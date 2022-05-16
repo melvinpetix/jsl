@@ -1,4 +1,4 @@
-@Library('webops-ci')
+@Library('github.com/melvinpetix/jsl@dev')_
 import com.webops.parser.ConfigParser;
 import com.webops.*;
 
