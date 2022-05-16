@@ -2,9 +2,7 @@ def call(String buildStatus, String jobName, String webhookUrl) {
   def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
   echo "userName: ${cause.userName}"
   def now = "${new Date().format('yyyyMMdd')}"  
-  
-  def emoji
-  
+ 
   if(currentBuild.result == ('FAILURE')){
     emoji = "❌" } else { emoji = "🚀" }
 
