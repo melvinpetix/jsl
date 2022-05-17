@@ -13,7 +13,7 @@ def call(yaml){
         choices = builder.parameters.choice.choices.toString().replaceAll(',','\n')
         params = input(id: '', message: "${builder.parameters.choice.name}", 
         parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${choices}",n ame: "${builder.parameters.choice.name}"]])  
+        choices: "${choices}", name: "${builder.parameters.choice.name}"]])  
         sh "set +x; echo ${builder.parameters.choice.name}=${params} >> .env"
     }
     if(builder.parameters.password){
