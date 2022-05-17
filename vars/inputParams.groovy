@@ -10,20 +10,17 @@ def call(yaml){
     } 
     if(builder.parameters.choice){       
         def choices = []
-        choices = builder.parameters.choice.choices.toString()
-        choices = choices.replaceAll(',','\n')
+        choices = builder.parameters.choice.choices.toString().replaceAll(',','\n')
         params = input(id: '', message: "${builder.parameters.choice.name}", 
-        parameters: [[$class: 'ChoiceParameterDefinition', choices: "${choices}", name: "${builder.parameters.choice.name}"]])  
+        parameters: [[$class: 'ChoiceParameterDefinition', 
+        choices: "${choices}",n ame: "${builder.parameters.choice.name}"]])  
         sh "set +x; echo ${builder.parameters.choice.name}=${params} >> .env"
     }
     if(builder.parameters.password){
-         PASSWORD = input(id: 'password', message: '', parameters: [
-         [$class: 'PasswordParameterDefinition', name: "Password"]])
+        PASSWORD = input(id: 'password', message: '', parameters: [
+        [$class: 'PasswordParameterDefinition', name: "Password"]])
+        sh "set +x; echo PASSWORD=${params} >> .env"
     }
   
 }
 
-
-
-
-return this;
