@@ -6,7 +6,7 @@ def call(yaml){
         userInput = input(id: 'string', message: "${builder.parameters.string.name}", 
         parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
         description: "${builder.parameters.string.name}", name: '', trim: true]]) 
-        sh """set +x; echo 'export ${builder.parameters.string.name}=${userInput} >> .env"""
+        sh """set +x; echo export ${builder.parameters.string.name}=${userInput} >> .env"""
     } 
     if(builder.parameters.choice){       
         def choices = []
