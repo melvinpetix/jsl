@@ -6,7 +6,7 @@ def call(yaml){
         userInput = input(id: 'string', message: "${builder.parameters.string.name}", 
         parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
         description: "${builder.parameters.string.name}", name: '', trim: true]]) 
-        sh "set +x; echo ${builder.parameters.string.name}=${userInput}\" >> .env"
+        sh "set +x; echo \"${builder.parameters.string.name}=${userInput}\" >> .env"
     } 
     if(builder.parameters.choice){       
         def choices = []
@@ -14,7 +14,7 @@ def call(yaml){
         userInput = input(id: '', message: "${builder.parameters.choice.name}", 
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${choices}", name: "${builder.parameters.choice.name}"]])  
-        sh "set +x; echo "${builder.parameters.choice.name}=${userInput}\" >> .env"        
+        sh "set +x; echo \"${builder.parameters.choice.name}=${userInput}\" >> .env"        
     }
     if(builder.parameters.password){
         PASSWORD = input(id: 'password', message: '', parameters: [
