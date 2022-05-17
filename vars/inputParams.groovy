@@ -6,7 +6,8 @@ def call(yaml){
         userInput = input(id: 'string', message: "${builder.parameters.string.name}", 
         parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
         description: "${builder.parameters.string.name}", name: '', trim: true]]) 
-        sh """#!/bin/bash +x\necho ${builder.parameters.string.name}=${userInput} >> .env"""
+        writeFile file: "${builder.parameters.string.name}.params", text: """
+        ${builder.parameters.string.name}=${userInput}"""
     } 
     if(builder.parameters.choice){       
         def choices = []
@@ -14,13 +15,16 @@ def call(yaml){
         userInput = input(id: '', message: "${builder.parameters.choice.name}", 
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${choices}", name: "${builder.parameters.choice.name}"]])  
-        sh """#!/bin/bash +x\necho ${builder.parameters.choice.name}=${userInput} >> .env"""
+        writeFile file: "${builder.parameters.choice.name}.params", text: """
+        ${builder.parameters.choice.name}=${userInput}"""
         
     }
     if(builder.parameters.password){
         PASSWORD = input(id: 'password', message: '', parameters: [
         [$class: 'PasswordParameterDefinition', name: "Password"]])
-        sh "set +x; echo PASSWORD=${params} >> .env"
+        writeFile file: 'password', text: """
+        ${builder.parameters.password.name}=${PASSWORD}"""
+        
     }
   
 }
