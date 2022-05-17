@@ -4,21 +4,25 @@ def common = new com.webops.Common()
 def call(){
     
     def builder
+    def yaml
     
     common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
 
     def files = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
-    def yaml = input(id: 'tasklist', message: 'task', parameters: [
+    yaml = input(id: 'tasklist', message: 'task', parameters: [
         [$class: 'ChoiceParameterDefinition', choices: "${files}", description: '', name: 'tasklist']]) 
         
-    builder = jobCfg("${yaml}")
+    builder = jobCfg(yaml)
     
-    inputParams("${yaml}")
-
+    if(builder.parameters){
+      inputParams(yaml)
+    }
+    
     if(builder.notification){
         def by = "${currentBuild.getBuildCauses()[0].userId}"
         msTeamsNotif("Started ${by}", builder.project_name, builder.notification.webhook)
     }
+    
     stepBuilder = builder.steps
     stepBuilder.each{->
       stepBuilder.name.each{A->
