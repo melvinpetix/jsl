@@ -14,7 +14,7 @@ def call(yaml){
         userInput = input(id: '', message: "${builder.parameters.choice.name}", 
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${choices}", name: "${builder.parameters.choice.name}"]])  
-        sh """set +x; echo 'export ${builder.parameters.choice.name}=${userInput}"""        
+        sh """set +x; echo export ${builder.parameters.choice.name}=${userInput}"""        
     }
     if(builder.parameters.password){
         PASSWORD = input(id: 'password', message: '', parameters: [
