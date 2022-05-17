@@ -1,4 +1,3 @@
-@Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
 def common = new com.webops.Common() 
 
