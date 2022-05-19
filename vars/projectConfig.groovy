@@ -1,4 +1,4 @@
 def call(){
-    Map projectconfig = readYaml(file: "${WORKSPACE}/runbook/" + yamlName + ".yml")
-    return projectconfig
+    Map projectConfig = readYaml(file: "${WORKSPACE}/runbook/" + yamlName + ".yml")
+    return projectConfig
 }
