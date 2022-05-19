@@ -13,10 +13,10 @@ def call(){
     yaml = input(id: 'tasklist', message: 'task', parameters: [
         [$class: 'ChoiceParameterDefinition', choices: "${files}", description: '', name: 'tasklist']]) 
         
-    builder = jobCfg(yaml)
+    builder = pipelineConfig("${yaml}")
     
     if(builder.parameters){
-      inputParams(yaml)
+      inputParams("${yaml}")
     }
     
     if(builder.notification){
