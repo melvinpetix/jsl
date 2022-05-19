@@ -1,12 +1,12 @@
 @Library('github.com/melvinpetix/jsl@main')_
 import com.webops.*;
-def common = new com.webops.Common() 
 
 def call(){
     
     def builder
     def yaml
     
+    def common = new com.webops.Common() 
     common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'
 
     def files = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
