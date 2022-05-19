@@ -1,10 +1,35 @@
-def call(String yamlName){
-    builder = projectConfig("$workspace/runbook/" + yamlName + ".yml")
-    def userInput
+def call(Map config){
+    def type = config.type
+    String description = config.description
+    def choices = config.choices.toString.replaceAll(',','\n')
+    def parameterName = config.name
     
-    if(builder.parameters.string){
-        userInput = input(id: 'string', message: "${builder.parameters.string.name}", 
-        parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
+    switch('config.type'){
+     case 'string':
+        userInput = input(id: 'string', message: "${parameterName}", parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
+        description: description, name: '', trim: true]]) 
+        sh "set +x; echo "${config.name}=${userInput}" >> .env"
+        break
+     case 'choice':
+        userInput = input(id: 'choice', message: parameterName, parameters: [[$class: 'ChoiceParameterDefinition', 
+        choices: "${choices}", name: parameterName]])
+        sh "set +x; echo "${config.name}=${userInput}" >> .env"
+        break
+     case 'password':
+            userInput = input(id: 'string', message: "${parameterName}", parameters:parameters: [
+            [$class: 'PasswordParameterDefinition', name: "Password"]]) 
+            sh "set +x; echo "${config.name}=${userInput}" >> .env"
+            break
+    
+    }
+}
+  
+
+
+/*
+
+if(builder.parameters.string){
+        userInput = input(id: 'string', message: parameterName, parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
         description: "${builder.parameters.string.name}", name: '', trim: true]]) 
         if(userInput){
            sh 'set +x; echo \"${builder.parameters.string.name}=${userInput}\" >> .env'
@@ -24,9 +49,4 @@ def call(String yamlName){
         PASSWORD = input(id: 'password', message: '', parameters: [
         [$class: 'PasswordParameterDefinition', name: "Password"]])
         if(PASSWORD){
-            sh 'set +x; echo \"${builder.parameters.choice.name}=${PASSWORD}\" >> .env'
-        }
-    }
-  
-}
-
+            sh 'set +x; echo \"${builder.parameters.choice.name}=${PASSWORD}\" >> .env' */
