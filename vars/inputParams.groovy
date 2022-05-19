@@ -1,5 +1,5 @@
 def call(String yamlName){
-    builder = jobCfg("$workspace/runbook/" + yamlName + ".yml")
+    builder = projectConfig("$workspace/runbook/" + yamlName + ".yml")
     def userInput
     
     if(builder.parameters.string){
