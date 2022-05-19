@@ -2,22 +2,19 @@ def call(Map config){
     def type = config.type
     def parameterName = config.name
     def choices = config.choices.toString.replaceAll(',','\n')
-    def args
+    def args = config.args
         switch('config.type'){
-     case 'string':
-        args = description
+     case 'string':      
         userInput = input(id: 'string', message: "${parameterName}", parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
-        description: description, name: '', trim: true]]) 
+        description: "${args}", name: '', trim: true]]) 
         sh "set +x; echo "${config.name}=${userInput}" >> .env"       
         break
      case 'choice':
-        args = choices
         userInput = input(id: 'choice', message: parameterName, parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${choices}", name: parameterName]])
+        choices: "${args}", name: parameterName]])
         sh "set +x; echo "${config.name}=${userInput}" >> .env"
         break
      case 'password':
-        args = parameterName
         userInput = input(id: 'string', message: "${parameterName}", parameters: [
          [$class: 'PasswordParameterDefinition', name: "Password"]]) 
          sh "set +x; echo "${config.name}=${userInput}" >> .env"
