@@ -75,7 +75,6 @@ def shWithParallel(Map config){
       } 
         parallel command
     } else { sh script: args + "${config.server}" + " " + config.cmd } 
-  }
 }
   
 
