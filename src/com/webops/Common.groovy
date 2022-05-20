@@ -63,18 +63,22 @@ def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
 def shWithParallel(Map config){
   def command = [:]
   def args = "ssh -F + -t "
-  if(!config.server || config.server == 'localhost'){
+  if(!config.server){
     echo 'local[SHELL]'
-    ${command}
+    res = sh script: config.cmd, 
+    returnStdout: false
+    return res 
   } 
   def slist = config.server.toString().split(',')
-    if(slist.size() > 1){ 
-      for(i in slist){ 
-        def s = i.trim()
-          command[s] = { sh script: args + "${s}" + " " + config.cmd } 
-      } 
-        parallel command
-    } else { sh script: args + "${config.server}" + " " + config.cmd } 
+  if(slist.size() > 1){ 
+    for(i in slist){ 
+     def s = i.trim()
+     command[s] = { sh script: args + "${s}" + " " + config.cmd } 
+    } 
+    parallel command
+  } else { 
+    sh script: args + "${config.server}" + " " + config.cmd 
+  }
 }
   
 
