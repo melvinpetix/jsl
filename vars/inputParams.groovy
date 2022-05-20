@@ -1,27 +1,27 @@
 def call(Map config){
     def type = config.type
-    def parameterName = config.name
-    def choices = config.choices.toString.replaceAll(',','\n')
+    def name = config.name
     def args = config.args
-        switch('config.type'){
-     case 'string':      
-        userInput = input(id: 'string', message: "${parameterName}", parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
-        description: "${args}", name: '', trim: true]]) 
-        sh "set +x; echo "${config.name}=${userInput}" >> .env"       
-        break
-     case 'choice':
-        userInput = input(id: 'choice', message: parameterName, parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${args}", name: parameterName]])
-        sh "set +x; echo "${config.name}=${userInput}" >> .env"
-        break
-     case 'password':
-        userInput = input(id: 'string', message: "${parameterName}", parameters: [
-         [$class: 'PasswordParameterDefinition', name: "Password"]]) 
-         sh "set +x; echo "${config.name}=${userInput}" >> .env"
-        break
     
+    if(type == 'string'){
+        userInput = input(id: 'string', message: "${name}", parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
+        description: "${args}", name: '', trim: true]]) 
+        sh "set +x; echo "${name}=${userInput}" >> .env"       
     }
+    if(type == 'choice'){
+        def choices = config.args.toString.replaceAll(',','\n')
+        userInput = input(id: 'choice', message: "${name}", parameters: [[$class: 'ChoiceParameterDefinition', 
+        choices: "${choices}", name: parameterName]])
+        sh "set +x; echo "${config.name}=${userInput}" >> .env"
+    }
+    if(type == 'password'){
+        userInput = input(id: 'string', message: "${name}", parameters: [
+         [$class: 'PasswordParameterDefinition', name: "Password"]]) 
+         sh "set +x; echo "${name}=${userInput}" >> .env"
+    }
+    
 }
+
   
 
 
