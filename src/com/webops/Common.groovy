@@ -15,6 +15,9 @@ def constructString(ArrayList options, String keyOption, String separator = ' ')
     return options.collect { keyOption + it }.join(separator).replaceAll('\n', '')
 }
 
+@NonCPS
+    def populateEnv(){ binding.variables.each{k,v -> env."$k" = "$v"} }
+
 def getDatetime(format = "yyyyMMddHHmmss") {
     def now = new Date()
     return now.format(format, TimeZone.getTimeZone('UTC'))
