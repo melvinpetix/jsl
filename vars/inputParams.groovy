@@ -10,15 +10,14 @@ def call(yamlName){
 
         if(j.parameters.choice){
             
-                j.parameters.choice.choices.split().each{->
-                    choices << it
+                j.parameters.choice.choices.collect{choice->
+                    choiceParams = input(id: '', message: "${j.parameters.choice.name}", 
+                    parameters: [[$class: 'ChoiceParameterDefinition', 
+                    choices: choice, description: '', 
+                    name: "${j.parameters.choice.name}"]])  
+                    sh "set +x; echo \"${choiceParams}\"=\"${j.parameters.string.name}\" >> .env"
+                    
                 }
-                choiceParams = input(id: '', message: "${j.parameters.choice.name}", 
-                parameters: [[$class: 'ChoiceParameterDefinition', 
-                choices: choices, description: '', 
-                name: "${j.parameters.choice.name}"]])  
-                sh "set +x; echo \"${choiceParams}\"=\"${j.parameters.string.name}\" >> .env"
-
         }
     } else {
         println 'no parameters settings for this job'
