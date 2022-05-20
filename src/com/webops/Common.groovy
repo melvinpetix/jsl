@@ -63,7 +63,7 @@ def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
 def shWithParallel(Map config){
   def command = [:]
   def args = "ssh -F + -t "
-  if(!config.server){
+  if(!config.server || config.server == null){
     echo 'local[SHELL]'
     ${command}
   } else {  
