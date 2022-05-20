@@ -16,6 +16,8 @@ def call(yamlName){
                 sh "set +x; echo \"${choiceParams}\"=\"${userInput}\" >> .env"
 
         }
+    } else {
+        println 'no parameters settings for this job'
     }
 }
 
