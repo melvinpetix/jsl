@@ -1,4 +1,5 @@
 def call(yamlName){
+    def choices
     j = jobCfg("$workspace/runbook/" + yamlName + ".yml")
     if(j.parameters){
         if(j.parameters.string){
@@ -8,10 +9,13 @@ def call(yamlName){
         }
 
         if(j.parameters.choice){
-                def choices = j.parameters.choice.choices.replaceAll(',',"\n")
+            
+                j.parameters.choice.choices.split().each{->
+                    choices << it
+                }
                 choiceParams = input(id: '', message: "${j.parameters.choice.name}", 
                 parameters: [[$class: 'ChoiceParameterDefinition', 
-                choices: "${choices}", description: '', 
+                choices: choices, description: '', 
                 name: "${j.parameters.choice.name}"]])  
                 sh "set +x; echo \"${choiceParams}\"=\"${j.parameters.string.name}\" >> .env"
 
