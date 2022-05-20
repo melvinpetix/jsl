@@ -8,7 +8,7 @@ def call(yamlName){
            sh "set +x; echo \"${stringParams}\"=\"${j.parameters.string.name}\" >> .env"  
         }
         if(j.parameters.choice){
-          choices = j.parameters.choice.choices
+          choices = j.parameters.choice.choices.trim()
           choiceParams = input(id: '', message: j.parameters.choice.name, 
           parameters: [[$class: 'ChoiceParameterDefinition', 
           choices: "${choices}", name: j.parameters.choice.name]])  
