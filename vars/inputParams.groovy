@@ -6,18 +6,18 @@ def call(Map config){
     if(type == 'string'){
         userInput = input(id: 'string', message: "${name}", parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
         description: "${args}", name: '', trim: true]]) 
-        sh "set +x; echo "${name}=${userInput}" >> .env"       
+        sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"       
     }
     if(type == 'choice'){
         def choices = config.args.toString.replaceAll(',','\n')
         userInput = input(id: 'choice', message: "${name}", parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${choices}", name: parameterName]])
-        sh "set +x; echo "${config.name}=${userInput}" >> .env"
+        sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"
     }
     if(type == 'password'){
         userInput = input(id: 'string', message: "${name}", parameters: [
          [$class: 'PasswordParameterDefinition', name: "Password"]]) 
-         sh "set +x; echo "${name}=${userInput}" >> .env"
+         sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"
     }
     
 }
