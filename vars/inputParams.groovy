@@ -1,29 +1,25 @@
-def call(body){
-    def config = body
-
-    if(config.string){
-        userInput = input(id: 'string', message: "${config.string}", 
-        parameters: [[$class: 'StringParameterDefinition', defaultValue: '', 
-        description: "${config.description}", name: '', trim: true]]) 
-        sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"       
-    }
-    if(config.choice){
-        def choices = j.parameters.choice.choices.replaceAll(',',"\n")
-        userInput = input(id: '', message: "${config.choice}", 
-        parameters: [[$class: 'ChoiceParameterDefinition', 
-        choices: "${choices}", description: '', 
-        name: "${config.choice}"]])  
-        sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"
-    }
-    if(type == 'password'){
-        userInput = input(id: 'string', message: "${name}", parameters: [
-        [$class: 'PasswordParameterDefinition', name: "Password"]]) 
-        sh "set +x; echo \"${name}\"=\"${userInput}\" >> .env"
-    }
+def call(yamlName){
+    j = jobCfg("$workspace/runbook/" + yamlName + ".yml")
     
-}
+    if(j.parameters.string){
+            stringParams = input(id: 'userInput', 
+            message: "${j.parameters.string.name}", 
+            parameters: [[$class: 'StringParameterDefinition', 
+            defaultValue: '', description: "${j.parameters.string.name}", 
+            name: "${j.parameters.string.name}", trim: true]])
+            sh "set +x; echo \"${stringParams}\"=\"${userInput}\" >> .env"  
+    }
 
-  
+    if(j.parameters.choice){
+            def choices = j.parameters.choice.choices.replaceAll(',',"\n")
+            choiceParams = input(id: '', message: "${j.parameters.choice.name}", 
+            parameters: [[$class: 'ChoiceParameterDefinition', 
+            choices: "${choices}", description: '', 
+            name: "${j.parameters.choice.name}"]])  
+            sh "set +x; echo \"${choiceParams}\"=\"${userInput}\" >> .env"
+
+    }
+}
 
 
 /*
