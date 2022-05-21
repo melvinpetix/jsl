@@ -75,7 +75,7 @@ def shWithParallel(Map config){
      def s = i.trim()
         command[s] = {                   
 sh"""#!/bin/bash\n\
-${args} ${server} "export TERM=xterm-256color; ${command}"
+${args} ${config.server} "export TERM=xterm-256color; ${command}"
 """ } 
   } 
   parallel command
