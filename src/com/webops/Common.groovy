@@ -73,11 +73,11 @@ def shWithParallel(Map config){
   if(slist.size() > 1){ 
     for(i in slist){ 
      def s = i.trim()
-     command[s] = { sh script: args + "${s}" + " " + config.cmd } 
+        command[s] = { sh script: args + "${s}" + " " + "${config.cmd}" } 
     } 
     parallel command
   } else { 
-    sh script: args + "${config.server}" + " " + config.cmd 
+      sh script: args + "${config.server}" + " " + "${config.cmd}" 
   }
 }
   
