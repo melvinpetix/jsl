@@ -74,16 +74,14 @@ def shWithParallel(Map config){
     for(i in slist){ 
      def s = i.trim()
         command[s] = {                   
-sh"""#!/bin/bash +x\n\
-while read line; do export $line; done < .env
-ssh -F + ${server} "export TERM=xterm-256color; ${command}"
+sh"""#!/bin/bash\n\
+${args} ${server} "export TERM=xterm-256color; ${command}"
 """ } 
   } 
   parallel command
   } else { 
-sh"""#!/bin/bash +x\n\
-while read line; do export $line; done < .env
-ssh -F + ${server} "export TERM=xterm-256color; ${command}"
+sh"""#!/bin/bash\n\
+${args} ${server} "export TERM=xterm-256color; ${command}"
 """
   }
 }
