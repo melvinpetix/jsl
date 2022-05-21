@@ -5,5 +5,6 @@ class ProjectConfiguration {
     def parameters;
     Steps steps;
     def project_name;
+    def environment;
         
 }
