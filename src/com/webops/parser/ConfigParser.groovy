@@ -8,7 +8,7 @@ class ConfigParser {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
         projectConfiguration.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
         projectConfiguration.steps = parseSteps(yaml.steps);
-        projectConfiguration.projectName = parseProjectName(yaml.config);
+        projectConfiguration.project_name = parseProjectName(yaml.config);
         return projectConfiguration;
     }
     static def parseEnvironment(def environment, def jenkinsEnvironment, def env) {
