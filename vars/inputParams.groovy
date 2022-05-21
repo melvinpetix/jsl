@@ -14,7 +14,8 @@ def call(yamlName){
                 parameters: [[$class: 'ChoiceParameterDefinition', 
                 choices: "${choices}", description: '', 
                 name: "${j.parameters.choice.name}"]])  
-                sh "set +x; echo \"${j.parameters.string.name}\"=\"${choiceParams}\" >> .env"
+                j.parameters.string.name=${choiceParams} 
+                populateEnv()
 
         }
     } else {
