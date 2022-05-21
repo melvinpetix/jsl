@@ -73,13 +73,18 @@ def shWithParallel(Map config){
   if(slist.size() > 1){ 
     for(i in slist){ 
      def s = i.trim()
-        command[s] = { sh """#/bin/bash +x\n\
-    ${args} ${s} "export TERM=xterm-256color; ${config.cmd}"
-    """} 
+        command[s] = {                   
+sh"""#!/bin/bash +x\n\
+while read line; do export $line; done < .env
+ssh -F + ${server} "export TERM=xterm-256color; ${command}"
+""" } 
   } 
   parallel command
   } else { 
-      sh script: args + "${config.server}" + " " + "${config.cmd}" 
+sh"""#!/bin/bash +x\n\
+while read line; do export $line; done < .env
+ssh -F + ${server} "export TERM=xterm-256color; ${command}"
+"""
   }
 }
   
