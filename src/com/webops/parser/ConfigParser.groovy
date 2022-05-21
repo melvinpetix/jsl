@@ -6,9 +6,7 @@ import com.webops.steps.*;
 class ConfigParser {
     static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
-        projectConfiguration.buildNumber = env.BUILD_ID;
         projectConfiguration.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
-        projectConfiguration.environment.add("BRANCH_NAME=${env.BRANCH_NAME.replace('origin/','')}");
         projectConfiguration.steps = parseSteps(yaml.steps);
         projectConfiguration.projectName = parseProjectName(yaml.config);
         return projectConfiguration;
@@ -26,8 +24,6 @@ class ConfigParser {
      static def parseSteps(def yamlSteps) {
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
-
-            // a step can have one or more commands to execute
             v.each {
                 step.commands.add(it);
             }
