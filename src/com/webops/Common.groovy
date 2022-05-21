@@ -73,9 +73,12 @@ def shWithParallel(Map config){
   if(slist.size() > 1){ 
     for(i in slist){ 
      def s = i.trim()
-        command[s] = { sh script: args + "${s}" + " " + "${config.cmd}" } 
-    } 
-    parallel command
+        command[s] = { sh """#/bin/bash +x\n\
+export TERM=xterm-256color\n\
+${args} ${s} "${config.cmd}"
+"""} 
+  } 
+  parallel command
   } else { 
       sh script: args + "${config.server}" + " " + "${config.cmd}" 
   }
