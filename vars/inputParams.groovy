@@ -4,7 +4,8 @@ def call(yamlName){
         if(j.parameters.string){
                 stringParams = input(id: 'userInput', message: "${j.parameters.string.name}", parameters: [[$class: 'StringParameterDefinition', 
                 defaultValue: '', description: "${j.parameters.string.name}", name: "${j.parameters.string.name}", trim: true]])
-                sh "set +x; echo \"${j.parameters.string.name}\"=\"${stringParams}\" >> .env"  
+                j.parameters.string.name=${stringParams} 
+                populateEnv()
         }
 
         if(j.parameters.choice){
@@ -20,3 +21,6 @@ def call(yamlName){
         println 'no parameters settings for this job'
     }
 }
+
+@NonCPS
+def populateEnv(){ binding.variables.each{k,v -> env."$k" = "$v"} }
