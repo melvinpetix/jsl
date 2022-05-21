@@ -80,9 +80,7 @@ ${args} ${config.server} "export TERM=xterm-256color; ${command}"
   } 
   parallel command
   } else { 
-sh"""#!/bin/bash\n\
-${args} ${config.server} "export TERM=xterm-256color; ${command}"
-"""
+    sh "set -x; ${args} ${config.server} 'export TERM=xterm-256color; ${command}'"
   }
 }
   
