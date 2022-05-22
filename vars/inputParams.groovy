@@ -6,8 +6,7 @@ def call(yamlName){
           parameters: [[$class: 'StringParameterDefinition', 
           defaultValue: '', description: "${j.parameters.string.name}", 
           name: "${j.parameters.string.name}", trim: true]])
-          writeFile file: "${j.parameters.string.name}.env", 
-          text: "${j.parameters.string.name}=${params}"
+          sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> .env"
         }
 
         if(j.parameters.choice){
@@ -16,8 +15,7 @@ def call(yamlName){
           parameters: [[$class: 'ChoiceParameterDefinition', 
           choices: "${choices}", description: '', 
           name: "${j.parameters.choice.name}"]])  
-          writeFile file: "${j.parameters.choice.name}.env",
-          text: "${j.parameters.choice.name}=${params}"
+          sh "set +x; echo \"${j.parameters.choice.name}=${params}\" >> .env"
         }
     } else {
         println 'no parameters settings for this job'
