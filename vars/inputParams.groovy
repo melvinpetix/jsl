@@ -6,9 +6,6 @@ def call(yamlName){
           parameters: [[$class: 'StringParameterDefinition', 
           defaultValue: '', description: "${j.parameters.string.name}", 
           name: "${j.parameters.string.name}", trim: true]])
-          println params
-          println j.parameters.string.name
-            println "${j.parameters.string.name}
           sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh"
         }
 
@@ -25,15 +22,4 @@ def call(yamlName){
     }
 }
 
-@NonCPS
-def call(Map config=[:]) {
 
-    def template = libraryResource("com/company/distribution/pod-templates/${config.name}.yaml")
-
-    if (config.binding) {
-        def engine = new groovy.text.GStringTemplateEngine()
-        template = engine.createTemplate(template).make(config.binding).toString()
-    }
-
-    return template
-}
