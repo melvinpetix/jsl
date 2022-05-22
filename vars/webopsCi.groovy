@@ -7,7 +7,14 @@ def call(String yamlName) {
     // load project's configuration
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
     // adds the last step of the build.
-    def closure = buildSteps(projectConfig)
+    List<Step> stepsA = projectConfig.steps.steps
     
-    closure([:])
+    stepsA.each { step ->
+     stage(step.name) {
+        step.commands.each { command ->
+           sh command
+        }
+      }
+    }
+    
 }
