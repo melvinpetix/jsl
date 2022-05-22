@@ -4,4 +4,5 @@ class PipelineConfiguration implements Serializable {
     def project_name
     def parameters
     Steps steps
+    def environment
 }
