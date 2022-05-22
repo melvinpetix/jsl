@@ -1,5 +1,5 @@
-def call(String runbook){
-    Map taskConfig = readYaml(file: "${WORKSPACE}/runbook/" + runbook + ".yml")
+def call(String yamlName){
+    Map taskConfig = readYaml(file: "${WORKSPACE}/runbook/" + yamlName + ".yml")
     return taskConfig
 }
 
