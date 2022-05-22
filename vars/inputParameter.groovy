@@ -5,7 +5,7 @@ def call(yamlName){
         parameters: [[$class: 'StringParameterDefinition', 
         defaultValue: '', description: j.parameters.string.name, 
         name: j.parameters.string.name, trim: true]])
-        sh 'set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh'
+        sh "set +x; echo '${j.parameters.string.name}=${params}' >> config.sh"
     }
 
     if(j.parameters.choice){
@@ -14,7 +14,7 @@ def call(yamlName){
         parameters: [[$class: 'ChoiceParameterDefinition', 
         choices: "${choices}", description: '', 
         name: j.parameters.choice.name]])  
-        sh 'set +x; echo \"${j.parameters.choice.name}=${params}\" >> config.sh'
+        sh "set +x; echo '${j.parameters.choice.name}=${params}' >> config.sh"
     }
 
 }
