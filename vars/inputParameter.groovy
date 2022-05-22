@@ -6,7 +6,7 @@ def call(yamlName){
             parameters: [[$class: 'StringParameterDefinition', 
             defaultValue: '', description: j.parameters.string.name, 
             name: j.parameters.string.name, trim: true]])
-            sh 'set +x; echo \"${j.parameters.string.name}=${params}\"'
+            sh "set +x; echo ${j.parameters.string.name}=${params}"
             //sh 'set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh'
             echo "${snapshot_date}"
         }
