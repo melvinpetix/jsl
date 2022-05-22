@@ -6,7 +6,10 @@ def call(yamlName){
           parameters: [[$class: 'StringParameterDefinition', 
           defaultValue: '', description: "${j.parameters.string.name}", 
           name: "${j.parameters.string.name}", trim: true]])
-          sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.env"
+          println params
+          println j.parameters.string.name
+            println "${j.parameters.string.name}
+          sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh"
         }
 
         if(j.parameters.choice){
@@ -15,7 +18,7 @@ def call(yamlName){
           parameters: [[$class: 'ChoiceParameterDefinition', 
           choices: "${choices}", description: '', 
           name: "${j.parameters.choice.name}"]])  
-          sh "set +x; echo \"${j.parameters.choice.name}=${params}\" >> config.env"
+          sh "set +x; echo \"${j.parameters.choice.name}=${params}\" >> config.sh"
         }
     } else {
         println 'no parameters settings for this job'
@@ -23,4 +26,14 @@ def call(yamlName){
 }
 
 @NonCPS
-def populateEnv(){ binding.variables.each{k,v -> env."$k" = "$v"} }
+def call(Map config=[:]) {
+
+    def template = libraryResource("com/company/distribution/pod-templates/${config.name}.yaml")
+
+    if (config.binding) {
+        def engine = new groovy.text.GStringTemplateEngine()
+        template = engine.createTemplate(template).make(config.binding).toString()
+    }
+
+    return template
+}
