@@ -16,7 +16,7 @@ def call(yamlName){
           parameters: [[$class: 'ChoiceParameterDefinition', 
           choices: "${choices}", description: '', 
           name: "${j.parameters.choice.name}"]])  
-          writeFile file: "${j.parameters.string.name}.env",
+          writeFile file: "${j.parameters.choice.name}.env",
           text: "${j.parameters.choice.name}=${params}"
         }
     } else {
