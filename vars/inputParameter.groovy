@@ -1,5 +1,6 @@
 def call(yamlName){
-    j = jobCfg("$workspace/runbook/" + yamlName + ".yml")
+    j = jobCfg(yamlName)
+    def ${j.parameters.string.name}
     if(j.parameters){
         if(j.parameters.string){
             params = input(id: 'userInput', message: '', 
