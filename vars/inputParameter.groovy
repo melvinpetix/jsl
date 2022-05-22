@@ -1,5 +1,5 @@
 def call(yamlName){
-    j = jobCfg(yamlName)    
+    j = taskConfig(yamlName)    
     if(j.parameters.string){
         params = input(id: 'userInput', message: '', 
         parameters: [[$class: 'StringParameterDefinition', 
