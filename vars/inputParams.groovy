@@ -6,7 +6,7 @@ def call(yamlName){
                 defaultValue: '', description: "${j.parameters.string.name}", name: "${j.parameters.string.name}", trim: true]])
                 j.parameters.string.name = stringParams
                 populateEnv()
-                println "${snapshot_date}"
+                println "${j.parameters.string.name}"
         }
 
         if(j.parameters.choice){
