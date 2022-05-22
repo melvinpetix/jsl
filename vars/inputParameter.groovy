@@ -2,11 +2,11 @@ def call(yamlName){
     j = jobCfg("$workspace/runbook/" + yamlName + ".yml")
     if(j.parameters){
         if(j.parameters.string){
-          params = input(id: 'userInput', message: "${j.parameters.string.name}", 
-          parameters: [[$class: 'StringParameterDefinition', 
-          defaultValue: '', description: "${j.parameters.string.name}", 
-          name: "${j.parameters.string.name}", trim: true]])
-          sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh"
+            env.${j.parameter.string.name} = input(id: 'userInput', message: "${j.parameters.string.name}", 
+            parameters: [[$class: 'StringParameterDefinition', 
+            defaultValue: '', description: "${j.parameters.string.name}", 
+            name: "${j.parameters.string.name}", trim: true]])
+            sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh"
         }
 
         if(j.parameters.choice){
