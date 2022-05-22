@@ -4,9 +4,8 @@ def call(yamlName){
         if(j.parameters.string){
                 stringParams = input(id: 'userInput', message: "${j.parameters.string.name}", parameters: [[$class: 'StringParameterDefinition', 
                 defaultValue: '', description: "${j.parameters.string.name}", name: "${j.parameters.string.name}", trim: true]])
-                j.parameters.string.name = stringParams
-                populateEnv()
-                println "${j.parameters.string.name}"
+                writeFile file: "${j.parameters.string.name}.env",
+                text: 'export ${j.parameters.string.name}=${params}'
         }
 
         if(j.parameters.choice){
@@ -15,9 +14,8 @@ def call(yamlName){
                 parameters: [[$class: 'ChoiceParameterDefinition', 
                 choices: "${choices}", description: '', 
                 name: "${j.parameters.choice.name}"]])  
-                j.parameters.string.name=choiceParams
-                populateEnv()
-
+                writeFile file: "${j.parameters.string.name}.env", 
+                text: 'export ${j.parameters.string.name}=${params}'
         }
     } else {
         println 'no parameters settings for this job'
