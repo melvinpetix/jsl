@@ -4,7 +4,9 @@ def call(yamlName){
         if(j.parameters.string){
                 stringParams = input(id: 'userInput', message: "${j.parameters.string.name}", parameters: [[$class: 'StringParameterDefinition', 
                 defaultValue: '', description: "${j.parameters.string.name}", name: "${j.parameters.string.name}", trim: true]])
-                sh "echo \"export ${j.parameters.string.name}=${stringParams}\" >> .env"
+                j.parameters.string.name = stringParams
+                populateEnv()
+                println "${snapshot_date}"
         }
 
         if(j.parameters.choice){
