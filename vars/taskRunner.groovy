@@ -2,7 +2,7 @@
 import com.webops.*;
 
 
-def call(string yamlName){
+def call(String yamlName){
     def common = new com.webops.Common()
     .loadKey()
 
