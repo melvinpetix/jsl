@@ -137,5 +137,5 @@ def loadKey(body){
       writeFile file: "snp.key", 
       text: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----"    
     }
-    sh 'set +x; chmod 600 config && chmod snp.key && cp config ${workspace}/+'
+    sh 'set +x; chmod 600 config && chmod 600 snp.key && cp config ${workspace}/+'
 }
