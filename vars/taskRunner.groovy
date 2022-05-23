@@ -8,30 +8,30 @@ def call(string yamlName){
 
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
-    if(yml.parameters){
+    if(yaml.parameters){
         inputParameter(runbook)
     }  
-    if(yml.environment){
-        j.environment.collectEntries { name, value ->
+    if(yaml.environment){
+        yaml.environment.collectEntries { name, value ->
             [name, value instanceof String ? interp(value) : value]
         }
     }
-    if(yml.notification){
+    if(yaml.notification){
         def by = "${currentBuild.getBuildCauses()[0].userId}"
-        common.sendTeamsNotif("started: ${by}", j.project_name, j.notification.webhook)
+        common.sendTeamsNotif("started: ${by}", yaml.project_name, yaml.notification.webhook)
     }
-    if(yml.environment){
-        yml.environment.collectEntries { name, value ->
+    if(yaml.environment){
+        yaml.environment.collectEntries { name, value ->
             [name, value instanceof String ? interp(value) : value]
         }
     }
     
-    if(!yml.steps){
+    if(!yaml.steps){
         currentBuild.description == 'test/update'
         return    
     }  
     else {
-        list stepsA = yml.steps
+        list stepsA = yaml.steps
         
         stepsA.each{step->
             list commands = step.command
