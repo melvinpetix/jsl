@@ -133,7 +133,9 @@ def loadKey(body){
   def config = libraryResource("+")
   def key = libraryResource(".snp")
   prependToFile content: config, file: "${workspace}/+"
-  prependToFile content: key, file: "${workspace}/config/snp.key"
+  prependToFile content: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----", 
+  file: "${workspace}/config/snp.key"
+  sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 } 
     
     
