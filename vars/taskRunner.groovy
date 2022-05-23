@@ -35,7 +35,7 @@ def call(String yamlName){
         stepsA.each{step->
             list commands = step.command
             commands.each{command->
-                common.buildStage(step.name){
+                common.Stage(step.name){
                     common.execute server: step.server,
                     cmd: command
                 }
