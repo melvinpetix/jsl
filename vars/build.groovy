@@ -7,7 +7,7 @@ def call(String stageName, Closure stageCmd){
 
 def execute(Map config){
   def command = [:]
-  def args = "ssh -F + -tt "
+  def args = "ssh -F config/config -tt "
   
   if(!config.server){
     echo 'local[SHELL]'
@@ -27,9 +27,10 @@ def execute(Map config){
   }
 }
 def shCommand(String server, String command){
-sh """#!/bin/bash\nset +x;  
-export \$(cat config.sh); 
-ssh -F + ${server} \"export TERM=xterm-256color; 
-set -x; ${command}\"
-"""
+  def args = "ssh -F config/config -tt "
+  sh """#!/bin/bash\nset +x;  
+  export \$(cat config.sh); 
+  ${args} ${server} \"export TERM=xterm-256color; 
+  set -x; ${command}\"
+  """
 }
