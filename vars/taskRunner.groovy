@@ -5,9 +5,10 @@ import com.webops.*;
 def call(String yamlName){
     def common = new com.webops.Common()
     .loadKey()
-
+    
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
-
+    sh 'set +x; echo \'runbook=${runbook}\' >> config.sh'
+    
     if(yaml.parameters){
         inputParameter(runbook)
     }  
