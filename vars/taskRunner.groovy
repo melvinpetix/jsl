@@ -32,12 +32,11 @@ def call(String yamlName){
     }  
     else {
         list stepsA = yaml.steps
-        
         stepsA.each{step->
             list commands = step.command
             commands.each{command->
-                buildStage(step.name){
-                    execute server: step.server,
+                common.buildStage(step.name){
+                    common.execute server: step.server,
                     cmd: command
                 }
             }
