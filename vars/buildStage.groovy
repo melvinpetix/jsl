@@ -1,4 +1,4 @@
-def Stage(stageName, Closure stageCmd){
+def Stage(String stageName, Closure stageCmd){
   try{ stage(stageName){ stageCmd() } 
   } catch(err){ 
     error stageName + "!! " + "Failed with the ff. error:\n" + err 
