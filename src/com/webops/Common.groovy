@@ -116,7 +116,8 @@ def interp(value) {
 def buildStage(stageName, Closure stageCmd){
   try{ stage(stageName){ stageCmd() } 
   } catch(err){ 
-    error stageName + "!! " + "Failed with the ff. error:\n" + err 
+    error stageName + "!! " + "Failed with the ff. error:\n" + err]
+    deleteDir()
   }
 } 
 
