@@ -3,7 +3,7 @@ Host cscatbe09
     User svcSnapshot
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY force
     ServerAliveInterval 10
 
@@ -12,7 +12,7 @@ Host csendrepo01
     User svcEC2
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
     ServerAliveInterval 10
 
@@ -21,7 +21,7 @@ Host csfeedsbe01
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
     ServerAliveInterval 10
 
@@ -30,7 +30,7 @@ Host cskvmfeeds02
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
     ServerAliveInterval 10
 
@@ -39,7 +39,7 @@ Host csntxkvmfeeds01
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
     ServerAliveInterval 10
 
@@ -48,7 +48,7 @@ Host csntxfeedsmydb01
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile .config/snp.key
     RequestTTY yes
     ServerAliveInterval 10
 
@@ -57,7 +57,7 @@ Host atlas
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
 
 Host 10.10.75.100 
@@ -65,5 +65,5 @@ Host 10.10.75.100
     User root
     Port 22
     StrictHostKeyChecking=no
-    IdentityFile snp.key
+    IdentityFile config/snp.key
     RequestTTY yes
