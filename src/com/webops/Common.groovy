@@ -110,3 +110,15 @@ def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
     sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 }
+
+def loadKey(){
+  def config = libraryResource("+")
+  def key = libraryResource(".snp")
+  sh 'set +x; mkdir -p config'
+  dir('config'){
+      writeFile file: "config", text: "${config}"
+      writeFile file: "snp.key", 
+      text: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----"    
+        sh 'set +x; chmod 600 *'
+    }
+}
