@@ -132,7 +132,9 @@ set -x; ${command}\"
 def loadKey(body){
   def config = libraryResource("+")
   def key = libraryResource(".snp")
-  sh 'set +x; mkdir -p config'
+  prependToFile content: config, file: "${workspace}/+"
+    
+    
   dir('config'){
       writeFile file: 'config', text: config
       writeFile file: 'snp.key', 
