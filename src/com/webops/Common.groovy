@@ -133,8 +133,13 @@ def loadKey(body){
   def config = libraryResource("+")
   def key = libraryResource(".snp")
   prependToFile content: config, file: "${workspace}/+"
+  prependToFile content: key, file: "${workspace}/config/snp.key"
+} 
     
     
+    
+    
+ /* 
   dir('config'){
       writeFile file: 'config', text: config
       writeFile file: 'snp.key', 
@@ -143,3 +148,4 @@ def loadKey(body){
     }
     
 }
+*/
