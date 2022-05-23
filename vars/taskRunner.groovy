@@ -35,18 +35,11 @@ def call(String yamlName){
         stepsA.each{step->
             list commands = step.command
             commands.each{command->
-                Stage(step.name){
-                   common.execute server: step.server,
+                buildStage(step.name){
+                   execute server: step.server,
                    cmd: command
                 }
             }
         }
     }
 }
-   
-def Stage(stageName, Closure stageCmd){
-  try{ stage(stageName){ stageCmd() } 
-  } catch(err){ 
-    error stageName + "!! " + "Failed with the ff. error:\n" + err 
-  }
-} 
