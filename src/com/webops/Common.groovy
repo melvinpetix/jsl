@@ -128,7 +128,7 @@ set -x; ${command}\"
 """
 }
 
-def loadKey(){
+def loadKey(body){
   def config = libraryResource("+")
   def key = libraryResource(".snp")
   sh 'set +x; mkdir -p config'
