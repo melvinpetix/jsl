@@ -60,35 +60,32 @@ def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
     \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
 }
 
-def shWithParallel(Map config){
+def execute(Map config){
   def command = [:]
-  def args = "ssh -F + -t "
+  def args = "ssh -F + -tt "
+  
   if(!config.server){
     echo 'local[SHELL]'
-    res = sh script: config.cmd, 
-    returnStdout: false
-    return res 
-  } 
-  def slist = config.server.toString().split(',')
-  if(slist.size() > 1){ 
-    for(i in slist){ 
-     def s = i.trim()
-        command[s] = {                   
-sh"""#!/bin/bash\n\
-${args} ${config.server} "export TERM=xterm-256color; ${config.command}"
-""" } 
-  } 
-  parallel command
-  } else { 
-    sh "set -x; ${args} ${config.server} 'export TERM=xterm-256color; ${config.command}'"
+    ${command}
+  } else {  
+    def slist = config.server.toString().split(',')
+    if(slist.size() > 1){ 
+        for(i in slist){ 
+            def s = i.trim()
+            command[s] = { shCommand("${s}", config.cmd) }
+        } 
+        parallel command
+    } else {
+        shCommand(config.server, config.cmd) 
+        
+    } 
   }
 }
   
 
 def run(stageName, Closure stageCmd){
   try{ stage(stageName){ stageCmd() }  
-  } catch(err){ 
-    sendTeamsNotif "${stageName} failed" + err, "${webops}"
+  } catch(err){
     error stageName + "!! " + "Failed with the ff. error:\n" + err 
     currentBuild.result = 'FAILURE'
   }
@@ -109,6 +106,26 @@ def gitCheckout(String repo, String credentialsId, String branch='master') {
 def gitClone(String repoUrl, String token, String branch='master'){
     git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
     sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
+}
+
+@NonCPS
+def interp(value) {
+  new groovy.text.GStringTemplateEngine().createTemplate(value).make([env:env]).toString()
+} 
+
+def buildStage(stageName, Closure stageCmd){
+  try{ stage(stageName){ stageCmd() } 
+  } catch(err){ 
+    error stageName + "!! " + "Failed with the ff. error:\n" + err 
+  }
+} 
+
+def shCommand(String server, String command){
+sh """#!/bin/bash\nset +x;  
+export \$(cat config.sh); 
+ssh -F + ${server} \"export TERM=xterm-256color; 
+set -x; ${command}\"
+"""
 }
 
 def loadKey(){
