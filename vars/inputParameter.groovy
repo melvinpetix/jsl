@@ -1,5 +1,5 @@
 def call(yamlName){
-    j = taskConfig(yamlName)    
+    j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
     if(j.parameters.string){
         params = input(id: 'userInput', message: '', 
         parameters: [[$class: 'StringParameterDefinition', 
