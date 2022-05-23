@@ -44,3 +44,9 @@ def call(String yamlName){
     }
 }
    
+def Stage(stageName, Closure stageCmd){
+  try{ stage(stageName){ stageCmd() } 
+  } catch(err){ 
+    error stageName + "!! " + "Failed with the ff. error:\n" + err 
+  }
+} 
