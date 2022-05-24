@@ -22,14 +22,14 @@ class ConfigParser {
         return config;
     }
      static def parseSteps(def yamlSteps) {
-        List<Step> steps = yamlSteps.collect { k, v ->
+        List<Step> step = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
             v.each {
                 step.commands.add(it);
             }
             return step
         }
-        return new Steps(steps: steps);
+        return new Steps(steps: step);
     }
     
     static def parseProjectName(def config) {
