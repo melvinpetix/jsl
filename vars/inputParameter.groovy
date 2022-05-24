@@ -1,8 +1,12 @@
 def call(yamlName){
     j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
     if(j.parameters.string){
-        env.${j.parameters.string.name} = input parameters: [string(defaultValue: '', description: j.parameters.string.description ,name: j.parameters.string.name)]
+       userinput = input parameters: [string(defaultValue: '', description: j.parameters.string.description ,name: j.parameters.string.name)]
+       env["${j.parameters.string.name}"] = userInput
+       
     }
+    
+    
 
     if(j.parameters.choice){
         def choices = j.parameters.choice.choices.replaceAll(',',"\n")
