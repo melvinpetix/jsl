@@ -29,7 +29,6 @@ class ConfigParser {
             }
             return step
         }
-        return new Steps(steps: step);
     }
     
     static def parseProjectName(def config) {
