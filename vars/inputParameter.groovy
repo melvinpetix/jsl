@@ -1,11 +1,7 @@
 def call(yamlName){
     j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
     if(j.parameters.string){
-        params = input(id: 'userInput', message: '', 
-        parameters: [[$class: 'StringParameterDefinition', 
-        defaultValue: '', description: j.parameters.string.name, 
-        name: j.parameters.string.name, trim: true]])
-        sh "set +x; echo \"${j.parameters.string.name}=${params}\" >> config.sh"
+        env.${j.parameters.string.name} = input parameters: [string(defaultValue: '', description: j.parameters.string.description ,name: j.parameters.string.name)]
     }
 
     if(j.parameters.choice){
