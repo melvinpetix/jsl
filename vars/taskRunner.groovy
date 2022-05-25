@@ -20,7 +20,7 @@ def call(yamlName){
     }
     if(yaml.notification){
         def userName = "${currentBuild.getBuildCauses()[0].userId}"
-        common.sendTeamsNotif('Started by ' + userName, yaml.project_name, yaml.notification.webhook)
+        msTeamsNotif('Started by ' + userName, yaml.project_name, yaml.notification.webhook)
     }
         
     if(!yaml.steps){
