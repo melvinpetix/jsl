@@ -33,10 +33,8 @@ def execute(Map config){
 }
 
 def shCommand(String server, String command){
-  def args = "ssh -F + -tt"
-  sh """#!/bin/bash +x;  
-  export \$(cat config.sh); 
-  ${args} ${server} \"export TERM=xterm-256color; 
+  def args = "ssh -F + -t"
+  sh """#!/bin/bash\nset +x; ${args} ${server} \"export TERM=xterm-256color; 
   set -x; ${command}\"
   """
 }
