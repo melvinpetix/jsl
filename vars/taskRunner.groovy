@@ -4,14 +4,15 @@ import com.webops.*;
 
 
 def call(yamlName){
+    def yaml
     try{
     def common = new com.webops.Common()
     .loadKey()
     
-    def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
+     yaml = readYaml file: "${workspace}/runbook/${yamlName}.yml"
     
     if(yaml.parameters){
-        build('parameters'){inputParams yamlname} 
+        build('parameters'){inputParams(yaml)} 
     }   
     if(yaml.environment){
         yaml.environment.each{env->
