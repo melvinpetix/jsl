@@ -3,12 +3,13 @@ import com.webops.*;
 
 
 def call(yamlName){
+
     def common = new com.webops.Common()
     .loadKey()
     
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
-    sh 'set +x; echo \'runbook=${runbook}\' >> config.sh'
-    
+
+    stage "${yamlName}"
     if(yaml.parameters){
         inputParams(yamlName)
     }  
