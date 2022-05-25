@@ -1,5 +1,5 @@
 def call(yamlName){
-  stage 'parameter definition'
+ 
   j = readYaml file: "runbook/" + yamlName + ".yml"
   def config = j.parameters
   if(config.password){
