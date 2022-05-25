@@ -34,7 +34,6 @@ def call(yamlName){
             list commands = step.command
             commands.each{command->
                 build(step.name){
-                   inputParams(yamlName)
                    build.execute server: step.server,
                    cmd: command
                 }
