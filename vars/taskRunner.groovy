@@ -20,7 +20,7 @@ def call(yamlName){
     }
     if(yaml.notification){
         def by = "${currentBuild.getBuildCauses()[0].userId}"
-        common.sendTeamsNotif("started: ${by}", yaml.project_name, yaml.notification.webhook)
+        msTeamsNotif("started: ${by}", yaml.project_name, yaml.notification.webhook)
     }
     if(yaml.environment){
         yaml.environment.collectEntries { name, value ->
