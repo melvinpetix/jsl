@@ -33,9 +33,9 @@ def call(yamlName){
     else {
         list steplist = yaml.steps
         steplist.each{step->
+            build(step.name){
             list commands = step.command
-            commands.each{command->
-                build(step.name){
+                commands.each{command->
                    build.execute server: step.server,
                    cmd: command
                 }
