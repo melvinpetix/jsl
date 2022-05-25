@@ -10,7 +10,7 @@ def call(yamlName){
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
     if(yaml.parameters){
-       build('parameter definition){
+       build('parameter definition'){
          paramsInput(yamlName)
        }
     }  
