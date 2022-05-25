@@ -3,7 +3,7 @@ import com.webops.*;
 
 
 def call(yamlName){
-
+    try{
     def common = new com.webops.Common()
     .loadKey()
     
@@ -44,4 +44,9 @@ def call(yamlName){
             }
         }
     }
+    } catch(err){
+        currentBuild.result = 'FAILURE'
+        deleteDir()
+    }
 }
+   
