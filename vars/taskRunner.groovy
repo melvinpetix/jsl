@@ -23,9 +23,10 @@ def call(yamlName){
         def by = "${currentBuild.getBuildCauses()[0].userId}"
         msTeamsNotif("started: ${by}", yaml.project_name, yaml.notification.webhook)
     }
+        
     if(yaml.environment){
-        yaml.environment.collectEntries { name, value ->
-            [name, value instanceof String ? interp(value) : value]
+        yaml.environment.collect { name, value ->
+            [env."${name}"="${value}"]
         }
     }
     
@@ -34,12 +35,12 @@ def call(yamlName){
         return    
     }  
     else {
-        list stepsA = yaml.steps
-        stepsA.each{step->
+        list stageSteps = yaml.steps
+        stageSteps.each{step->
             list commands = step.command
             commands.each{command->
-                build(step.name){
-                   build.execute server: step.server,
+                common.build(stageStep.name){
+                   common.execute server: stageStep.server,
                    cmd: command
                 }
             }
