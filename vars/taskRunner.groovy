@@ -9,10 +9,12 @@ def call(yamlName){
     def common = new com.webops.Common()
     .loadKey()
     
-     yaml = readYaml file: "${workspace}/runbook/${yamlName}.yml"
+    yaml = readYaml file: "runbook/${yamlName}.yml"
+    
+        stage 'yamlName'
     
     if(yaml.parameters){
-        build('parameters'){inputParams(yaml)} 
+        inputParams(yaml)
     }   
     if(yaml.environment){
         yaml.environment.each{env->
