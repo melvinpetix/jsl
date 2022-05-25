@@ -10,7 +10,7 @@ def call(yamlName){
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
     if(yaml.parameters){
-        inputParams(yamlName)
+        closure = {inputParams(yamlName)}
     }  
     if(yaml.environment){
         yaml.environment.each{env->
@@ -37,6 +37,7 @@ def call(yamlName){
             list commands = step.command
             commands.each{command->
                 build(step.name){
+                   closure()
                    build.execute server: step.server,
                    cmd: command
                 }
