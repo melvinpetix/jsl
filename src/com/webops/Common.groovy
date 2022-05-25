@@ -38,11 +38,7 @@ def dumpYAML(Map map) {
   return yaml.dump(map)
 }
 
-def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {   
-  def buildStatus
-  def jobName
-  def webhookUrl
-    
+def sendTeamsNotif(def buildStatus, def jobName, def webhookUrl) {     
   if(currentBuild.result == ('FAILURE')){
     emoji = "❌"
     COLOR = "ff0000"
