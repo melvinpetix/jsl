@@ -45,7 +45,7 @@ def call(yamlName){
         }
     }
     } catch(err){
-        printl err
+        println err
         currentBuild.result = 'FAILURE'
         deleteDir()
     }
