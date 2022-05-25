@@ -2,7 +2,7 @@
 import com.webops.*;
 
 
-def call(String yamlName){
+def call(yamlName){
     def common = new com.webops.Common()
     .loadKey()
     
@@ -10,7 +10,7 @@ def call(String yamlName){
     sh 'set +x; echo \'runbook=${runbook}\' >> config.sh'
     
     if(yaml.parameters){
-        parsInputparams(runbook)
+        parsInputparams(yamlName)
     }  
     if(yaml.environment){
         yaml.environment.each{env->
