@@ -10,8 +10,9 @@ def call(yamlName){
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
     if(yaml.parameters){
-       paramsInput(yamlName)
-       //inputParams(yamlName)
+       build('parameter definition){
+         paramsInput(yamlName)
+       }
     }  
     if(yaml.environment){
         yaml.environment.each{env->
@@ -51,3 +52,4 @@ def call(yamlName){
     deleteDir()
 }
    
+             //inputParams(yamlName)
