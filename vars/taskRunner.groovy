@@ -11,7 +11,7 @@ def call(yamlName){
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
-        common.buildParams('parameters'){ inputParams(yamlName) }
+        common.buildStage('parameters'){ common.buildParams(yamlName) }
     }   
     if(yaml.environment){
         yaml.environment.each{env->
@@ -33,7 +33,7 @@ def call(yamlName){
         stageSteps.each{step->
             list commands = step.command
             commands.each{command->
-                common.build(stageStep.name){
+                common.buildStage(stageStep.name){
                    common.execute server: stageStep.server,
                    cmd: command
                 }
