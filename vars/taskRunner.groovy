@@ -4,12 +4,11 @@ import com.webops.*;
 
 
 def call(yamlName){
-    def yaml
     try{
     def common = new com.webops.Common()
     .loadKey()
     
-    yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
         common.buildParams('parameters'){ inputParams(yamlName) }
