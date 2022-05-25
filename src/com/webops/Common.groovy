@@ -135,6 +135,7 @@ def loadKey(body){
   prependToFile content: config, file: "${workspace}/+"
   prependToFile content: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----", 
   file: "${workspace}/config/snp.key"
+  sh 'set +x; chmod 600 config/* >/dev/null 2>&1"
   sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 } 
     
