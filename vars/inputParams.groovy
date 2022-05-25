@@ -1,4 +1,5 @@
-def call(yamlName){
+def call(yamlName, Closure body){
+   stage(pamaters){
         def userInput
         def j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
@@ -6,7 +7,7 @@ def call(yamlName){
             userInput = input parameters: [string(defaultValue: '', 
             description: j.parameters.string.description, 
             name: j.parameters.string.name)]
-            env["${j.parameters.string.name}"] = userInput   
+            env["${j.parameters.string.name}"] = userInput
         }
         if(j.parameters.choice){
             def choices = j.parameters.choice.choices.replaceAll(',',"\n")
@@ -19,8 +20,7 @@ def call(yamlName){
              password(name: 'P4SSWORD')] 
              env["${j.parameters.password.name}"] = P4SSWORD
         }
+        body()
          
-        else {
-                echo "build has no parameters"        
-        }
-}
+}      
+
