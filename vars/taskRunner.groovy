@@ -11,10 +11,10 @@ def call(yamlName){
     
     yaml = readYaml file: "runbook/${yamlName}.yml"
     
-        stage 'yamlName'
+        
     
     if(yaml.parameters){
-        inputParams(yamlName)
+        build('parameters'){ inputParams(yamlName) }
     }   
     if(yaml.environment){
         yaml.environment.each{env->
