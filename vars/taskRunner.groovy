@@ -13,8 +13,8 @@ def call(String yamlName){
         inputParameter(runbook)
     }  
     if(yaml.environment){
-        yaml.environment.collectEntries { name, value ->
-            [name, value instanceof String ? interp(value) : value]
+        yaml.environment.each{env->
+            env.collect{k,v-> env."${k}"="${v}"}
         }
     }
     if(yaml.notification){
