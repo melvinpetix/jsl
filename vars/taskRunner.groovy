@@ -9,10 +9,10 @@ def call(yamlName){
     def common = new com.webops.Common()
     .loadKey()
     
-    yaml = readYaml file: "runbook/${yamlName}.yml"
+    yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
-        build('parameters'){ inputParams(yamlName) }
+        common.buildParams('parameters'){ inputParams(yamlName) }
     }   
     if(yaml.environment){
         yaml.environment.each{env->
@@ -20,18 +20,13 @@ def call(yamlName){
         }
     }
     if(yaml.notification){
-        def by = "${currentBuild.getBuildCauses()[0].userId}"
-        msTeamsNotif("started: ${by}", yaml.project_name, yaml.notification.webhook)
+        def userName = "${currentBuild.getBuildCauses()[0].userId}"
+        common.sendTeamsNotif('Started by ' + userName, yaml.project_name, yaml.notification.webhook)
     }
         
-    if(yaml.environment){
-        yaml.environment.collect { name, value ->
-            [env."${name}"="${value}"]
-        }
-    }
-    
     if(!yaml.steps){
-        currentBuild.description == 'test/update'
+        currentBuild.description = 'test/update'
+        currentBuild.result = 'SUCCESS'
         return    
     }  
     else {
