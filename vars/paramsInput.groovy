@@ -1,15 +1,9 @@
-def call(body){
-  def config = body
-  def type = config.type
-  def name = config.name
-  def description = config.description
-  def choices
-  def args
-
-  if(config.choices){
-  input parameters:[config.type(name: name, choices: config.choices)]  
-  } 
-    else {
-  input parameters:[config.type(name: name, description: description,  )]
+def call(yamlName){
+  j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
+  if(j.parameters.type == 'choice'){
+    input parameters:[config.type(name: name, description: config.description, choices: config.choices)]  
+  } else {
+    input parameters:[config.type(name: name, description: config.description)]
   }
 }
+    
