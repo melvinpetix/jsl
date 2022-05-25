@@ -1,6 +1,6 @@
 def call(yamlName){
         def userInput
-        def j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
+        def j = readYaml file: "${yamlName}"
 
         if(j.parameters.string){
             userInput = input parameters: [string(defaultValue: '', 
