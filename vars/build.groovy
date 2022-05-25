@@ -39,7 +39,7 @@ def shCommand(String server, String command){
   """
 }
 
-def inputParams(yamlName){
+def params(yamlName){
   def userInput
   def j = readYaml file: "runbook/${yamlName}.yml"
 
