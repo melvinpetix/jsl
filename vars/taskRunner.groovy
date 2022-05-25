@@ -11,7 +11,7 @@ def call(yamlName){
 
     if(yaml.parameters){
          stage 'parameter definition'
-            inputParams(yaml)
+            inputParams(yamlName)
          paramsInput(yamlName) 
     }  
     if(yaml.environment){
