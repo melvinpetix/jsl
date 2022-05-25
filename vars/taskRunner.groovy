@@ -10,7 +10,7 @@ def call(yamlName){
     sh 'set +x; echo \'runbook=${runbook}\' >> config.sh'
     
     if(yaml.parameters){
-        parsInputparams(yamlName)
+        inputParams(yamlName)
     }  
     if(yaml.environment){
         yaml.environment.each{env->
