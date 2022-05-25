@@ -1,5 +1,4 @@
-def call(yamlName, Closure body){
-   stage(pamaters){
+def call(yamlName){
         def userInput
         def j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
@@ -20,7 +19,7 @@ def call(yamlName, Closure body){
              password(name: 'P4SSWORD')] 
              env["${j.parameters.password.name}"] = P4SSWORD
         }
-        body()
+      
          
 }      
 
