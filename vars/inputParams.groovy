@@ -1,5 +1,4 @@
 def call(yamlName, Closure block){
-    stage('parameter definition'){
         def userInput
         readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
