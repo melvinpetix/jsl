@@ -1,7 +1,8 @@
 def call(yamlName, Closure block){
     stage('parameter definition'){
         def userInput
-        j = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
+        readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
+
         if(j.parameters.string){
             userInput = input parameters: [string(defaultValue: '', 
             description: j.parameters.string.description, 
