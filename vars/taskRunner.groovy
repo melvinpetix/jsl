@@ -14,7 +14,7 @@ def call(yamlName){
         stage 'yamlName'
     
     if(yaml.parameters){
-        inputParams(yaml)
+        inputParams(yamlName)
     }   
     if(yaml.environment){
         yaml.environment.each{env->
