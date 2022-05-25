@@ -39,7 +39,7 @@ def shCommand(String server, String command){
   """
 }
 
-def params(yamlName){
+def inputParams(yamlName){
   def userInput
   def j = readYaml file: "runbook/${yamlName}.yml"
 
@@ -57,7 +57,7 @@ def params(yamlName){
   }
   if(j.parameters.password){
     P4SSWORD = input parameters: [
-    password(name: 'P4SSWORD')] 
+    password(name: '')] 
     env["${j.parameters.password.name}"] = P4SSWORD
   }       
 }      
