@@ -10,9 +10,9 @@ def call(yamlName){
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
     if(yaml.parameters){
-       build('parameter definition'){
-         paramsInput(yaml)
-       }
+         stage 'parameter definition'
+            inputParams(yaml)
+         paramsInput(yamlName) 
     }  
     if(yaml.environment){
         yaml.environment.each{env->
