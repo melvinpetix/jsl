@@ -11,7 +11,7 @@ def call(yamlName){
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
-        build('parameters'){ inputParams(yamlName) }
+        build('parameters'){ build.params(yamlName) }
         
     }      
         
