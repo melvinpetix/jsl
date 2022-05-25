@@ -19,5 +19,5 @@ def call(yamlName, Closure block){
              password(name: 'P4SSWORD')] 
              env["${j.parameters.password.name}"] = P4SSWORD
         }
-    }
+
 }
