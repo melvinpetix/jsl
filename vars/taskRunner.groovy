@@ -12,7 +12,11 @@ def call(yamlName){
     
     if(yaml.parameters){
         build('parameters'){ build.params(yamlName) }
+        
     }   
+        echo "${PASSWORD} ${P4SSWORD}"    
+        
+        
     if(yaml.environment){
         yaml.environment.each{env->
             env.collect{k,v-> env."${k}"="${v}"}
