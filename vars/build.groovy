@@ -1,30 +1,33 @@
 #!groovy
 
 def call(String stageName, Closure stageCmd){
-  try{ stage(stageName){ stageCmd()} 
-    } catch(err){ 
+  try{ 
+    stage(stageName){ 
+      stageCmd()
+    } 
+ } catch(err){ 
     error stageName + "Failed!! error:\n" + err 
   }
 } 
 
 def execute(Map config){
-  try{ stage(stageName){ 
-    def command = [:]
-    if(!config.server){
-      echo 'local[SHELL]'
-      ${command}
-    } else {    
+  def command = [:]
+  def args = "ssh -F + -tt "
+  
+  if(!config.server){
+    echo 'local[SHELL]'
+    ${command}
+  } else {  
     def slist = config.server.toString().split(',')
     if(slist.size() > 1){ 
-      for(i in slist){ 
-        def s = i.trim()
-        command[s] = { 
-          shCommand("${s}", config.cmd) 
-        }
-      } 
-      parallel command
+        for(i in slist){ 
+            def s = i.trim()
+            command[s] = { shCommand("${s}", config.cmd) }
+        } 
+        parallel command
     } else {
-      shCommand(config.server, config.cmd)  
+        shCommand(config.server, config.cmd) 
+        
     } 
   }
 }
