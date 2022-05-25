@@ -60,4 +60,17 @@ def params(yamlName){
     password(name: '')] 
     env["${j.parameters.password.name}"] = P4SSWORD
   }       
-}      
+}
+
+def notifier(String buildStatus, String jobName, webhookUrl) {     
+  if(currentBuild.result == ('FAILURE')){
+    emoji = "❌"
+    COLOR = "ff0000"
+  } else {
+    emoji = "🚀"
+    COLOR = "00FF00"
+  }  
+   sh "curl -X POST -H \'Content-Type: application/json\'\
+  -d \'{\"title\": \"${emoji}Unified-Notifier: ${params.SNAPSHOT}\",\
+    \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
+}
