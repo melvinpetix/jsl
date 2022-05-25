@@ -29,12 +29,12 @@ def call(yamlName){
         return    
     }  
     else {
-        list stageSteps = yaml.steps
-        stageSteps.each{step->
+        list steplist = yaml.steps
+        steplist.each{step->
             list commands = step.command
             commands.each{command->
-                common.buildStage(stageStep.name){
-                   common.execute server: stageStep.server,
+                build(step.name){
+                   build.execute server: step.server,
                    cmd: command
                 }
             }
