@@ -11,11 +11,9 @@ def call(yamlName){
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
-        build('parameters'){ build.params(yamlName) }
+        build('parameters'){ inputParams(yamlName) }
         
-    }   
-        echo "${PASSWORD} ${P4SSWORD}"    
-        
+    }      
         
     if(yaml.environment){
         yaml.environment.each{env->
