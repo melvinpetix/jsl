@@ -82,15 +82,16 @@ def execute(Map config){
   }
 }
   
-
-def run(stageName, Closure stageCmd){
-  try{ stage(stageName){ stageCmd() }  
-  } catch(err){
-    error stageName + "!! " + "Failed with the ff. error:\n" + err 
-    currentBuild.result = 'FAILURE'
+def buildStage(stageName, Closure stageCmd){
+  try{ 
+    stage(stageName){ 
+        stageCmd()
+    } 
+  } catch(err){ 
+    error stageName + "!! " + "Failed with the ff. error:\n" + err
+    deleteDir()
   }
 } 
-
 
 def gitCheckout(String repo, String credentialsId, String branch='master') {
   checkout([
@@ -113,16 +114,8 @@ def interp(value) {
   new groovy.text.GStringTemplateEngine().createTemplate(value).make([env:env]).toString()
 } 
 
-def buildStage(stageName, Closure stageCmd){
-  try{ stage(stageName){ stageCmd() } 
-  } catch(err){ 
-    error stageName + "!! " + "Failed with the ff. error:\n" + err
-    deleteDir()
-  }
-} 
-
 def shCommand(String server, String command){
-sh """#!/bin/bash\nset +x;  
+sh """#!/bin/bash set +x;
 export \$(cat config.sh); 
 ssh -F + ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
@@ -138,17 +131,29 @@ def loadKey(body){
   sh 'set +x; chmod 600 config/* >/dev/null 2>&1'
   sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 } 
-    
-    
-    
-    
- /* 
-  dir('config'){
-      writeFile file: 'config', text: config
-      writeFile file: 'snp.key', 
-      text: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----"   
-      sh 'set +x; chmod 600 config && chmod 600 snp.key && cp config ../'
+
+def buildParams(yamlName){
+    def userInput
+    def j = readYaml file: 'runbook/' + yamlName + '.yml'
+
+    if(j.parameters.string){
+      userInput = input parameters: [string(defaultValue: '', 
+      description: j.parameters.string.description, 
+      name: j.parameters.string.name)]
+      env["${j.parameters.string.name}"] = userInput
     }
+    if(j.parameters.choice){
+      def choices = j.parameters.choice.choices.replaceAll(',',"\n")
+      userInput = input parameters: [
+      choice(choices: choices ,name: j.parameters.choice.name)]
+      env["${j.parameters.choice.name}"] = userInput    
+    }
+    if(j.parameters.password){
+      P4SSWORD = input parameters: [
+      password(name: 'P4SSWORD')] 
+      env["${j.parameters.password.name}"] = P4SSWORD
+    }
+     
+}      
+
     
-}
-*/
