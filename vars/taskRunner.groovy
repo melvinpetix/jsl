@@ -1,3 +1,4 @@
+#!groovy
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
@@ -8,7 +9,10 @@ def call(yamlName){
     .loadKey()
     
     def yaml = readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
-
+    
+    if(yaml.parameters){
+        inputParams(yamlname)
+    }   
     if(yaml.environment){
         yaml.environment.each{env->
             env.collect{k,v-> env."${k}"="${v}"}
