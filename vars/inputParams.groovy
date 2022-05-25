@@ -1,4 +1,4 @@
-def call(yamlName, Closure block){
+def call(yamlName){
         def userInput
         readYaml file: "${workspace}/runbook/" + yamlName + ".yml"
 
@@ -19,5 +19,8 @@ def call(yamlName, Closure block){
              password(name: 'P4SSWORD')] 
              env["${j.parameters.password.name}"] = P4SSWORD
         }
-
+         
+        else {
+                echo "build has no parameters"        
+        }
 }
