@@ -1,5 +1,5 @@
 def call(yamlName){
-  def j = readYaml file: yamlName
+  def j = readYaml file: 'runbook/' + yamlName + '.yml'
   def config = j.parameters
   if(config.password){
     input parameters:[password(name: P4SSWORD]
