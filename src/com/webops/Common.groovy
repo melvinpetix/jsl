@@ -38,7 +38,7 @@ def dumpYAML(Map map) {
   return yaml.dump(map)
 }
 
-def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {
+def sendTeamsNotif(buildStatus, JobName, webhookUrl) {
   def cause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')  
   def BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}\n\
   ${currentBuild.getBuildCauses()[0].userId}" 
