@@ -16,8 +16,8 @@ def call(yamlName){
     }
     if(j.parameters.password){
       P4SSWORD = input parameters: [
-      password(name: 'P4SSWORD')] 
-      env["${j.parameters.password.name}"] = P4SSWORD
+      password(name: 'PASSWORD')] 
+      env['PASSWORD'] = P4SSWORD
     }
      
 }      
