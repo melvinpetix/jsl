@@ -4,7 +4,7 @@ import com.webops.steps.Step;
 
 def call(ProjectConfiguration projectConfig) {
   return { ->
-    list stepsA = projectConfig.steps.steps
+    list stepsA = projectConfig.steps.step
      stepsA.each { step ->
          stage(step.name) {
             step.commands.each { command ->
