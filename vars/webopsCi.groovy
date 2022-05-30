@@ -9,6 +9,7 @@ def call(String yamlName) {
     // load project's configuration
     ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
     // adds the last step of the build.
+    println projectConfig
     def closure = buildSteps(projectConfig);
     closure([:])
 }
