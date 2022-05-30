@@ -38,7 +38,7 @@ def dumpYAML(Map map) {
   return yaml.dump(map)
 }
 
-def sendTeamsNotif(def buildStatus, def jobName, def webhookUrl) {     
+def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {     
   if(currentBuild.result == ('FAILURE')){
     emoji = "❌"
     COLOR = "ff0000"
@@ -52,6 +52,7 @@ def sendTeamsNotif(def buildStatus, def jobName, def webhookUrl) {
 }
 
 def execute(Map config){
+  def common = new com.webops.Common()
   def command = [:]
   def args = "ssh -F + -tt "
   
@@ -63,17 +64,17 @@ def execute(Map config){
     if(slist.size() > 1){ 
         for(i in slist){ 
             def s = i.trim()
-            command[s] = { shCommand("${s}", config.cmd) }
+            command[s] = { common.shCommand("${s}", config.cmd) }
         } 
         parallel command
     } else {
-        shCommand(config.server, config.cmd) 
+        common.shCommand(config.server, config.cmd) 
         
     } 
   }
 }
   
-def buildStage(stageName, Closure stageCmd){
+def buildStage(String stageName, Closure stageCmd){
   try{ 
     stage(stageName){ 
         stageCmd()
