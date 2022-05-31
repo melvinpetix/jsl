@@ -29,7 +29,7 @@ def call(yamlName){
         def userName = "${currentBuild.getBuildCauses()[0].userId}"
         build.notifier('Started by: ' + userName, yaml.project_name, yaml.notification.webhook)
     }
-        }     
+       
     if(!yaml.steps){
         currentBuild.description = 'test/update'
         currentBuild.result = 'SUCCESS'
