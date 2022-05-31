@@ -11,8 +11,8 @@ def call(yamlName){
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
-        build('parameters'){ build.params(yamlName) }
-        
+       build('parameters'){ build.params(yamlName) }
+        //def closure = { build.params(yamlName) 
     }      
         
     if(yaml.environment){
@@ -32,6 +32,7 @@ def call(yamlName){
     }  
     else {
         list steplist = yaml.steps
+        node("maintenance-script-ec2-spot-worker"){
         steplist.each{step->
             build(step.name){
             list commands = step.command
@@ -41,6 +42,7 @@ def call(yamlName){
                 }
             }
         }
+    }
     }
     } catch(err){
         println err
