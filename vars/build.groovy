@@ -1,6 +1,6 @@
 #!groovy
 
-def call(String stageName, stageCmd){
+def call(String stageName, Closure stageCmd){
   try{ 
     stage(stageName)
       stageCmd()
