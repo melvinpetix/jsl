@@ -38,17 +38,20 @@ def dumpYAML(Map map) {
   return yaml.dump(map)
 }
 
-def sendTeamsNotif(String buildStatus, String jobName, String webhookUrl) {     
-  if(currentBuild.result == ('FAILURE')){
-    emoji = "❌"
-    COLOR = "ff0000"
-  } else {
-    emoji = "🚀"
-    COLOR = "00FF00"
-  }  
-   sh "curl -X POST -H \'Content-Type: application/json\'\
-  -d \'{\"title\": \"${emoji}Unified-Notifier: ${params.SNAPSHOT}\",\
-    \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
+def sendTeamsNotif(body) {
+    def buildStatus = config.msg
+    def jobName = config.job
+    def webhookUrl = config.url
+                                                                          
+    if(currentBuild.result == ('FAILURE')){
+        emoji = "❌"
+        COLOR = "ff0000"
+    } else {
+        emoji = "🚀"
+        COLOR = "00FF00"
+    }  
+    steps.sh "curl -X POST -H \'Content-Type: application/json\'\
+    -d \'{\"title\": \"${jobName}\", \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
 }
 
 def execute(Map config){
