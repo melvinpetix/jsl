@@ -5,12 +5,12 @@ def common
 
 
 def call(yamlName){
+    deleteDir()
     common = new com.webops.Common()
-    common.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
-    //.gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
-    common.loadKey()
-   
+    .gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
+    .loadKey()
     try{
+        node {        
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
@@ -28,7 +28,7 @@ def call(yamlName){
         def userName = "${currentBuild.getBuildCauses()[0].userId}"
         build.notifier('Started by: ' + userName, yaml.project_name, yaml.notification.webhook)
     }
-        
+        }     
     if(!yaml.steps){
         currentBuild.description = 'test/update'
         currentBuild.result = 'SUCCESS'
