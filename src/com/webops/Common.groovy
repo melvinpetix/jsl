@@ -39,7 +39,7 @@ def dumpYAML(Map map) {
 }
 
 def sendTeamsNotif(body) {
-    def confif = body
+    def config = body
     def buildStatus = config.msg
     def jobName = config.job
     def webhookUrl = config.url
