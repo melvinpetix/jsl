@@ -7,10 +7,9 @@ import com.webops.*;
 def call(yamlName){
     try{
     def common = new com.webops.Common()
-    .loadkey()
-    //.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
+    .gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
     //.gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
-    
+    .loadKey()
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
