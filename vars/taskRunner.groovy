@@ -4,39 +4,40 @@ import com.webops.*;
 
 
 def call(yamlName){
-    try{
     def common = new com.webops.Common()
     .loadKey()
     
-    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+    try{
+        
+        def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
-    if(yaml.parameters){
-        build('parameters'){ build.params(yamlName) }
-    }      
+        if(yaml.parameters){
+            build('parameters'){ build.params(yamlName) }
+        }      
         
-    if(yaml.environment){
-        yaml.environment.each{env->
-            env.collect{k,v-> env."${k}"="${v}"}
+        if(yaml.environment){
+            yaml.environment.each{env->
+                env.collect{k,v-> env."${k}"="${v}"}
+            }
         }
-    }
-    if(yaml.notification){
-        def userName = "${currentBuild.getBuildCauses()[0].userId}"
-        build.notifier('Started by: ' + userName, yaml.project_name, yaml.notification.webhook)
-    }
+        if(yaml.notification){
+            def userName = "${currentBuild.getBuildCauses()[0].userId}"
+            common.sendTeamsNotif("Started by: ${userName}", yaml.project_name, yaml.notification.webhook)
+        }
         
-    if(!yaml.steps){
-        currentBuild.description = 'test/update'
-        currentBuild.result = 'SUCCESS'
-        return    
-    }  
-    else {
-        list steplist = yaml.steps
-        steplist.each{step->
-            list commands = step.command
-            commands.each{command->
-                build(step.name){
-                   build.execute server: step.server,
-                   cmd: command
+        if(!yaml.steps){
+            currentBuild.description = 'test/update'
+            currentBuild.result = 'SUCCESS'
+            return    
+        }  
+        else {
+            list steplist = yaml.steps
+            steplist.each{step->
+                list commands = step.command
+                commands.each{command->
+                    build(step.name){
+                        build.execute server: step.server,
+                        cmd: command
                 }
             }
         }
