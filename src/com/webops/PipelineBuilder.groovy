@@ -5,4 +5,5 @@ class PipelineBuilder implements Serializable {
     def parameters
     def environment
     def notification
+    def env
 }
