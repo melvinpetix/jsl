@@ -1,14 +1,15 @@
 #!groovy
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
-def common = new com.webops.Common()
-.loadKey()
+
+
 
 def call(yamlName){
     try{
-    
-    common.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
- 
+    def common = new com.webops.Common()
+    .loadkey()
+    //.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
+    //.gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
     
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
@@ -34,19 +35,21 @@ def call(yamlName){
     }  
     else {
         list steplist = yaml.steps
-        node("maintenance-script-ec2-spot-worker"){
-        steplist.each{step->
-            build(step.name){
-            list commands = step.command
-                commands.each{command->
-                   build.execute server: step.server,
-                   cmd: command
+            node("maintenance-script-ec2-spot-worker"){
+                steplist.each{step->
+                    build(step.name){
+                        list commands = step.command
+                        commands.each{command->
+                             build.execute server: step.server,
+                                      cmd: command
+                        }
+                    }
                 }
             }
         }
-    }
-    }
-    } catch(err){
+    } 
+    
+    catch(err){
         println err
         currentBuild.result = 'FAILURE'
         deleteDir()
