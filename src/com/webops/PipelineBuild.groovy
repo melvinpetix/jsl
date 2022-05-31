@@ -1,10 +1,11 @@
 package com.webops;
 import com.webops.steps.Steps;
 
-class ProjectConfiguration {
+class PipelineBuild {
     def parameters;
     Steps steps;
     def project_name;
     def environment;
+    def notification
         
 }
