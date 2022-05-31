@@ -7,7 +7,7 @@ def call(yamlName){
     try{
     def common = new com.webops.Common()
     .loadKey()
-        
+    stage 'test'    
     common.gitClone 'gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'main'    
     
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
