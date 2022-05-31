@@ -5,12 +5,13 @@ def common
 
 
 def call(yamlName){
+    node { 
     deleteDir()
     common = new com.webops.Common()
     .gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
     .loadKey()
     try{
-        node {        
+              
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
