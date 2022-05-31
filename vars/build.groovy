@@ -44,8 +44,8 @@ def params(yamlName){
 
   if(j.parameters.string){
     userInput = input parameters: [string(defaultValue: '', 
-    description: j.parameters.string.description, 
-    name: j.parameters.string.name)]
+    description: j.parameters.string.description.toString(), 
+    name: j.parameters.string.name.toString())]
     env["${j.parameters.string.name}"] = userInput
   }
   if(j.parameters.choice){
