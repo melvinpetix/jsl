@@ -1,41 +1,42 @@
-package com.webops.parser;
-import com.webops.ProjectConfiguration;
-import com.webops.services.*;
-import com.webops.steps.*;
+package com.webops.parser
 
-class ConfigParser {
-    static ProjectConfiguration parse(def yaml, def env) {
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration();
-        projectConfiguration.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
-        projectConfiguration.steps = parseSteps(yaml.steps);
-        projectConfiguration.project_name = parseProjectName(yaml.config);
-        return projectConfiguration;
+import com.webops.PipelineConfig
+import com.webops.PipelineBuilder
+
+import com.webops.JenkinsDefinitions
+
+/**
+ * Configuration Parser
+ */
+@groovy.transform.InheritConstructors
+class ConfigParser extends JenkinsDefinitions implements Serializable {
+
+    PipelineConfig parse(yaml, env) {
+
+        new PipelineBuilder()
+            .setEnvironment(parseEnvironment(yaml.environment))
+            .setProjectName(parseProjectName(yaml.config))
+            .build()
     }
-    static def parseEnvironment(def environment, def jenkinsEnvironment, def env) {
-        def config = [];
-        if (environment) {
-            config += environment.collect { k, v -> "${k}=${v}"};
+
+   // def getNodeAgent(yaml) {
+    //    configToClass[(yaml.config.node_agent == null) ? DEFAULT_AGENT : yaml.config.node_agent]
+ //   }
+
+    def parseEnvironment(def environment) {
+        if (!environment) {
+            return ''
         }
-        if (jenkinsEnvironment) {
-            config += jenkinsEnvironment.collect { k -> "${k}=${env.getProperty(k)}"};
-        }
-        return config;
+
+        return environment.collect { k, v -> "${k}=${v}"}
     }
-     static def parseSteps(def yamlSteps) {
-        List<Step> step = yamlSteps.collect { k, v ->
-            Step step = new Step(name: k)
-            v.each {
-                step.commands.add(it);
-            }
-            return step
-        }
-    }
-    
-    static def parseProjectName(def config) {
+
+    def parseProjectName(def config) {
         if (!config || !config["project_name"]) {
-            return "webopsci-project";
+            return "composeci-project"
         }
 
-        return config["project_name"];
+        return config["project_name"]
     }
+
 }
