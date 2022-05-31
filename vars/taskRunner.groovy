@@ -15,7 +15,7 @@ def call(yamlName){
     
     if(yaml.parameters){
         
-       stage 'parameters' build.params(yamlName)
+        build('parameters', build.params("${yamlName}")
         //def closure = { build.params(yamlName) 
     }      
         
