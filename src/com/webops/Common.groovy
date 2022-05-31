@@ -116,6 +116,7 @@ set -x; ${command}\"
 
 def loadKey(body){
   def config = libraryResource("+")
+  def workspace = pwd()
   def key = libraryResource(".snp")
   prependToFile content: config, file: "${workspace}/+"
   prependToFile content: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----", 
