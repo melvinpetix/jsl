@@ -58,5 +58,5 @@ def call(yamlName){
     }
     deleteDir()
 }
-   
+}
              //inputParams(yamlName)
