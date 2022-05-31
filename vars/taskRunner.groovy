@@ -12,7 +12,6 @@ def call(yamlName){
     
     if(yaml.parameters){
         build('parameters'){ build.params(yamlName) }
-        
     }      
         
     if(yaml.environment){
