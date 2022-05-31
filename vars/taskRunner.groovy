@@ -5,7 +5,7 @@ import com.webops.*;
 
 def call(yamlName){
     def common = new com.webops.Common()
-    .loadKey()
+    common.loadKey()
     
     try{
         
@@ -22,7 +22,11 @@ def call(yamlName){
         }
         if(yaml.notification){
             def userName = "${currentBuild.getBuildCauses()[0].userId}"
-            common.sendTeamsNotif(msg: "Started by: ${userName}", job: yaml.project_name, url: yaml.notification.webhook)
+            common.sendTeamsNotif(
+                msg: "Started by: ${userName}", 
+                job: "${yaml.project_name}", 
+                url: "${yaml.notification.webhook}
+            )
         }
         
         if(!yaml.steps){
