@@ -51,7 +51,7 @@ def params(yamlName){
     env["${j.parameters.string.name}"] = userInput
   }
   if(j.parameters.choice){
-    def choices = j.parameters.choice.choices.toString().replaceAll(',',"\n")
+    list choices = j.parameters.choice.choices
     userInput = input parameters: [
     choice(choices: choices ,name: j.parameters.choice.name)]
     env["${j.parameters.choice.name}"] = userInput    
