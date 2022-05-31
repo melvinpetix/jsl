@@ -2,8 +2,7 @@
 
 def call(String stageName, Closure stageCmd){
   try{ 
-    stage(stageName)
-      stageCmd()
+    stage(stageName){stageCmd()}
  } catch(err){ 
     error stageName + "Failed!! error:\n" + err 
   }
