@@ -1,9 +1,9 @@
 #!groovy
 
-def call(String stageName){
+def call(String stageName, def stageCmd){
   try{ 
     stage(stageName){ 
-      body()
+      stageCmd()
     } 
  } catch(err){ 
     error stageName + "Failed!! error:\n" + err 
@@ -34,7 +34,7 @@ def execute(Map config){
 
 def shCommand(String server, String command){
   def args = "ssh -F + -t"
-  sh """#!/bin/bash set +x; ${args} ${server} \"export TERM=xterm-256color; 
+  sh """#!/bin/bash\nset +x; ${args} ${server} \"export TERM=xterm-256color; 
   set -x; ${command}\"
   """
 }
@@ -64,10 +64,10 @@ def params(yamlName){
 
 def notifier(String buildStatus, String jobName, webhookUrl) {     
   if(currentBuild.result == ('FAILURE')){
-    emoji = "❌"
+    emoji = "???"
     COLOR = "ff0000"
   } else {
-    emoji = "🚀"
+    emoji = "????"
     COLOR = "00FF00"
   }  
    sh "curl -X POST -H \'Content-Type: application/json\'\
