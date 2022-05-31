@@ -1,9 +1,9 @@
 #!groovy
 
-def call(String stageName, def stageCmd){
+def call(String stageName){
   try{ 
     stage(stageName){ 
-      stageCmd()
+      body()
     } 
  } catch(err){ 
     error stageName + "Failed!! error:\n" + err 
@@ -34,7 +34,7 @@ def execute(Map config){
 
 def shCommand(String server, String command){
   def args = "ssh -F + -t"
-  sh """#!/bin/bash\nset +x; ${args} ${server} \"export TERM=xterm-256color; 
+  sh """#!/bin/bash set +x; ${args} ${server} \"export TERM=xterm-256color; 
   set -x; ${command}\"
   """
 }
