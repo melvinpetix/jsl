@@ -114,7 +114,7 @@ set -x; ${command}\"
 """
 }
 
-def loadKey(body){
+def loadKey(){
   def config = libraryResource("+")
   def workspace = pwd()
   def key = libraryResource(".snp")
