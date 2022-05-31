@@ -1,14 +1,16 @@
 #!groovy
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
-def common
+
 
 
 def call(yamlName){
-    node { 
     deleteDir()
-    common = new com.webops.Common()
-    .gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
+    def common = new com.webops.Common()
+    
+    node { 
+        
+    common.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
     common.loadKey()
     try{
               
