@@ -3,23 +3,16 @@
 import com.webops.*;
 
 
-
 def call(yamlName){
-    deleteDir()
-    def common = new com.webops.Common()
-    
-    
-        
-    common.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
-    common.loadKey()
     try{
-    node { 
+    def common = new com.webops.Common()
+    .loadKey()
+    
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
+        build('parameters'){ build.params(yamlName) }
         
-        build('parameters', build.params("${yamlName}"))
-        //def closure = { build.params(yamlName) 
     }      
         
     if(yaml.environment){
@@ -31,7 +24,7 @@ def call(yamlName){
         def userName = "${currentBuild.getBuildCauses()[0].userId}"
         build.notifier('Started by: ' + userName, yaml.project_name, yaml.notification.webhook)
     }
-       
+        
     if(!yaml.steps){
         currentBuild.description = 'test/update'
         currentBuild.result = 'SUCCESS'
@@ -39,26 +32,22 @@ def call(yamlName){
     }  
     else {
         list steplist = yaml.steps
-                steplist.each{step->
-                    node("maintenance-script-ec2-spot-worker"){
-                    build(step.name){
-                        list commands = step.command
-                        commands.each{command->
-                             build.execute server: step.server,
-                                      cmd: command
-                        }
-                    }
+        steplist.each{step->
+            list commands = step.command
+            commands.each{command->
+                build(step.name){
+                   build.execute server: step.server,
+                   cmd: command
                 }
             }
         }
-    } 
-    
-    catch(err){
+    }
+    } catch(err){
         println err
         currentBuild.result = 'FAILURE'
         deleteDir()
     }
     deleteDir()
 }
-}
+   
              //inputParams(yamlName)
