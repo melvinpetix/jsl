@@ -1,15 +1,16 @@
 #!groovy
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
-def common = new com.webops.Common()
+def common
 
 
 def call(yamlName){
-    try{
-
+    common = new com.webops.Common()
     common.gitClone('gitlab.com/me1824/jsl', 'glpat-GxfR6J-STGecxjDPGz8z', 'test')
     //.gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
     common.loadKey()
+   
+    try{
     def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(yaml.parameters){
