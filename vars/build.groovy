@@ -2,7 +2,8 @@
 
 def call(String stageName, def stageCmd){
   try{ 
-    stage(stageName){ 
+    node{
+    stage 'stageName'
       stageCmd()
     } 
  } catch(err){ 
