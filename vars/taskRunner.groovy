@@ -36,8 +36,8 @@ def call(yamlName){
     }  
     else {
         list steplist = yaml.steps
-            node("maintenance-script-ec2-spot-worker"){
                 steplist.each{step->
+                    node("maintenance-script-ec2-spot-worker"){
                     build(step.name){
                         list commands = step.command
                         commands.each{command->
