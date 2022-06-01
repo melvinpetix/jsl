@@ -1,4 +1,4 @@
-package com.webops.*
+package com.webops
 
 class PipelineBuilder implements Serializable {
     def project_name
