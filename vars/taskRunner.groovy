@@ -12,7 +12,9 @@ def call(yamlName){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
         if(yaml.parameters){
-            common.build('parameters', this.&buildParams(yamlName))
+            return com.webops.Common()
+            .build('parameters')
+            .buildParams(yamlName)
         }      
         
         if(yaml.environment){
