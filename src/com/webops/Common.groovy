@@ -81,8 +81,6 @@ def execute(Map config){
   }
 }
 
-def
-
 def stage(String name, Closure stageCommands) {
     try {
       script.stage(name, stageCommands)
