@@ -12,7 +12,7 @@ def call(yamlName){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
         if(yaml.parameters){
-            common.build('parameters'){ common.buildParams(yamlName) }
+            common.stage("${yaml.project_name}  parameters"){ common.buildParams(yamlName) }
                         
         }      
         
