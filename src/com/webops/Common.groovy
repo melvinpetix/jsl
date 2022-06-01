@@ -83,7 +83,7 @@ def execute(Map config){
 
 def stage(String name, Closure stageCommands) {
     try {
-      script.stage(name, stageCommands)
+      stage(name, stageCommands)
     } catch(err) {
       def msg = "pipeline failed in stage ${name}\n"
         error "${msg}" + " " + err
