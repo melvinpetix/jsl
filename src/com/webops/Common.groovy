@@ -110,7 +110,7 @@ def interp(value) {
 } 
 
 def shCommand(String server, String command){
-sh """#!/bin/bash set +x;
+sh """#!/bin/bash; set +x; 
 ssh -F + ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
 """
