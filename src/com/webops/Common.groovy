@@ -85,8 +85,8 @@ def stage(String name, Closure stageCommands) {
     try {
       script.stage(name, stageCommands)
     } catch(err) {
-      def msg = "pipeline failed in stage ${name}"
-        error "${msg}"\n + " " + err
+      def msg = "pipeline failed in stage ${name}\n"
+        error "${msg}" + " " + err
     }
   }
 
