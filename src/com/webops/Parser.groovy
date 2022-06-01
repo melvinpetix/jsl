@@ -4,22 +4,22 @@ import com.wolox.PipelineBuilder;
 
 class ConfigParser {
 
-    static ProjectConfiguration parse(def yaml, def env) {
+    static PipelineBuilder parse(def yaml, def env) {
       
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+        PipelineBuilder pipelineBuilder = new PipelineBuilder();
 
          // parse the environment variables and jenkins environment variables to be passed
-        projectConfiguration.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
+        pipelineBuilder.environment = parseEnvironment(yaml.environment, yaml.jenkinsEnvironment, env);
 
         // parse the execution steps
-        projectConfiguration.steps = parseSteps(yaml.steps);
+        pipelineBuilder.steps = parseSteps(yaml.steps);
 
         // load the project name
-        projectConfiguration.projectName = parseProjectName(yaml.project_name);
+        pipelineBuilder.projectName = parseProjectName(yaml.project_name);
 
-        projectConfiguration.env = env;
+        pipelineBuilder.env = env;
 
-        return projectConfiguration;
+        return pipelineBuilder;
     }
 
     def parseEnvironment(def environment, def jenkinsEnvironment, def env) {
