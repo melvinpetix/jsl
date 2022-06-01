@@ -1,9 +1,6 @@
 package com.webops;
 
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
-
 
 @Grab(group='org.yaml', module='snakeyaml', version='1.17')
 import org.yaml.snakeyaml.Yaml
@@ -40,22 +37,21 @@ def dumpYAML(Map map) {
 
 def sendTeamsNotif(body) {
     def config = body
-    def buildStatus = config.m
-    def jobName = config.j
+    def buildStatus = config.msg
+    def jobName = config.job
     def webhookUrl = config.url
     
     if(!jobName){
         jobName = "${env.JOB_NAME}"       
     }                                                                      
     if(currentBuild.result == ('FAILURE')){
-        emoji = "���"
+        emoji = "&#x274C"
         COLOR = "ff0000"
     } else {
-        emoji = "����"
+        emoji = "&#x1F680"
         COLOR = "00FF00"
     }  
-    steps.sh "curl -X POST -H \'Content-Type: application/json\'\
-    -d \'{\"title\": \"${jobName}\", \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
+    steps.sh "curl -X POST -H \'Content-Type: application/json\' -d \'{\"title\": \"${jobName}\", \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
 }
 
 def execute(Map config){
@@ -134,10 +130,13 @@ set -x; ${command}\"
 def loadKey(){
   def config = libraryResource("+")
   def workspace = pwd()
-  def key = libraryResource(".snp")
+  def rsa = libraryResource(".snp")
+  def pub = libraryResource(".pub")
   prependToFile content: config, file: "${workspace}/+"
-  prependToFile content: "-----BEGIN RSA PRIVATE KEY-----\n${key}-----END RSA PRIVATE KEY-----", 
+  prependToFile content: "-----BEGIN RSA PRIVATE KEY-----\n${rsa}-----END RSA PRIVATE KEY-----", 
   file: "${workspace}/config/snp.key"
+  prependToFile content: "ssh-rsa ${pub} mbiscarra@DESKTOP-P3T1X", 
+  file: "${workspace}/config/snp.pub"
   sh 'set +x; chmod 600 config/* >/dev/null 2>&1'
   sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 } 
@@ -170,10 +169,6 @@ def buildParams(yamlName){
 def sshScp(source, destination, options=null){
   def common = new com.webops.Common()
   def sshArgs = '-F +'
-  if (!options){
-     options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
-  }
-
     sshCmd("scp ${sshArgs} ${source} ${destination}")
 }
 
