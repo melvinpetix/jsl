@@ -162,6 +162,19 @@ def buildParams(yamlName){
       env["${j.parameters.password.name}"] = P4SSWORD
     }
      
-}      
+} 
+
+def sshScp(source, destination, options=null){
+  def common = new com.webops.Common()
+  def sshArgs = '-F +'
+  if (!options){
+     options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
+  }
+
+    sshCmd("scp ${sshArgs} ${source} ${destination}")
+}
+
+
+return this;
 
     
