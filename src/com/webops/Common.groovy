@@ -78,7 +78,7 @@ def execute(Map config){
   }
 }
   
-def buildStage(String stageName, Closure stageCmd){
+def build(String stageName, Closure stageCmd){
   try{ 
     stage(stageName){ 
         stageCmd()
