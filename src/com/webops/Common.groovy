@@ -78,16 +78,15 @@ def execute(Map config){
   }
 }
   
-def build(String stageName, def stageCmd){
-  try{ 
-    stage(stageName){ 
-        stageCmd()
-    } 
-  } catch(err){ 
-    error stageName + "!! " + "Failed with the ff. error:\n" + err
-    deleteDir()
+def stage(String name, Closure stageCommands) {
+    try {
+      script.stage(name, stageCommands)
+    } catch(e) {
+      def msg = "pipeline failed in stage ${name}"
+      this.failure_messages.add(msg)
+      throw e
+    }
   }
-} 
 
 def gitCheckout(String repo, String credentialsId, String branch='master') {
   checkout([
