@@ -40,10 +40,13 @@ def dumpYAML(Map map) {
 
 def sendTeamsNotif(body) {
     def config = body
-    def buildStatus = config.msg
-    def jobName = config.job
+    def buildStatus = config.m
+    def jobName = config.j
     def webhookUrl = config.url
-                                                                          
+    
+    if(!jobName){
+        jobName = "${env.JOB_NAME}"       
+    }                                                                      
     if(currentBuild.result == ('FAILURE')){
         emoji = "❌"
         COLOR = "ff0000"
@@ -68,11 +71,11 @@ def execute(Map config){
     if(slist.size() > 1){ 
         for(i in slist){ 
             def s = i.trim()
-            command[s] = { common.shCommand("${s}", config.cmd) }
+            command[s] = { common.sshCmd("${s}", config.cmd) }
         } 
         parallel command
     } else {
-        common.shCommand(config.server, config.cmd) 
+        common.sshCmd(config.server, config.cmd) 
         
     } 
   }
@@ -109,9 +112,19 @@ def interp(value) {
   new groovy.text.GStringTemplateEngine().createTemplate(value).make([env:env]).toString()
 } 
 
-def shCommand(String server, String command){
-sh """#!/bin/bash; set +x; 
-ssh -F + ${server} \"export TERM=xterm-256color; 
+def sshCmd(String server, String command){
+    def common = new com.webops.Common()
+    if (!args){
+        args = ['-F +']
+    }
+    String sshArgs = ''
+    args.each { k,v ->
+        optionsString += "-o ${k}=${v} "
+    }
+        
+sh """
+#!/bin/bash; 
+set +x; ssh -F + ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
 """
 }
