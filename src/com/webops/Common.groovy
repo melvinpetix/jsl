@@ -159,9 +159,9 @@ def buildParams(yamlName){
       env["${j.parameters.choice.name}"] = userInput    
     }
     if(j.parameters.password){
-      P4SSWORD = input parameters: [
+      userInput = input parameters: [
       password(name: 'P4SSWORD')] 
-      env["${j.parameters.password.name}"] = P4SSWORD
+      env["${j.parameters.password.name}"] = userInput
     }
      
 } 
