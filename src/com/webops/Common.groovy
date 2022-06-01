@@ -78,10 +78,10 @@ def execute(Map config){
   }
 }
   
-def build(String stageName, def closure){
+def build(String stageName, Closure body){
   try{ 
     stage(stageName){ 
-        closure()
+        body()
     } 
   } catch(err){ 
     error stageName + "!! " + "Failed with the ff. error:\n" + err
@@ -112,7 +112,6 @@ def interp(value) {
 
 def shCommand(String server, String command){
 sh """#!/bin/bash set +x;
-export \$(cat config.sh); 
 ssh -F + ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
 """
