@@ -26,7 +26,7 @@ def call(yamlName){
             common.sendTeamsNotif(m: "Started by: ${userName}", 
                                   j: "${yaml.project_name}", 
                                   url: "${yaml.notification.webhook}")
-            )
+       
         }
         
         if(!yaml.steps){
