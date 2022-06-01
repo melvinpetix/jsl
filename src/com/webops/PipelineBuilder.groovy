@@ -6,4 +6,5 @@ class PipelineBuilder implements Serializable {
     def environment
     def notification
     def env
+    def steps
 }
