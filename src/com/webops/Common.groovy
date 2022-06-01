@@ -78,10 +78,10 @@ def execute(Map config){
   }
 }
   
-def build(stageName){
+def build(stageName, Closure stageCmd){
   try{ 
     stage(stageName){ 
-        body()
+        stageCmd()
     } 
   } catch(err){ 
     error stageName + "!! " + "Failed with the ff. error:\n" + err
