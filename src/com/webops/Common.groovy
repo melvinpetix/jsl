@@ -143,28 +143,29 @@ def loadKey(){
 } 
 
 def buildParams(yamlName){
-    def userInput
-    def j = readYaml file: 'runbook/' + yamlName + '.yml'
-
+  def userInput
+  def j = readYaml file: "runbook/${yamlName}.yml"
+  timeout(time: 120, unit: 'SECONDS') {
     if(j.parameters.string){
       userInput = input parameters: [string(defaultValue: '', 
-      description: j.parameters.string.description, 
-      name: j.parameters.string.name)]
+      description: j.parameters.string.description.toString(), 
+      name: j.parameters.string.name.toString())]
       env["${j.parameters.string.name}"] = userInput
     }
     if(j.parameters.choice){
-      def choices = j.parameters.choice.choices.replaceAll(',',"\n")
+      list choices = j.parameters.choice.choices
       userInput = input parameters: [
       choice(choices: choices ,name: j.parameters.choice.name)]
       env["${j.parameters.choice.name}"] = userInput    
     }
     if(j.parameters.password){
       userInput = input parameters: [
-      password(name: 'P4SSWORD')] 
+      password(name: '')] 
       env["${j.parameters.password.name}"] = userInput
-    }
-     
-} 
+    }         
+  }
+}
+
 
 def sshScp(source, destination, options=null){
   def common = new com.webops.Common()
