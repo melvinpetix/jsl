@@ -38,7 +38,7 @@ class ConfigParser {
   
      def parseProjectName(def config) {
         if (!config || !config["project_name"]) {
-            return "woloxci-project";
+            return "webops-generic-template";
         }
 
         return config["project_name"];
