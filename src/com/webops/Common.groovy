@@ -114,17 +114,18 @@ def interp(value) {
 
 def sshCmd(String server, String command){
     def common = new com.webops.Common()
-    if (!args){
-        args = ['-F +']
+    def sshArgs = 'ssh -F +'
+    if (!options){
+        options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
     }
-    String sshArgs = ''
-    args.each { k,v ->
+    String optionsString = ''
+    options.each { k,v ->
         optionsString += "-o ${k}=${v} "
     }
-        
+
 sh """
 #!/bin/bash; 
-set +x; ssh -F + ${server} \"export TERM=xterm-256color; 
+set +x; ${sshArgs} ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
 """
 }
