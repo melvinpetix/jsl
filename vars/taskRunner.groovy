@@ -38,7 +38,8 @@ def call(yamlName){
         else {
             list steplist = yaml.steps
             steplist.each{step->
-                common.Stage(step.name){
+                node(env.jenkins_agent){
+                    common.Stage(step.name){
                     list commands = step.command
                     commands.each{command->
                         common.execute(cmd: command, server: step.server)
@@ -47,6 +48,7 @@ def call(yamlName){
             }
         }
     }
+        }        
     } catch(err){
         println err
         currentBuild.result = 'FAILURE'
