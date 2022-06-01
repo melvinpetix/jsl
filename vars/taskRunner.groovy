@@ -23,10 +23,9 @@ def call(yamlName){
         }
         if(yaml.notification){
             def userName = "${currentBuild.getBuildCauses()[0].userId}"
-            common.sendTeamsNotif(
-                msg: "Started by: ${userName}", 
-                job: "${yaml.project_name}", 
-                url: "${yaml.notification.webhook}"
+            common.sendTeamsNotif(m: "Started by: ${userName}", 
+                                  j: "${yaml.project_name}", 
+                                  url: "${yaml.notification.webhook}")
             )
         }
         
