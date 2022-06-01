@@ -14,7 +14,7 @@ def call(yamlName){
         if(yaml.parameters){
             return  new com.webops.Common()
                     .build('parameters'){
-                    .buildParams(yamlName)
+                   buildParams(yamlName)
         }      
         
         if(yaml.environment){
