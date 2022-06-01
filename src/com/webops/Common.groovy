@@ -114,13 +114,13 @@ def interp(value) {
 def sshCmd(String server, String command){
     def common = new com.webops.Common()
     def sshArgs = 'ssh -F +'
-    if (!options){
+    /*if (!options){
         options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
     }
     String optionsString = ''
     options.each { k,v ->
         optionsString += "-o ${k}=${v} "
-    }
+    */}
 
 sh """
 #!/bin/bash; 
