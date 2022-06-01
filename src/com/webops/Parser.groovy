@@ -2,7 +2,7 @@ package com.webops;
 
 import com.webops.PipelineBuilder;
 
-class ConfigParser {
+class Parser {
 
     static PipelineBuilder parse(def yaml, def env) {
       
