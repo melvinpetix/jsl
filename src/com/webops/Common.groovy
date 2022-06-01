@@ -120,8 +120,8 @@ def sshCmd(String server, String command){
     String optionsString = ''
     options.each { k,v ->
         optionsString += "-o ${k}=${v} "
-    */}
-
+    }
+*/
 sh """
 #!/bin/bash; 
 set +x; ${sshArgs} ${server} \"export TERM=xterm-256color; 
