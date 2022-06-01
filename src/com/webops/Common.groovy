@@ -48,10 +48,10 @@ def sendTeamsNotif(body) {
         jobName = "${env.JOB_NAME}"       
     }                                                                      
     if(currentBuild.result == ('FAILURE')){
-        emoji = "❌"
+        emoji = "���"
         COLOR = "ff0000"
     } else {
-        emoji = "🚀"
+        emoji = "����"
         COLOR = "00FF00"
     }  
     steps.sh "curl -X POST -H \'Content-Type: application/json\'\
