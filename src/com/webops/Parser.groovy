@@ -1,6 +1,6 @@
 package com.webops;
 
-import com.wolox.PipelineBuilder;
+import com.webops.PipelineBuilder;
 
 class ConfigParser {
 
