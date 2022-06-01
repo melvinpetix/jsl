@@ -13,7 +13,7 @@ def call(yamlName){
     
         if(yaml.parameters){
             common = new com.webops.Common()
-            .Stage("${yaml.project_name, closure = { common.buildParams(yamlName) })
+            .Stage("${yaml.project_name}", closure = { common.buildParams(yamlName) })
             
                         
         }      
