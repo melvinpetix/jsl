@@ -12,8 +12,8 @@ def call(yamlName){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
         if(yaml.parameters){
-            common = new com.webops.Common()
-            .Stage(yaml.project_name){ common.buildParams(yamlName) }          
+            common.Stage("${yaml.project_name}  parameters"){ common.buildParams(yamlName) }
+                        
         }      
         
         if(yaml.environment){
