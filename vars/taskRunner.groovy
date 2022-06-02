@@ -44,11 +44,11 @@ def call(yamlName){
           steplist.each{step->
             common.Stage(step.name){
               if(step.commands){
-                step.commands.each{c->
-                  c.command.each{command->
-                    common.execute(cmd: command, server: step.server)
-                  }
-                }
+                  step.commands.collect{v->
+                    v.command.each{command->
+                      common.execute(cmd: command, server: step.server)
+                    }
+                 }
               } 
 
               if(step.command){
