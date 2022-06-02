@@ -14,7 +14,7 @@ def call(yamlName){
         return   
     }
     
-    try{    
+      try{    
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
@@ -40,26 +40,27 @@ def call(yamlName){
             return    
         }  
         else {
-            list steplist = yaml.steps
-            steplist.each{step->
-               common.Stage(step.name){
-                   if(step.commands){
-                       step.commands.each{c->
-                           c.command.each{command->
-                               common.execute(cmd: command, server: step.server)
-                           }
-                       }
-                   } else {
-                    list commands = step.command
-                    commands.each{command->
-                        common.execute(cmd: command, server: step.server) 
-                    }
+          list steplist = yaml.steps
+          steplist.each{step->
+            common.Stage(step.name){
+              if(step.commands){
+                step.commands.each{c->
+                  c.command.each{command->
+                    common.execute(cmd: command, server: step.server)
+                  }
                 }
+              } 
+
+              if(step.command){
+                list commands = step.command
+                commands.each{command->
+                    common.execute(cmd: command, server: step.server) 
+                }
+              }
             }
-        }       
-    } 
-    
-    catch(err){
+          }       
+        } 
+      } catch(err){
         def msg = "execution failed with the following error\n"
         println err
         currentBuild.result = 'FAILURE'
@@ -67,5 +68,4 @@ def call(yamlName){
     }
     deleteDir()
 }
-   
-             //inputParams(yamlName)
+
