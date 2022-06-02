@@ -9,7 +9,7 @@ def call(String repo=null, String branch=null) {
     stage('define task'){
       def folders = sh(returnStdout: true,  
       script: "ls $workspace/runbook").replaceAll(".yml", "")
-      yamlName = input(message: 'tasklist', parameters: [
+      yamlName = input(message: 'runbook', parameters: [
             [$class: 'ChoiceParameterDefinition', 
             choices: "${folders}", 
             description: '', name: '']])   
