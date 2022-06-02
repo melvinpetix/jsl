@@ -1,6 +1,6 @@
 package com.webops;
 
-import com.webops.PipelineBuilder;
+import com.webops.PipelineConfig;
 
 class Parser {
 
