@@ -103,9 +103,8 @@ def checkoutRepo(body) {
    ])     
 }
 
-def gitClone(String repoUrl, String token, String branch='master'){
-    git branch: "${branch}", url: 'https://oauth:' + token + '@' + repoUrl
-    //sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
+def gitClone(String branch='master', String repoUrl){
+    steps.git branch: "${branch}", url: "${repoUrl}"
 }
 
 @NonCPS
