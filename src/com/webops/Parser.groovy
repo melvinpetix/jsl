@@ -4,19 +4,19 @@ import com.webops.PipelineBuilder;
 
 class Parser {
 
-    static PipelineBuilder parse(def yaml) {
+    static PipelineConfig parse(def yaml) {
       
-        PipelineBuilder pipelineBuilder = new PipelineBuilder();
+        PipelineConfig pipelineConfig = new PipelineConfig();
 
-        pipelineBuilder.steps = parseSteps(yaml.steps);
+        pipelineConfig.steps = parseSteps(yaml.steps);
 
-        pipelineBuilder.projectName = parseProjectName(yaml.project_name);
+        pipelineConfig.projectName = parseProjectName(yaml.project_name);
         
-        pipelineBuilder.parameter = parseParameters(yaml.parameters);
+        pipelineConfig.parameter = parseParameters(yaml.parameters);
         
-        pipelineBuilder.notification = parseNotification(yaml.notification)
+        pipelineConfig.notification = parseNotification(yaml.notification)
 
-        return pipelineBuilder;
+        return pipelineConfig;
     }
 
 
