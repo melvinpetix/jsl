@@ -1,13 +1,12 @@
 import com.webops.*;
 def common = new com.webops.Common()
 
-def call(body){
-  def config = body
+def call(String repo=null, String branch=null) {
   def yamlName
   node{
     deleteDir()
     if(config.repo){
-      common.gitClone("test", "https://gitlab.com/me1824/jsl.git")
+      common.gitClone("${branch}", "${repo}")
     } else {
       checkout scm
     }  
