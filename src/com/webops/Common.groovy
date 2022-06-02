@@ -83,18 +83,17 @@ def Stage(String name, def closure) {
             closure.call()
         }
     } catch(err) {
-      def msg = "pipeline failed in stage ${name}\n"
+          def msg = "pipeline failed in stage ${name}\n"
         error "${msg}" + " " + err
     }
   }
 
-def gitCheckout(String repo, String credentialsId, String branch='master') {
+def gitCheckout(String repo, String branch='master') {
   checkout([
     $class: 'GitSCM',
       branches: [[name: "${branch}"]],
       extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-      userRemoteConfigs: [[credentialsId: 
-      credentialsId, url: 'git@gitlab.usautoparts.io:' + repo]]])
+      userRemoteConfigs: [[credentialsId: 'prd-private-gitlab', url: 'git@gitlab.usautoparts.io:' + repo]]])
       //sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
         
 }
