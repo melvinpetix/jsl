@@ -88,14 +88,19 @@ def Stage(String name, def closure) {
     }
   }
 
-def gitCheckout(String repo, String branch='master') {
-  checkout([
-    $class: 'GitSCM',
-      branches: [[name: "${branch}"]],
-      extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '.']],
-      userRemoteConfigs: [[credentialsId: 'prd-private-gitlab', url: 'git@gitlab.usautoparts.io:' + repo]]])
-      //sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
-        
+def checkoutRepo(body) {
+  def config = body
+  checkout([$class: 'GitSCM',
+      branches: [[name: config.branch]],
+      extensions: [[
+          $class: 'RelativeTargetDirectory', 
+          relativeTargetDir: '.'
+      ]],
+      userRemoteConfigs: [[
+          credentialsId: 'prd-private-gitlab', 
+          url: 'git@gitlab.usautoparts.io:' + config.repo
+      ]]
+   ])     
 }
 
 def gitClone(String repoUrl, String token, String branch='master'){
