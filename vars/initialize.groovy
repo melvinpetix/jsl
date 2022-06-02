@@ -23,3 +23,4 @@ def call(body){
       node("${env.jenkins_agent}"){
         taskRunner(yamlName)
       } 
+}
