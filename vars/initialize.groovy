@@ -18,7 +18,7 @@ def call(String repo=null, String branch=null) {
   stage 'start taskRunner'
     node("${env.jenkins_agent}"){
       deleteDir()
-      checkout S
+      common.gitClone("${branch}", "${repo}")
       taskRunner(yamlName)
   } 
 }
