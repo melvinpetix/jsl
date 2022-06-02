@@ -6,12 +6,11 @@ def call(body){
   def yamlName
   node{
     deleteDir()
-    if(!config.repo){
-      checkout scm
-    } else {
+    if(config.repo){
       common.gitClone("test", "https://gitlab.com/me1824/jsl.git")
+    } else {
+      checkout scm
     }  
-    
     common.loadKey()
     
     stage 'task'
@@ -23,26 +22,4 @@ def call(body){
       node("${env.jenkins_agent}"){
         taskRunner(yamlName)
       } 
-}
-
-def checkoutRepo(body) {
-  def config = body
-  
-
-  checkout([
-    $class: 'GitSCM',
-    branches: [[name: "*/${branch}"]],
-    extensions: [[$class: 'RelativeTargetDirectory', 
-    relativeTargetDir: '.']],
-    userRemoteConfigs: [[
-      url: 'git@gitlab.usautoparts.io:' + repo]]])
-   
-  checkout([$class: 'GitSCM',
-      branches: [[name: config.branch]],
-      extensions: [[ ]],
-      userRemoteConfigs: [[
-          credentialsId: 'prd-private-gitlab', 
-          
-      ]]
-   ])     
 }
