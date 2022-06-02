@@ -1,10 +1,12 @@
 import com.webops.*;
-def common = new com.webops.Common()
 
 def call(String repo=null, String branch=null) {
   def yamlName
+  def common
+  
   node{
     deleteDir()
+    common = new com.webops.Common()
     common.gitClone("${branch}", "${repo}")
     common.loadKey()
     stage('task'){
