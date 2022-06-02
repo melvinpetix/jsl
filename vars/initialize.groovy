@@ -9,7 +9,7 @@ def call(body){
     if(!config.repo){
       checkout scm
     } else {
-      common.checkoutRepo(repo: "mbiscarra/legacy-task.git", branch: "script")
+      common.gitClone("test", "https://gitlab.com/me1824/jsl.git")
     }  
     
     common.loadKey()
@@ -23,4 +23,26 @@ def call(body){
       node("${env.jenkins_agent}"){
         taskRunner(yamlName)
       } 
+}
+
+def checkoutRepo(body) {
+  def config = body
+  
+
+  checkout([
+    $class: 'GitSCM',
+    branches: [[name: "*/${branch}"]],
+    extensions: [[$class: 'RelativeTargetDirectory', 
+    relativeTargetDir: '.']],
+    userRemoteConfigs: [[
+      url: 'git@gitlab.usautoparts.io:' + repo]]])
+   
+  checkout([$class: 'GitSCM',
+      branches: [[name: config.branch]],
+      extensions: [[ ]],
+      userRemoteConfigs: [[
+          credentialsId: 'prd-private-gitlab', 
+          
+      ]]
+   ])     
 }
