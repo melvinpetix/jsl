@@ -1,16 +1,21 @@
 import com.webops.*;
+def common = new com.webops.Common()
 
-
-def call(){
+def call(body){
+  def config = body
   def yamlName
   node{
     deleteDir()
-    def common = new com.webops.Common()
-    .gitCheckout 'mbiscarra/legacy-task.git', 'prd-private-gitlab', 'script'
-    .loadKey()
-
-    stage('task'){  
-      def folders = sh(returnStdout: true, script: "ls $workspace/runbook").replaceAll(".yml", "")
+    if(!config.repo){
+      checkout scm
+    } else {
+      common.checkoutRepo(
+      repo: 'mbiscarra/legacy-task.git', 
+      branch: 'script')
+      common.loadKey()
+    }  
+    stage 'task'
+      def folders = sh(returnStdout: true,  script: "ls $workspace/runbook").replaceAll(".yml", "")
       yamlName = input(id: 'tasklist', message: 'task', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "${folders}", description: '', name: '']]) 
 
@@ -20,4 +25,3 @@ def call(){
     taskRunner(yamlName)
   }
 }  
-
