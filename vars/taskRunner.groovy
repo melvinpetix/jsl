@@ -6,15 +6,17 @@ import com.webops.*;
 def call(yamlName){
     def common = new com.webops.Common()
     common.loadKey()
+    
+    if(yamlName == "debug"){ 
+        interactiveShell()
+        currentBuild.description = 'test/debug'
+        currentBuild.result = 'SUCCESS'
+        return   
+    }
+    
     try{    
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
-        if(yamlName == debug){ 
-            interactiveShell()
-            currentBuild.description = 'test/debug'
-            currentBuild.result = 'SUCCESS'
-            return   
-        }
         if(yaml.parameters){
             common.Stage("${yaml.project_name}  parameters"){ common.buildParams(yamlName) }             
         }           
