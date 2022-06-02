@@ -88,17 +88,16 @@ def Stage(String name, def closure) {
     }
   }
 
-def checkoutRepo(body) {
-  def config = body
+def checkoutRepo(String repo, String branch='master') {
   checkout([$class: 'GitSCM',
-      branches: [[name: config.branch]],
+            branches: [[name: "${branch}"]],
       extensions: [[
           $class: 'RelativeTargetDirectory', 
           relativeTargetDir: '.'
       ]],
       userRemoteConfigs: [[
           credentialsId: 'prd-private-gitlab', 
-          url: 'git@gitlab.usautoparts.io:' + config.repo
+          url: 'git@gitlab.usautoparts.io:' + repo
       ]]
    ])     
 }
