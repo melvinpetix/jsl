@@ -18,10 +18,8 @@ def call(body){
       def folders = sh(returnStdout: true,  script: "ls $workspace/runbook").replaceAll(".yml", "")
       yamlName = input(id: 'tasklist', message: 'task', parameters: [
       [$class: 'ChoiceParameterDefinition', choices: "${folders}", description: '', name: '']]) 
-
-    }
   }
-  node{
-    taskRunner(yamlName)
-  }
-}  
+    stage 'task2'
+      node("${env.jenkins_agent}"){
+        taskRunner(yamlName)
+      } 
