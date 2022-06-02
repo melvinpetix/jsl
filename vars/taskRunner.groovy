@@ -40,32 +40,24 @@ def call(yamlName){
             return    
         }  
         else {
-          list steplist = yaml.steps
-          steplist.each{step->
-            common.Stage(step.name){
-              if(step.commands){
-                  step.commands.collect{v->
-                    v.command.each{command->
-                      common.execute(cmd: command, server: step.server)
+            list steplist = yaml.steps
+            steplist.each{step->
+                common.Stage(step.name){
+                    list commands = step.command
+                    commands.each{command->
+                        common.execute(cmd: command, server: step.server) 
                     }
-                 }
-              } 
-
-              if(step.command){
-                list commands = step.command
-                commands.each{command->
-                    common.execute(cmd: command, server: step.server) 
                 }
-              }
-            }
-          }       
-        } 
-      } catch(err){
-        def msg = "execution failed with the following error\n"
-        println err
-        currentBuild.result = 'FAILURE'
-        deleteDir()
+            }  
+         }
+      } 
+        catch(err){
+            def msg = "execution failed with the following error\n"
+            println err
+            currentBuild.result = 'FAILURE'
+            deleteDir()      
+        }
+        deleteDir()  
     }
-    deleteDir()
-}
+    
 
