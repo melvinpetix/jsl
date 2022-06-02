@@ -1,11 +1,12 @@
 import com.webops.*;
-def common = new com.webops.Common()
+
 
 
 def call(String repo=null, String branch=null) {
   def yamlName
   
   node{
+    def common = new Common()
     common.gitClone("${branch}", "${repo}")
     common.loadKey()
     stage('task'){
@@ -17,6 +18,7 @@ def call(String repo=null, String branch=null) {
   }
   stage 'start taskRunner'
     node("${env.jenkins_agent}"){
+      def common = new Common()
       deleteDir()
       common.gitClone("${branch}", "${repo}")
       taskRunner(yamlName)
