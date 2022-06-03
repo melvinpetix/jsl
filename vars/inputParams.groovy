@@ -1,7 +1,7 @@
 def call(yamlName){
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
-        switch(params.type){
+        switch(j.parameters.type){
             case 'string':
             userInput = input message: '', parameters: [string(description: j.parameters.description , name: j.parameters.name)]
             break
@@ -9,7 +9,7 @@ def call(yamlName){
             userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
             break
         }
-         return env["${params.name}"] = userInput   
+         return env["${j.parameters.name}"] = userInput   
 }
     
     
