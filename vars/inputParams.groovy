@@ -1,18 +1,22 @@
 def call(yamlName){
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
-        switch(j.parameters.type){
-            case 'string':
+    timeout(time: 120, unit: 'SECONDS') {
+        if(j.parameters.type == 'string' ){
             userInput = input message: '', parameters: [string(description: j.parameters.description , name: j.parameters.name)]
-            break
-            case 'choice':
-            userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
-            break
+            //return env["${j.parameters.name}"] = userInput
         }
-         return env["${j.parameters.name}"] = userInput   
+        if(j.parameters.type == 'choice' ){
+            userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
+            //return env["${j.parameters.name}"] = userInput
+        }
+        if(j.parameters.type == 'password' ){       
+            userInput = input parameters: [password(name: '')]
+            
+        }
+        return env["${j.parameters.name}"] = userInput
+    }
 }
-    
-    
    /* 
     if(j.parameters.type == ){
         userInput = input parameters: [string(defaultValue: '', 
