@@ -19,9 +19,7 @@ def call(yamlName){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
-            def args = new Parameter(yaml.parameters.args.toString())
-            input parameters:[yaml.parameters.type(args)]
-            //common.Stage("build parameters"){ common.buildParams(yamlName) }             
+          common.Stage("build parameters"){ common.buildParams(yamlName) }             
         }           
         if(yaml.environment){
             yaml.environment.each{env->
