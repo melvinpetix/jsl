@@ -1,24 +1,8 @@
 def call(yamlName){
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
-    timeout(time: 120, unit: 'SECONDS') {
-        if(j.parameters.type == 'string' ){
-            userInput = input message: '', parameters: [string(description: j.parameters.description , name: j.parameters.name)]
-            //return env["${j.parameters.name}"] = userInput
-        }
-        if(j.parameters.type == 'choice' ){
-            userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
-            //return env["${j.parameters.name}"] = userInput
-        }
-        if(j.parameters.type == 'password' ){       
-            userInput = input parameters: [password(name: '')]
-            
-        }
-        return env["${j.parameters.name}"] = userInput
-    }
-}
-   /* 
-    if(j.parameters.type == ){
+
+    if(j.parameters.string){
         userInput = input parameters: [string(defaultValue: '', 
         description: j.parameters.string.description, 
         name: j.parameters.string.name)]
@@ -36,5 +20,3 @@ def call(yamlName){
          env["${j.parameters.password.name}"] = P4SSWORD
     }
 }      
-
-*/
