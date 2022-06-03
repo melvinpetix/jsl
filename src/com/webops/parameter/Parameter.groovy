@@ -1,9 +1,8 @@
 package com.webops.parameter
 
-import groovy.transform.MapConstructor
 
 @MapConstructor
-
+@ToString(includeNames=true, includeFields=true)
 class Parameter {
     
     String name
