@@ -156,7 +156,7 @@ def buildParams(yamlName){
     if(j.parameters.choice){
       list choices = j.parameters.choice.choices.toString()
       userInput = input parameters: [
-      choice(choices: choices ,name: j.parameters.choice.name)]
+      choice(choices: j.parameters.choice.choices.replaceAll(',','\n') ,name: j.parameters.choice.name)]
       env["${j.parameters.choice.name}"] = userInput    
     }
     if(j.parameters.password){
