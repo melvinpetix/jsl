@@ -4,11 +4,10 @@ def call(yamlName){
     j.parameters.each{params->
         switch(params.type){
             case 'string':
-            userInput = input parameters: [string(description: j.parameters.string.description, name: j.parameters.string.name)]
+            userInput = input message: '', parameters: [string(description: params.description, name: params.name)]
             break
             case 'choice':
-            userInput = input parameters: [string(description: j.parameters.string.description, name: j.parameters.string.name 
-            choices: j.parameters.choice.choices.toString().replaceAll(',',"\n"))]
+            userInput = input message: '', parameters: [choice(description: params.description, name: params.name, choices: params.choices.toString().replaceAll(',',"\n"))]
             break
         }
         
