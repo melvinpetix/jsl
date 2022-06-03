@@ -1,5 +1,11 @@
-class Person {
+package com.webops.parameter
+
+
+class Parameter {
+    
     String name
-    String alias
-    List<String> likes
+    
+    String description
+   
+    List<String> choices
 }
