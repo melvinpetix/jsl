@@ -7,7 +7,8 @@ def call(yamlName){
             userInput = input message: '', parameters: [string(description: "${params.description}", name: "${params.name}")]
             break
             case 'choice':
-            userInput = input message: '', parameters: [choice(description: "${params.description}", name: "${params.name}", choices: "${params.choices.toString().replaceAll(',',"\n")})]
+            userInput = input message: '', parameters: [choice(description: "${params.description}", name: "${params.name}", 
+            choices: params.choices.toString())]
             break
         }
         
