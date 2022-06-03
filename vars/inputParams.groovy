@@ -9,9 +9,7 @@ def call(yamlName){
             userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
             break
         }
-        
-    }
-   return env["${params.name}"] = userInput   
+         return env["${params.name}"] = userInput   
 }
     
     
