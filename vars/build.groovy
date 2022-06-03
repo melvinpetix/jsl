@@ -1,10 +1,9 @@
 #!groovy
 
-def call(String name, Closure stageCmd){
+def Stage(String stageName, Closure stageCmd){
   try{ 
-    stage(name){
-        stageCmd()
-    }
+    stage(name, stageCmd)
+    
  } catch(err){ 
     error stageName + "Failed!! error:\n" + err 
   }
