@@ -1,6 +1,7 @@
 #!groovy
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
+import com.webops.parameters
 
 
 def call(yamlName){
