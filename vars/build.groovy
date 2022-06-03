@@ -18,9 +18,9 @@ def execute(Map config){
     echo 'local[SHELL]'
     ${command}
   } else {  
-    if(config.server instanceof List){
-      echo "list" 
-        for(i in config.server){ 
+    def slist = config.server.toString().split(',')
+    if(slist.size() > 1){ 
+        for(i in slist){ 
             def s = i.trim()
             command[s] = { shCommand("${s}", config.cmd) }
         } 
@@ -42,25 +42,24 @@ def shCommand(String server, String command){
 def params(yamlName){
   def userInput
   def j = readYaml file: "runbook/${yamlName}.yml"
-  timeout(time: 120, unit: 'SECONDS') {
-    if(j.parameters.string){
-      userInput = input parameters: [string(defaultValue: '', 
-      description: j.parameters.string.description.toString(), 
-      name: j.parameters.string.name.toString())]
-      env["${j.parameters.string.name}"] = userInput
-    }
-    if(j.parameters.choice){
-      list choices = j.parameters.choice.choices
-      userInput = input parameters: [
-      choice(choices: choices ,name: j.parameters.choice.name)]
-      env["${j.parameters.choice.name}"] = userInput    
-    }
-    if(j.parameters.password){
-      P4SSWORD = input parameters: [
-      password(name: '')] 
-      env["${j.parameters.password.name}"] = P4SSWORD
-    }         
+
+  if(j.parameters.string){
+    userInput = input parameters: [string(defaultValue: '', 
+    description: j.parameters.string.description.toString(), 
+    name: j.parameters.string.name.toString())]
+    env["${j.parameters.string.name}"] = userInput
   }
+  if(j.parameters.choice){
+    list choices = j.parameters.choice.choices
+    userInput = input parameters: [
+    choice(choices: choices ,name: j.parameters.choice.name)]
+    env["${j.parameters.choice.name}"] = userInput    
+  }
+  if(j.parameters.password){
+    P4SSWORD = input parameters: [
+    password(name: '')] 
+    env["${j.parameters.password.name}"] = P4SSWORD
+  }       
 }
 
 def notifier(String buildStatus, String jobName, webhookUrl) {     
