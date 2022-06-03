@@ -3,7 +3,7 @@
 import com.webops.*;
 
 def call(yamlName){
-    def common = new com.webops.Common()
+    def common = new Common()
     common.loadKey()
     
     if(yamlName == "debug"){ 
