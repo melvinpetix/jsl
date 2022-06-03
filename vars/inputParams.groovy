@@ -1,14 +1,12 @@
 def call(yamlName){
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
-    j.parameters.each{params->
         switch(params.type){
             case 'string':
-            userInput = input message: '', parameters: [string(description: "${params.description}", name: "${params.name}")]
+            userInput = input message: '', parameters: [string(description: j.parameters.description , name: j.parameters.name)]
             break
             case 'choice':
-            userInput = input message: '', parameters: [choice(description: "${params.description}", name: "${params.name}", 
-            choices: params.choices.toString())]
+            userInput = input message: '', parameters: [choice(description: j.parameters.description , name: j.parameters.name, choices: j.parameters.choices.toString())]
             break
         }
         
