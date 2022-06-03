@@ -4,9 +4,8 @@ def call(String repo, String branch) {
   def yamlName
   node("${env.jenkins_agent}"){
     deleteDir()  
-    def common = new Common()
-    common.gitClone("${repo}", "${branch}")
-    stage('define task'){
+    git branch: "${branch}", url: "${repo}"
+    stage('define runbook'){
       def folders = sh(returnStdout: true,  
       script: "ls $workspace/runbook").replaceAll(".yml", "")
       yamlName = input(message: 'runbook', parameters: [
