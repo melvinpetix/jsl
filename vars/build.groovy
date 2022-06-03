@@ -22,11 +22,11 @@ def execute(Map config){
     if(slist.size() > 1){ 
         for(i in slist){ 
             def s = i.trim()
-            command[s] = { build.shCommand("${s}", config.cmd) }
+            command[s] = { shCommand("${s}", config.cmd) }
         } 
         parallel command
     } else {
-        build.shCommand(config.server, config.cmd) 
+        shCommand(config.server, config.cmd) 
         
     } 
   }
