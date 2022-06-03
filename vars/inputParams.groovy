@@ -1,8 +1,24 @@
 def call(yamlName){
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
-
-    if(j.parameters.string){
+    j.parameters.each{params->
+        switch(params.type){
+            case 'string':
+            userInput = input parameters: [string(description: j.parameters.string.description, name: j.parameters.string.name)]
+            break
+            case 'choice':
+            userInput = input parameters: [string(description: j.parameters.string.description, name: j.parameters.string.name 
+            choices: j.parameters.choice.choices.toString().replaceAll(',',"\n"))]
+            break
+        }
+        
+    }
+   return env["${params.name}"] = userInput   
+}
+    
+    
+   /* 
+    if(j.parameters.type == ){
         userInput = input parameters: [string(defaultValue: '', 
         description: j.parameters.string.description, 
         name: j.parameters.string.name)]
@@ -21,3 +37,4 @@ def call(yamlName){
     }
 }      
 
+*/
