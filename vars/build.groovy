@@ -18,9 +18,9 @@ def execute(Map config){
     echo 'local[SHELL]'
     ${command}
   } else {  
-    def slist = config.server.toString().split(',')
-    if(slist.size() > 1){ 
-        for(i in slist){ 
+    if(config.server instanceof List){
+      echo "list" 
+        for(i in config.server){ 
             def s = i.trim()
             command[s] = { shCommand("${s}", config.cmd) }
         } 
