@@ -18,7 +18,7 @@ def call(String yamlName = 'debug'){
         
         if(yaml.parameters){
         
-            buildParams(yaml.parameters)       
+            common.buildParams(yaml.parameters)       
         }           
         if(yaml.environment){
             yaml.environment.each{env->
