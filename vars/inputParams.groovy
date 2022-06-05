@@ -1,8 +1,18 @@
-def call(yamlName){
+def call(params){
+    if(string){
+        input message: '', parameters: [string(name: params.string.name)]
+    }
+    if(choice){
+        input message: '', parameters: [string(name: params.string.choice.name)]
+    }
+}
+    
+    
+    /*
     def userInput
     def j = readYaml file: "runbook/${yamlName}.yml"
 
-    if(j.parameters.string){
+    if(string){
         userInput = input parameters: [string(defaultValue: '', 
         description: j.parameters.string.description, 
         name: j.parameters.string.name)]
@@ -18,5 +28,7 @@ def call(yamlName){
          P4SSWORD = input parameters: [
          password(name: 'P4SSWORD')] 
          env["${j.parameters.password.name}"] = P4SSWORD
+    */
     }
+    
 }      
