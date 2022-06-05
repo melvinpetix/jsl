@@ -20,7 +20,7 @@ def call(yamlName){
             
         if(yaml.parameters){
         
-            common.buildParams(yaml.parameters)       
+            common.inputParams(yaml.parameters)       
         }           
         if(yaml.environment){
             yaml.environment.each{env->
