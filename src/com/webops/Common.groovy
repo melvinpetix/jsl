@@ -143,47 +143,25 @@ def loadKey(){
   sh "set +x; chmod 600 \$(find . -name \"*.key\"||\"*.pub\"||\"id_rsa\")"
 } 
 
-def buildParams(yamlName){
-  def userInput
-  def j = readYaml file: "runbook/${yamlName}.yml"
-  timeout(time: 120, unit: 'SECONDS') {
-    if(j.parameters.string){
-      userInput = input parameters: [string(defaultValue: '', 
-      description: j.parameters.string.description.toString(), 
-      name: j.parameters.string.name.toString())]
-      env["${j.parameters.string.name}"] = userInput
-    }
-    if(j.parameters.choice){
-      list choices = j.parameters.choice.choices.toString()
-      userInput = input parameters: [
-      choice(choices: j.parameters.choice.choices.replaceAll(',','\n') ,name: j.parameters.choice.name)]
-      env["${j.parameters.choice.name}"] = userInput    
-    }
-    if(j.parameters.password){
-      userInput = input parameters: [
-      password(name: '')] 
-      env["${j.parameters.password.name}"] = userInput
-    }         
-  }
-}
-
-
 def inputParams(params){
    def userInput
    timeout(time: 120, unit: 'SECONDS') {  
         if(params.string){
             userInput = input message: '', parameters: [string(name: params.string.name)]
+            env[params.string.name] = userInput
         }
         if(params.choice){
            // list choices = toString()
             userInput = input message: '', parameters: [choice(name: params.choice.name, 
             choices: params.choice.choices.replaceAll(',','\n'))]
+            env[params.choice.name] = userInput
         }
-    }
+        if(params.password){
+           userInput = input parameters: [password(name: '')]
+            env[params.password.name] = userInput
+        }
 }
   
-
-
 
 def sshScp(source, destination, options=null){
   def common = new com.webops.Common()
