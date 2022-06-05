@@ -1,7 +1,7 @@
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 
 
-def call(configPath='./runbook'){
+def call(){
  node {
     def runbook
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
