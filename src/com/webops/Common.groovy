@@ -168,12 +168,14 @@ def buildParams(yamlName){
 }
 
 
-def call(params){
-    if(string){
-        input message: '', parameters: [string(name: params.string.name)]
-    }
-    if(choice){
-        input message: '', parameters: [choice(name: params.string.choice.name, choices: params.string.choice.choices)]
+def inputParams(params){
+   timeout(time: 120, unit: 'SECONDS') {  
+        if(string){
+            input message: '', parameters: [string(name: params.string.name)]
+        }
+        if(choice){
+            input message: '', parameters: [choice(name: params.string.choice.name, choices: params.string.choice.choices)]
+        }
     }
 }
   
