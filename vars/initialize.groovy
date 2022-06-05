@@ -14,7 +14,7 @@ def runbook
     yamlName = runbook
     deleteDir()
   }
-  node(${env.jenkins_agent}){
+  node(jenkins_agent){
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
     taskRunner yamlName
   }
