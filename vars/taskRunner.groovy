@@ -19,9 +19,10 @@ def call(yamlName){
     try{    
             
         if(yaml.parameters){
-        
-            common.inputParams(yaml.parameters)       
-        }           
+            yaml.parameters.each{->
+                common.inputParams(yaml.parameters)       
+            }       
+        }    
         if(yaml.environment){
             yaml.environment.each{env->
                 env.collect{k,v-> env."${k}"="${v}"}
