@@ -1,7 +1,7 @@
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
-def call(String yamlName = 'debug'){
+def call(yamlName){
     
     def common = new Common()
     common.loadKey()
@@ -16,10 +16,11 @@ def call(String yamlName = 'debug'){
     }   
     
     try{    
-          
+        node{  
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
+        
             common.Stage('parameters'){inputParams(yaml.parameters)}          
         }           
         if(yaml.environment){
@@ -53,6 +54,7 @@ def call(String yamlName = 'debug'){
             }  
          }
       } 
+    }
         catch(err){
             def msg = "execution failed with the following error\n"
             println err
