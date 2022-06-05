@@ -77,16 +77,16 @@ def execute(Map config){
   }
 }
 
-def Stage(String name, def closure) {
+ def stage(String name, Closure stageCommands) {
     try {
-        stage(name){
-            closure.call()
-        }
+      script.stage(name, stageCommands)
     } catch(err) {
-          def msg = "pipeline failed in stage ${name}\n"
-        error "${msg}" + " " + err
+      def msg = "pipeline failed in stage ${name}\n"
+      error "${msg}" + " " + err
+      throw err
     }
   }
+
 
 def checkoutRepo(String repo, String branch='master') {
   checkout([$class: 'GitSCM',
