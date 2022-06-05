@@ -3,16 +3,14 @@
 
 def call(){
  node {
-    def runbook
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
-    def folders = sh(returnStdout: true, 
-    script: 'ls ./runbook/*').replaceAll(".yml", "")  
-    writeFile file: 'runbook', 
+    def folders = sh(returnStdout: true, script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")
+    writeFile file: 'parameters', 
     text: """ 
 ${folders}
 """ 
-    //runbooks = readFile('parameters')
-    properties([parameters([choice(choices: runbook, name: 'runbook')])])
+    def runbooks = readFile('parameters')
+    properties([parameters([choice(choices: runbooks, name: 'runbook')])])
     taskRunner params.runbook
  }  
 }
