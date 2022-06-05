@@ -4,6 +4,7 @@
 def call(){
 def node
 def runbook
+
 node('maintenance-script-ec2-spot-worker'){
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
     def folders = sh(returnStdout: true, script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")  
@@ -14,4 +15,4 @@ node('maintenance-script-ec2-spot-worker'){
     taskRunner yamlName
   }
 }
-  
+return this;  
