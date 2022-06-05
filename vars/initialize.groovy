@@ -4,6 +4,7 @@
 def call(){
 def yamlName
 def runbook
+def agent
   node {
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
     def folders = sh(returnStdout: true, 
@@ -12,9 +13,10 @@ def runbook
     runbooks = readFile('parameters')
     properties([parameters([choice(choices: "${runbook}", name: 'runbook')])])
     yamlName = runbook
+    agent = "${env.jenkins_agent}"
     deleteDir()
   }
-  node(jenkins_agent){
+  node(agent){
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
     taskRunner yamlName
   }
