@@ -160,8 +160,8 @@ def inputParams(params){
            userInput = input parameters: [password(name: '')]
             env[params.password.name] = userInput
         }
+    }
 }
-  
 
 def sshScp(source, destination, options=null){
   def common = new com.webops.Common()
