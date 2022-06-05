@@ -5,7 +5,7 @@ def call(String yamlName = 'debug'){
     def common = new Common()
     common.loadKey()
     
-    if(yamlName == "debug"){ 
+    if(yamlName == "debug" || yamlName == 'null'){ 
         interactiveShell()
         currentBuild.description = 'test/debug'
         currentBuild.result = 'SUCCESS'
