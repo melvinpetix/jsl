@@ -20,7 +20,7 @@ def call(String yamlName = 'debug'){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
-          common.buildParams(yamlName)          
+            common.Stage('parameters'){inputParams(yaml.parameters)}          
         }           
         if(yaml.environment){
             yaml.environment.each{env->
