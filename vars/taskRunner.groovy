@@ -1,7 +1,8 @@
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
-def call(yamlName){
+def call(String yamlName = 'debug'){
+    def yamlName
     def common = new Common()
     common.loadKey()
     
