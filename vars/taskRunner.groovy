@@ -14,7 +14,6 @@ def call(String yamlName = 'debug'){
     }   
     
     try{    
-        node{  
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
@@ -52,7 +51,6 @@ def call(String yamlName = 'debug'){
             }  
          }
       } 
-    }
         catch(err){
             def msg = "execution failed with the following error\n"
             println err
