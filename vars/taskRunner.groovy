@@ -1,7 +1,7 @@
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
-def call(yamlName){
+def call(yamlName = ''){
     def common = new Common()
     common.loadKey()
     
