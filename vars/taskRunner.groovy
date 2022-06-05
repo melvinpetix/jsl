@@ -2,7 +2,6 @@
 import com.webops.*;
 
 def call(String yamlName = 'debug'){
-    def yamlName
     def common = new Common()
     common.loadKey()
     
