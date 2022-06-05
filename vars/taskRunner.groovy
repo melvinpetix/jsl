@@ -44,7 +44,7 @@ def call(yamlName){
         else {
             list steplist = yaml.steps
             steplist.each{step->
-                common.Stage(step.name){
+                common.stage(step.name){
                     list commands = step.command
                     commands.each{command->
                         common.execute(cmd: command, server: step.server) 
