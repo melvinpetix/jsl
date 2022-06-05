@@ -175,7 +175,9 @@ def inputParams(params){
             userInput = input message: '', parameters: [string(name: params.string.name)]
         }
         if(params.choice){
-            userInput = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]
+           // list choices = toString()
+            userInput = input message: '', parameters: [choice(name: params.choice.name, 
+            choices: params.choice.choices.replaceAll(',','\n'))]
         }
     }
 }
