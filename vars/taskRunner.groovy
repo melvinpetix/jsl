@@ -1,7 +1,8 @@
 @Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
-def call(String yamlName = 'debug'){
+def call(yamlName){
+    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     def common = new Common()
     common.loadKey()
     
@@ -14,8 +15,7 @@ def call(String yamlName = 'debug'){
     }   
     
     try{    
-        def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-        
+            
         if(yaml.parameters){
         
             common.buildParams(yaml.parameters)       
