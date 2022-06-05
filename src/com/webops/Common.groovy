@@ -172,10 +172,10 @@ def inputParams(params){
    def userInput
    timeout(time: 120, unit: 'SECONDS') {  
         if(params.string){
-            userInput = input message: '', parameters: [string(name: params.name)]
+            userInput = input message: '', parameters: [string(name: params.string.name)]
         }
         if(params.choice){
-            userInput = input message: '', parameters: [choice(name: params.name, choices: params.choices)]
+            userInput = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]
         }
     }
 }
