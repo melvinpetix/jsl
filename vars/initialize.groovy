@@ -1,3 +1,5 @@
+@Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
+
 def call(String repo, String branch) {
   def yamlName
   node("${env.jenkins_agent}"){
