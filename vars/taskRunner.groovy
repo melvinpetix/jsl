@@ -10,7 +10,6 @@ def call(String yamlName = 'debug'){
             currentBuild.description = 'test/debug'
             currentBuild.result = 'SUCCESS'
             return   
-    
         }
     }   
     
@@ -20,7 +19,7 @@ def call(String yamlName = 'debug'){
         
         if(yaml.parameters){
         
-            common.Stage('parameters'){inputParams(yaml.parameters)}          
+            common.Stage('parameters'){common.buildParams(yaml.parameters)}          
         }           
         if(yaml.environment){
             yaml.environment.each{env->
