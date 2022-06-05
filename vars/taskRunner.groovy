@@ -14,6 +14,13 @@ def call(yamlName){
     }
     
       try{    
+          common.stage('setup runbook'){ 
+            yamlName = input(message: 'runbook', parameters: [
+                    [$class: 'ChoiceParameterDefinition', 
+                    choices: "${folders}", 
+                    description: '', name: '']])  
+          }
+          
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
