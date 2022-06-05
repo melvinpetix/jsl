@@ -2,22 +2,16 @@
 
 
 def call(){
-def yamlName
+def node
 def runbook
-def agent
-  node {
+node('maintenance-script-ec2-spot-worker'){
     git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
-    def folders = sh(returnStdout: true, 
-    script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")  
+    def folders = sh(returnStdout: true, script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")  
     writeFile file: 'parameters', text: """\n\${folders}"""        
     runbooks = readFile('parameters')
     properties([parameters([choice(choices: "${runbook}", name: 'runbook')])])
-    yamlName = runbook
-    agent = "${env.jenkins_agent}"
-    deleteDir()
-  }
-  node(agent){
-    git url: 'https://oauth2:glpat-GxfR6J-STGecxjDPGz8z@gitlab.com/me1824/jsl.git', branch: 'test'
+    yamlName = params.runbook
     taskRunner yamlName
   }
 }
+  
