@@ -2,9 +2,11 @@
 import com.webops.*;
 
 def call(yamlName){
-    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+    
     def common = new Common()
     common.loadKey()
+    
+    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
     
     if(!yamlName || yamlName == 'debug'){ 
         try { interactiveShell() } catch(err){ 
