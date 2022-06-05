@@ -18,7 +18,7 @@ def call(yamlName){
     
     try{           
         if(yaml.parameters){
-            common.Stage("${yamlName} parameters"){
+            common.stage("${yamlName} parameters"){
               common.inputParams(yaml.parameters)          
             }
         }
