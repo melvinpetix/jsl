@@ -11,8 +11,8 @@ def call(configPath='./runbook'){
     text: """ 
 ${folders}
 """ 
-    runbooks = readFile('parameters')
-    properties([parameters([choice(choices: "${runbook}", name: 'runbook')])])
+    //runbooks = readFile('parameters')
+    properties([parameters([choice(choices: runbook, name: 'runbook')])])
     taskRunner params.runbook
  }  
 }
