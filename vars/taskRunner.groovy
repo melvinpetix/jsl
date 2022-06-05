@@ -6,13 +6,15 @@ def call(String yamlName = 'debug'){
     common.loadKey()
     
     if(yamlName == "debug" || yamlName == 'null'){ 
-        interactiveShell()
-        currentBuild.description = 'test/debug'
-        currentBuild.result = 'SUCCESS'
-        return   
-    }
+        try { interactiveShell() } catch(err){ 
+            currentBuild.description = 'test/debug'
+            currentBuild.result = 'SUCCESS'
+            return   
     
-      try{    
+        }
+    }   
+    
+    try{    
           
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
