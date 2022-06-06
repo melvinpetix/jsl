@@ -5,9 +5,7 @@ def call(yamlName){
     
     def common = new Common()
     common.loadKey()
-    
-    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-    
+   
     if(!yamlName || yamlName == 'debug'){ 
         try { interactiveShell() } catch(err){ 
             currentBuild.description = 'test/debug'
@@ -17,6 +15,8 @@ def call(yamlName){
     }   
     
     try{           
+        def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+        
         if(yaml.parameters){
             common.stage("${yamlName} parameters"){
               common.inputParams(yaml.parameters)          
