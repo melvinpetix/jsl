@@ -145,20 +145,22 @@ def loadKey(){
 
 def inputParams(params){
    def userInput
-   timeout(time: 120, unit: 'SECONDS') {  
-        if(params.string){
-            userInput = input message: '', parameters: [string(name: params.string.name)]
-            env[params.string.name] = userInput
-        }
-        if(params.choice){
-           // list choices = toString()
-            userInput = input message: '', parameters: [choice(name: params.choice.name, 
-            choices: params.choice.choices)]
-            env[params.choice.name] = userInput
-        }
-        if(params.password){
-           userInput = input parameters: [password(name: '')]
-            env[params.password.name] = userInput
+    timeout(time: 120, unit: 'SECONDS') {  
+      switch(params){
+        case 'params.string':
+          userInput = input message: '', parameters: [
+              string(name: params.string.name)]
+              env[params.string.name] = userInput
+          break 
+        case 'params.choice':
+          userInput = input message: '', parameters: [
+          choice(name: params.choice.name, choices: params.choice.choices)]
+          env[params.choice.name] = userInput
+        case 'params.password':
+          userInput = input parameters: [
+              password(name: '')]
+              env[params.password.name] = userInput
+
         }
     }
 }
