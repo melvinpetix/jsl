@@ -153,7 +153,7 @@ def inputParams(params){
         if(params.choice){
            // list choices = toString()
             userInput = input message: '', parameters: [choice(name: params.choice.name, 
-            choices: params.choice.choices.replaceAll(',','\n'))]
+            choices: params.choice.choices)]
             env[params.choice.name] = userInput
         }
         if(params.password){
