@@ -5,7 +5,9 @@ def call(yamlName){
     
     def common = new Common()
     common.loadKey()
-   
+    
+    def userInput
+    
     if(!yamlName || yamlName == 'debug'){ 
         try { interactiveShell() } catch(err){ 
             currentBuild.description = 'test/debug'
@@ -17,21 +19,21 @@ def call(yamlName){
     try{  
         
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-        
-        if(yaml.parameters){
-            stage('def parameters'){
+
+        if(yaml.parameters){               
+           stage('def parameters'){
                 yaml.parameters.each{params->
-                    timeout(time: 120, unit: 'SECONDS') {  
+                    timeout(time: 120, unit: 'SECONDS') {
                         switch(params.type){
                             case 'string':
-                            input message: '', parameters: [string(name: params.name)]; 
-                            break    
+                                userInput = input message: '', parameters: [string(name: params.name)]
+                                break    
                             case 'choice':
-                            input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
-                            break
+                                userInput = input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
+                                break
                             case 'password':
-                            input parameters: [password(name: '')]; 
-                            break           
+                                userInput = input parameters: [password(name: '')]; 
+                                break           
                         }
                     }
                 }
