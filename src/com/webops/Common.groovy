@@ -138,11 +138,11 @@ def loadKey(){
 } 
 
 def inputParams(params){
-   def userInput
+   //def userInput
    timeout(time: 120, unit: 'SECONDS') {  
         if(params == 'string'){
-            userInput = input message: '', parameters: [string(name: params.choice.name)]; 
-            env.${params.choice.name} = userInput
+            userInput = input message: '', parameters: [string(name: params.string.name)]; 
+            env.${params.string.name} = userInput
         }
         if(params == 'choice'){
             userInput = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]; 
