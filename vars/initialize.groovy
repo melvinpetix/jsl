@@ -1,5 +1,4 @@
-//@Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
-
+@Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 
 def call(){
  
@@ -10,10 +9,10 @@ def call(){
     def folders = sh(returnStdout: true, 
     script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")
   
-    String runbooks = """\n${folders}\n""" 
+    String jp = """\n${folders}\n""" 
 
-    properties([parameters([choice(choices: runbooks, name: 'runbook')])])
+    properties([parameters([choice(choices: "${jp}", name: 'runbook')])])
     
-    taskRunner params.runbooks
+    taskRunner params.runbook
   }  
 }
