@@ -1,8 +1,7 @@
 package com.webops;
 
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
-
-@Grab(group='org.yaml', module='snakeyaml', version='1.17')
+//@Grab(group='org.yaml', module='snakeyaml', version='1.17')
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
