@@ -35,10 +35,14 @@ def call(yamlName){
                                 userInput = input parameters: [password(name: '')]; 
                                 break           
                         }
+                        return env["${params.name}"] = userInput
                     }
                 }
             }
         }
+        
+        echo "${snapshot_date}"
+        
         if(yaml.environment){
             yaml.environment.each{env->
                 env.collect{k,v-> env."${k}"="${v}"}
