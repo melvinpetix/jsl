@@ -14,12 +14,24 @@ def call(yamlName){
         }
     }   
     
-    try{           
+    try{  
+        
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
-            common.stage("${yamlName} parameters"){
-              common.inputParams(yaml.parameters)          
+            def params = yaml.paramters               
+            timeout(time: 120, unit: 'SECONDS') {  
+                switch(params){
+                    case 'params.string':
+                        input message: '', parameters: [string(name: params.string.name)]; 
+                    break    
+                    case 'params.choice':
+                        input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]; 
+                    break
+                    case 'params.password':
+                        input parameters: [password(name: '')]; 
+                    break           
+                }
             }
         }
         if(yaml.environment){
