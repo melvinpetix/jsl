@@ -152,7 +152,7 @@ def inputParams(params){
            //params.name = userInput
         }
      
-        return env[params.name] = userInput
+        return env.params.name = userInput
    }    
      
 }
