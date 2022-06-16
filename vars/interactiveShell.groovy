@@ -1,6 +1,6 @@
 def call() {
   stage 'shell session'
-  timeout(time: 10, unit: 'MINUTES') {
+  timeout(time: 2, unit: 'MINUTES') {
     println "[Starting shell session]"
     String cmd = ''
     while (true) {
