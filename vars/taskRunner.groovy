@@ -40,9 +40,7 @@ def call(yamlName){
                 }
             }
         }
-        
-        echo "${snapshot_date}"
-        
+          
         if(yaml.environment){
             yaml.environment.each{env->
                 env.collect{k,v-> env."${k}"="${v}"}
@@ -54,9 +52,7 @@ def call(yamlName){
                 msg: "Started by: ${userName}", 
                 job: "${yaml.project_name}", 
                 url: "${yaml.notification.webhook}")
-       
         }
-        
         if(!yaml.steps){
             currentBuild.description = 'test/update'
             currentBuild.result = 'SUCCESS'
