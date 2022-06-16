@@ -19,18 +19,20 @@ def call(yamlName){
         def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
         
         if(yaml.parameters){
-            yaml.parameters.each{params->
-                timeout(time: 120, unit: 'SECONDS') {  
-                    switch(params.type){
-                        case 'string':
+            stage('def parameters'){
+                yaml.parameters.each{params->
+                    timeout(time: 120, unit: 'SECONDS') {  
+                        switch(params.type){
+                            case 'string':
                             input message: '', parameters: [string(name: params.name)]; 
-                        break    
-                        case 'choice':
+                            break    
+                            case 'choice':
                             input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
-                        break
-                        case 'password':
+                            break
+                            case 'password':
                             input parameters: [password(name: '')]; 
-                        break           
+                            break           
+                        }
                     }
                 }
             }
