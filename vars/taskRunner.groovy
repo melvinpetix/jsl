@@ -35,7 +35,7 @@ def call(yamlName){
                                 userInput = input parameters: [password(name: '')]; 
                                 break           
                         }
-                        return env["${params.name}"] = userInput
+                        return env."${params.name}" = userInput
                     }
                 }
             }
