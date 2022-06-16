@@ -142,14 +142,15 @@ def inputParams(params){
    def env
    timeout(time: 120, unit: 'SECONDS') {  
         if(params.string){
-            env["${params.string.name}"] = input message: '', parameters: [string(name: params.string.name)]
+            ${params.string.name} = input message: '', parameters: [string(name: params.string.name)]
         }
         if(params.choice){
-            env["${params.choice.name}"] = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)] 
+            ${params.choice.name} = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)] 
         }
         if(params.password){
-           env["${params.password.name}"] = input parameters: [password(name: '')]
+           ${params.password.name} = input parameters: [password(name: '')]
         }
+   
    }    
      
 }
