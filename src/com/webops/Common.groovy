@@ -141,18 +141,19 @@ def inputParams(params){
    def userInput
    timeout(time: 120, unit: 'SECONDS') {  
         if(params == 'string'){
-            userInput = input message: '', parameters: [string(name: params.name)]; 
+            userInput = input message: '', parameters: [string(name: params.choice.name)]; 
+            env.${params.choice.name} = userInput
         }
         if(params == 'choice'){
-            userInput = input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
-            //params.name = userInput
+            userInput = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]; 
+            env.${params.choice.name} = userInput
         }
         if(params == 'password'){
            userInput = input parameters: [password(name: '')]; 
-           //params.name = userInput
+            env.${params.password.name} = userInput
         }
      
-        return env.params.name = userInput
+        //return env.params.name = userInput
    }    
      
 }
