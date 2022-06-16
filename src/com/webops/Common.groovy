@@ -138,7 +138,7 @@ def loadKey(){
 } 
 
 def inputParams(params){
-   //def userInput
+   def userInput
    def env
    timeout(time: 120, unit: 'SECONDS') {  
         if(params.string){
