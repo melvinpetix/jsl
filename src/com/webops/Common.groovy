@@ -140,19 +140,21 @@ def loadKey(){
 def inputParams(params){
    def userInput
    timeout(time: 120, unit: 'SECONDS') {  
-        if(params.string){
-            userInput = input message: '', parameters: [string(name: params.string.name)]; 
-            params.string.name = userInput
+        if(params == 'string'){
+            userInput = input message: '', parameters: [string(name: params.name)]; 
         }
-        if(params.choice){
-            userInput = input message: '', parameters: [choice(name: params.choice.name, choices: params.choice.choices)]; 
-            params.choice.name = userInput
+        if(params == 'choice'){
+            userInput = input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
+            //params.name = userInput
         }
-        if(params.password){
+        if(params == 'password'){
            userInput = input parameters: [password(name: '')]; 
-           params.password.name = userInput
+           //params.name = userInput
         }
-    }
+     
+        return env[params.name] = userInput
+   }    
+     
 }
 
 def sshScp(source, destination, options=null){
