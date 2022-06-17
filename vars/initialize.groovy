@@ -12,7 +12,8 @@ def call(){
     String jp = """\n${folders}\n""" 
 
     properties([parameters([choice(choices: "${jp}", name: 'runbook')])])
-    
-    taskRunner params.runbook
-  }  
+
+  } 
+  stage 'define pipeline config'
+    taskRunner params.runbook  
 }
