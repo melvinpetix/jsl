@@ -14,6 +14,5 @@ def call(){
     properties([parameters([choice(choices: "${jp}", name: 'runbook')])])
 
   } 
-  stage 'define pipeline config'
     taskRunner params.runbook  
 }
