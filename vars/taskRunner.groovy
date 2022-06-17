@@ -19,28 +19,12 @@ def call(yamlName){
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
   try{   
-    if(yaml.parameters){               
-      common.stage('def parameters'){
-        yaml.parameters.each{params->
-          timeout(time: 120, unit: 'SECONDS') {
-            switch(params.type){
-              case 'string':
-                userInput = input message: '', parameters: [string(name: params.name)]
-                break    
-              case 'choice':
-                userInput = input message: '', parameters: [choice(name: params.name, choices: params.choices)]; 
-                break
-              case 'password':
-                userInput = input parameters: [password(name: '')]; 
-                break           
-            } 
-
-            return env."${params.name}" = userInput                     
-          }
-        }
-      }
-    }
-        
+    if(yaml.parameters){          
+      def myProps = readMyProps yaml.parameters
+      timeout(time: 120, unit: 'SECONDS') {
+        input parameters: myProps         
+      }      
+    }             
     if(yaml.environment){
       yaml.environment.each{env->
         env.collect{k,v-> env."${k}"="${v}"}
@@ -83,4 +67,22 @@ def call(yamlName){
   deleteDir()  
 }
     
+@NonCPS
+def readMyProps(parameters) {
+    parameters.collect { params ->
+      this.invokeMethod params.type, params.args.collectEntries { name, value ->
+        [
+          name, 
+          value instanceof String ? interp(value) : value
+        ]
+      }
+    }
+}
 
+@NonCPS
+def interp(value) {
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+}
