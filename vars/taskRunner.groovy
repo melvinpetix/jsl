@@ -21,6 +21,7 @@ def call(yamlName){
   try{   
     if(yaml.parameters){          
       def myProps = readMyProps yaml.parameters
+        
       timeout(time: 120, unit: 'SECONDS') {
         input parameters: myProps         
       }      
@@ -66,3 +67,16 @@ def call(yamlName){
 
   deleteDir()  
 }
+
+@NonCPS
+def readMyProps(parameters) {
+    parameters.collect { params ->
+      this.invokeMethod params.type, params.args.collectEntries { name, value ->
+        [
+          name, 
+          value instanceof String ? interp(value) : value
+        ]
+      }
+    }
+ }
+
