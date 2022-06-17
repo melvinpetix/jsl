@@ -70,11 +70,12 @@ def call(yamlName){
 
 @NonCPS
 def readMyProps(parameters) {
+    def common = new Common()
     parameters.collect { params ->
       this.invokeMethod params.type, params.args.collectEntries { name, value ->
         [
           name, 
-          value instanceof String ? interp(value) : value
+          value instanceof String ? common.interp(value) : value
         ]
       }
     }
