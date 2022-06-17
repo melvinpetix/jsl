@@ -73,7 +73,7 @@ def call(yamlName){
 def readMyProps(parameters) {
     parameters.collect { params ->
       this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [name, value instanceof String ]
+        [name, value.toString() ]
       }
     }
  }
