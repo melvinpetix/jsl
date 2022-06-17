@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.DumperOptions
 
 @NonCPS
 def exportEnv(value) {
-  new groovy.text.GStringTemplateEngine()
+  new GStringTemplateEngine()
     .createTemplate(value)
     .make([env:env])
     .toString()
