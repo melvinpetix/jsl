@@ -21,7 +21,7 @@ def call(yamlName){
   try{   
     if(yaml.parameters){          
       def myProps = readMyProps yaml.parameters
-        
+      stage 'define pipeline config'  
       timeout(time: 120, unit: 'SECONDS') {
         input parameters: myProps         
       }    
