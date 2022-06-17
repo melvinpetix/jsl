@@ -75,7 +75,7 @@ def readMyProps(parameters) {
       this.invokeMethod params.type, params.args.collectEntries { name, value ->
         [
           name, 
-          value instanceof String ? common.interp(value) : value
+          value instanceof String ? common.exportEnv(value) : value
         ]
       }
     }
