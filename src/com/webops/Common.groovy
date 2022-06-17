@@ -7,6 +7,14 @@ import org.yaml.snakeyaml.DumperOptions
 
 
 @NonCPS
+def exportEnv(value) {
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+}
+
+@NonCPS
 def constructString(ArrayList options, String keyOption, String separator = ' ') {
     return options.collect { keyOption + it }.join(separator).replaceAll('\n', '')
 }
