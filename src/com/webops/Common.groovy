@@ -1,5 +1,8 @@
 package com.webops;
 
+import groovy.text.GStringTemplateEngine;
+import groovy.text.Template;
+import groovy.text.TemplateEngine;
 import static org.yaml.snakeyaml.DumperOptions.FlowStyle.BLOCK
 //@Grab(group='org.yaml', module='snakeyaml', version='1.17')
 import org.yaml.snakeyaml.Yaml
