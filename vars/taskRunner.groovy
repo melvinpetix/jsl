@@ -23,7 +23,7 @@ def call(yamlName){
       def myProps = readMyProps yaml.parameters
       stage 'define pipeline config'  
       timeout(time: 120, unit: 'SECONDS') {
-        input parameters: myProps         
+        input parameters: myProps.toString         
       }    
         populateEnv
     }             
