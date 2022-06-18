@@ -17,7 +17,7 @@ def call(yaml){
                case 'password':
                  input parameters: [password(name: params.args.name)]; break           
              }  
-             return env."${params.args.name}" = params.args.name
+             return env."${params.args.name}" = "${params.args.name}"
            }     
          }
       }
