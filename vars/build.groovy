@@ -3,7 +3,7 @@ import com.webops.*
 
 def call(yaml){
    def common = new Common()
-   def yaml = readYaml file: yaml
+  // def yaml = readYaml file: yaml
   
    if(yaml.parameters){
       stage('pipeline parameters'){
