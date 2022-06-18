@@ -1,6 +1,8 @@
 #!groovy
+import com.webops.*
 
 def call(body){
+   def common = new Common()
    def config = body
    def yaml = readYaml file: 'runbook/' + config.yaml + '.yml'
   
@@ -24,14 +26,12 @@ def call(body){
          }
       }
    }
-   if(yaml.notification){
+   if(yaml.notification){    
       def userName = "${currentBuild.getBuildCauses()[0].userId}"
       common.sendTeamsNotif(
         msg: "Started by: ${userName}", 
         job: "${yaml.project_name}", 
         url: "${yaml.notification.webhook}"
       )
-    }
-   
-   
+    } 
 }
