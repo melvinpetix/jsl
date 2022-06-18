@@ -181,7 +181,7 @@ def parseParams(parameters) {
       this.invokeMethod params.type, params.args.collectEntries { name, value ->
         [
           name, 
-          value instanceof String
+          value.toString()
         ]
       }
     }
