@@ -18,14 +18,17 @@ def call(yamlName){
 
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  try{   
+  try{
+    build(yaml: yamlName)  
+      
+    /*
     if(yaml.parameters){          
       def myProps = common.parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         input parameters: myProps         
       }      
     } 
-    /* 
+     
     if(yaml.parameters){
        common.stage("${yamlName} parameters"){
            yaml.parameters.each{params->
@@ -33,6 +36,7 @@ def call(yamlName){
             }
        }    
     }
+    
     if(yaml.environment){
       yaml.environment.each{env->
         env.collect{k,v-> env."${k}"="${v}"}
