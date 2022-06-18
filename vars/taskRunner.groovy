@@ -26,6 +26,7 @@ def call(yamlName){
             input parameters: myProps    
         }
       }
+      populateEnv()  
     }
     if(yaml.environment){
       yaml.environment.each{env->
