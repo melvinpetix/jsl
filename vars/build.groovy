@@ -1,68 +1,31 @@
 #!groovy
 
-def Stage(String stageName, Closure stageCmd){
-  try{ 
-    stage(stageName){
-      stageCmd()
+def call(yamlName){
+   Map yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+   return yaml
+}
+
+def params(){
+  params = yaml.parameters
+  stage('build parameters'){
+    timeout(time: 120, unit: 'SECONDS') {  
+      switch(params.type){
+        case 'string':
+        userInput = input message: '', parameters: [string(name: params.args.name)]
+        break    
+        case 'choice':
+        userInput = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; 
+        break
+        case 'password':
+        userInput = input parameters: [password(name: password)]; 
+        break           
+     } 
+      return env."${params.args.name}" = userInput   
     }
- } catch(err){ 
-    error stageName + "Failed!! error:\n" + err 
-  }
-} 
-
-def execute(Map config){
-  def command = [:]
-  def args = "ssh -F + -tt "
-  
-  if(!config.server){
-    echo 'local[SHELL]'
-    ${command}
-  } else {  
-    def slist = config.server.toString().split(',')
-    if(slist.size() > 1){ 
-        for(i in slist){ 
-            def s = i.trim()
-          command[s] = { sh("${args} ${s} ${config.cmd}") }
-        } 
-        parallel command
-    } else {
-        sh("${args} ${config.server} ${config.cmd}")
-        
-    } 
   }
 }
 
-def shCommand(String server, String command){
-  def args = "ssh -F + -t"
-  sh """#!/bin/bash\nset +x; ${args} ${server} \"export TERM=xterm-256color; 
-  set -x; ${command}\"
-  """
-}
-
-def params(yamlName){
-  def userInput
-  def j = readYaml file: "runbook/${yamlName}.yml"
-
-  if(j.parameters.string){
-    userInput = input parameters: [string(defaultValue: '', 
-    description: j.parameters.string.description.toString(), 
-    name: j.parameters.string.name.toString())]
-    env["${j.parameters.string.name}"] = userInput
-  }
-  if(j.parameters.choice){
-    list choices = j.parameters.choice.choices
-    userInput = input parameters: [
-    choice(choices: choices ,name: j.parameters.choice.name)]
-    env["${j.parameters.choice.name}"] = userInput    
-  }
-  if(j.parameters.password){
-    P4SSWORD = input parameters: [
-    password(name: '')] 
-    env["${j.parameters.password.name}"] = P4SSWORD
-  }       
-}
-
-def notifier(String buildStatus, String jobName, webhookUrl) {     
+def notification(String buildStatus, String jobName, webhookUrl) {     
   if(currentBuild.result == ('FAILURE')){
     emoji = "???"
     COLOR = "ff0000"
