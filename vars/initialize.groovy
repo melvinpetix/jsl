@@ -2,18 +2,13 @@
 
 def call(){
  
- node {
-    
-  checkout scm
-  
+ node {    
+  checkout scm  
+  if(!params.runbook || params.runbook == 'null'){ 
     def folders = sh(returnStdout: true, 
-    script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")
-  
+    script: "ls $WORKSPACE/runbook").replaceAll(".yml", "")  
     String jp = """\n${folders}\n""" 
-
-    properties([parameters([choice(choices: "${jp}", name: 'runbook')])])
-     
-    taskRunner params.runbook 
-  } 
-     
+    properties([parameters([choice(choices: "${jp}", name: 'runbook')])])   
+  }   
+ taskRunner params.runbook   
 }
