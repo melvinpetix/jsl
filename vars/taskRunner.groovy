@@ -19,6 +19,9 @@ def call(yamlName){
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
   try{   
+    build(yamlName)
+      
+    /* 
     if(yaml.parameters){
        common.stage("${yamlName} parameters"){
            yaml.parameters.each{params->
@@ -39,7 +42,7 @@ def call(yamlName){
         url: "${yaml.notification.webhook}"
       )
     }
-
+   */
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
