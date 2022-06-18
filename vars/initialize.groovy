@@ -9,7 +9,9 @@ def call(){
       String jp = """\n${folders}\n""" 
       properties([parameters([choice(choices: "${jp}", name: 'runbook')])])   
    } else {
-    node(jenkins_agent){  
-     taskRunner params.runbook   
-  }
+       node(jenkins_agent){  
+         checkout scm  
+         taskRunner params.runbook   
+       }
+   }
 }
