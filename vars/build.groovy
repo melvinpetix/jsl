@@ -19,12 +19,12 @@ def params(){
             case 'password':
             userInput = input parameters: [password(name: password)]; 
             break           
-         }    
+          }    
+        }
+         return env."${params.args.name}" = userInput    
       }
-      return env."${params.args.name}" = userInput    
    }
 }
-
 def notification(String buildStatus, String jobName, webhookUrl) {     
   if(currentBuild.result == ('FAILURE')){
     emoji = "???"
