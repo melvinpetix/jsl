@@ -3,7 +3,7 @@
 def call(yamlName){
    def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
 }
-def params(yamlName){
+def params(){
   stage('build parameters'){
      yaml.parameters.each{params->
       timeout(time: 120, unit: 'SECONDS') {  
