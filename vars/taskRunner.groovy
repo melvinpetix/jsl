@@ -9,7 +9,7 @@ def call(yamlName){
   def userInput
   
   if(!yamlName || yamlName == 'debug'){ 
-    try { interactiveShell() } catch(err){ 
+    try { interactiveGroovy() } catch(err){ 
       currentBuild.description = 'test/debug'
       currentBuild.result = 'SUCCESS'
       return   
@@ -73,7 +73,7 @@ def call(yamlName){
 def readMyProps(parameters) {
     parameters.collect { params ->
       this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [name, value].toString()
+        [name, value.toString()]
       }
     }
  }
