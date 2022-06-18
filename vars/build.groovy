@@ -6,10 +6,19 @@ def call(body){
    def config = body
    def yaml = readYaml file: 'runbook/' + config.yaml + '.yml'
   
-   if(yaml.parameters){     
+   if(yaml.parameters){
+      def paramsConfig = parseParams yaml.parameters
       stage('pipeline parameters'){
         timeout(time: 120, unit: 'SECONDS') {  
-          yaml.parameters.each{params->   
+          input parameters: paramsConfig
+             
+        }
+      }
+   }
+             
+             /*
+             
+             
             switch(params.type){
                case 'string':
                userInput = input message: '', parameters: [string(name: params.args.name)]
@@ -26,6 +35,8 @@ def call(body){
          }
       }
    }
+   
+   */
    if(yaml.notification){    
       def userName = "${currentBuild.getBuildCauses()[0].userId}"
       common.sendTeamsNotif(
@@ -35,3 +46,24 @@ def call(body){
       )
     } 
 }
+
+@NonCPS
+def parseParams(parameters) {
+    parameters.collect { params ->
+      this.invokeMethod params.type, params.args.collectEntries { name, value ->
+        [
+          name, 
+          value instanceof String ? interp(value) : value
+        ]
+      }
+    }
+}
+
+@NonCPS
+def interp(value) {
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+}
+
