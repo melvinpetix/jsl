@@ -10,7 +10,7 @@ def call(body){
           yaml.parameters.each{params->   
             switch(params.type){
                case 'string':
-               userInput = input message: '', parameters: [params.type(params.args)]
+               userInput = input message: '', parameters: [params.type(params.args.toString())]
                break    
                case 'choice':
                userInput = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; 
