@@ -21,8 +21,10 @@ def call(yamlName){
   try{   
     if(yaml.parameters){
        common.stage("${yamlName} parameters"){
-            common.inputParams(yaml.parameters)          
-        }
+           yaml.parameters.each{params->
+               common.inputParams(params)
+            }
+       }    
     }
     if(yaml.environment){
       yaml.environment.each{env->
