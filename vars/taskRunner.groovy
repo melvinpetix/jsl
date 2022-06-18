@@ -20,13 +20,10 @@ def call(yamlName){
   
   try{   
     if(yaml.parameters){          
-      def myProps = readMyProps yaml.parameters
-      stage 'define pipeline config'  
-      timeout(time: 120, unit: 'SECONDS') {
-        input parameters: myProps   
-      }    
-        populateEnv
-    }             
+        common.stage('set parameters'){
+            common.inputParams(yaml.parameters)           
+        }
+    }        
     if(yaml.environment){
       yaml.environment.each{env->
         env.collect{k,v-> env."${k}"="${v}"}
@@ -71,9 +68,11 @@ def call(yamlName){
 
 @NonCPS
 def readMyProps(parameters) {
+
     parameters.collect { params ->
-      this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [name, value.toString()]
+        if(params.type == 'choice'){
+            this.invokeMethod params.type, params.args.collectEntries { name, value ->
+        [name, value instanceof String ]
       }
     }
  }
