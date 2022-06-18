@@ -19,7 +19,7 @@ def call(yamlName){
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
   try{   
-    build(yamlName)
+    build(yaml: yamlName)
       
     /* 
     if(yaml.parameters){
@@ -70,28 +70,3 @@ def call(yamlName){
 
   deleteDir()  
 }
-
-@NonCPS
-def readMyProps(parameters) {
-    parameters.collect { params ->
-      this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [
-          name, 
-          value.toString()
-        ]
-      }
-    }
-}
-
-
-@NonCPS
-def interp(value) {
-  new groovy.text.GStringTemplateEngine()
-    .createTemplate(value)
-    .make([env:env])
-    .toString()
-}
-
-@NonCPS
-    def populateEnv(){ binding.variables.each{k,v -> env."$k" = "$v"} }
-
