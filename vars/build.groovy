@@ -1,11 +1,9 @@
 #!groovy
 
 def call(yamlName){
-   Map yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-   return yaml
+   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
 }
-
-def params(){
+def params(yamlName){
   stage('build parameters'){
      yaml.parameters.each{params->
       timeout(time: 120, unit: 'SECONDS') {  
@@ -19,21 +17,9 @@ def params(){
             case 'password':
             userInput = input parameters: [password(name: password)]; 
             break           
-          }    
-        }
-         return env."${params.args.name}" = userInput    
+          }  
+         return env."${params.args.name}" = userInput
+        }     
       }
    }
-}
-def notification(String buildStatus, String jobName, webhookUrl) {     
-  if(currentBuild.result == ('FAILURE')){
-    emoji = "???"
-    COLOR = "ff0000"
-  } else {
-    emoji = "????"
-    COLOR = "00FF00"
-  }  
-   sh "curl -X POST -H \'Content-Type: application/json\'\
-  -d \'{\"title\": \"${emoji}Unified-Notifier: ${params.SNAPSHOT}\",\
-    \"themeColor\": \"${COLOR}\", \"text\": \"${buildStatus}\" }' ${webhookUrl}"
 }
