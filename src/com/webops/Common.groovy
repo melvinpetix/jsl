@@ -71,7 +71,7 @@ def execute(Map config){
   
   if(!config.server){
     echo 'local[SHELL]'
-    ${command}
+    sh config.cmd
   } else {  
     def slist = config.server.toString().split(',')
     if(slist.size() > 1){ 
