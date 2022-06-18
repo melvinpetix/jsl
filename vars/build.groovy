@@ -10,13 +10,13 @@ def call(body){
           yaml.parameters.each{params->   
             switch(params.type){
                case 'string':
-               userInput = input message: '', parameters: [params.type(params.args.toString())]
+               userInput = input message: '', parameters: [string(name: params.args.name)]
                break    
                case 'choice':
                userInput = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; 
                break
                case 'password':
-               userInput = input parameters: [password(name: password)]; 
+               userInput = input parameters: [password(name: params.args.name)]; 
                break           
              }  
                return env."${params.args.name}" = userInput
