@@ -2,18 +2,15 @@
 
 def call(body){
    def config = body
-   def yamlName = config.yaml
-   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-   //def params = yaml.parameters
-   //def notification = yaml.notification
-   stage('define pipeline config'){
-      def userInput
-      if(yaml.parameters){     
+   def yaml = readYaml file: 'runbook/' + config.yaml + '.yml'
+  
+   if(yaml.parameters){     
+      stage('pipeline parameters'){
         timeout(time: 120, unit: 'SECONDS') {  
           yaml.parameters.each{params->   
             switch(params.type){
                case 'string':
-               userInput = input message: '', parameters: [string(name: params.args.name)]
+               userInput = input message: '', parameters: string(params.args.toString())
                break    
                case 'choice':
                userInput = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; 
@@ -27,4 +24,14 @@ def call(body){
          }
       }
    }
+   if(yaml.notification){
+      def userName = "${currentBuild.getBuildCauses()[0].userId}"
+      common.sendTeamsNotif(
+        msg: "Started by: ${userName}", 
+        job: "${yaml.project_name}", 
+        url: "${yaml.notification.webhook}"
+      )
+    }
+   
+   
 }
