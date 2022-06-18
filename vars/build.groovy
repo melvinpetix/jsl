@@ -6,18 +6,19 @@ def call(yaml){
   // def yaml = readYaml file: yaml
   
    if(yaml.parameters){
+      def var
       stage('pipeline parameters'){
         timeout(time: 120, unit: 'SECONDS') {  
            yaml.parameters.each{params->
             switch(params.type){
                case 'string':
-                 input message: '', parameters: [string(name: params.args.name)]; break    
+                 var = input message: '', parameters: [string(name: params.args.name)]; break    
                case 'choice':
-                 input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
+                 var = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
                case 'password':
-                 input parameters: [password(name: params.args.name)]; break           
+                 var = input parameters: [password(name: params.args.name)]; break           
              }  
-             return env."${params.args.name}" = "${params.args.name}"
+             return env."${params.args.name}" = var
            }     
          }
       }
