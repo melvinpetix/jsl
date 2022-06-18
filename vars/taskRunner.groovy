@@ -20,12 +20,9 @@ def call(yamlName){
   
   try{   
     if(yaml.parameters){
-      def myProps = readMyProps yaml.parameters
-      common.stage('build parameters'){  
-        timeout(time: 120, unit: 'SECONDS') {
-            input parameters: myProps    
+       common.stage("${yamlName} parameters"){
+            common.inputParams(yaml.parameters)          
         }
-      }
     }
     if(yaml.environment){
       yaml.environment.each{env->
