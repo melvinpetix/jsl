@@ -68,14 +68,24 @@ def call(yamlName){
 
 @NonCPS
 def readMyProps(parameters) {
-
     parameters.collect { params ->
-        if(params.type == 'choice'){
-            this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [name, value instanceof String ]
+      this.invokeMethod params.type, params.args.collectEntries { name, value ->
+        [
+          name, 
+          value instanceof String ?: value
+        ]
       }
     }
- }
+}
+
+
+@NonCPS
+def interp(value) {
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+}
 
 @NonCPS
     def populateEnv(){ binding.variables.each{k,v -> env."$k" = "$v"} }
