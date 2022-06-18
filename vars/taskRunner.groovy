@@ -2,7 +2,7 @@
 import com.webops.*;
 
 def call(yamlName){
-    
+  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   def common = new Common()
   common.loadKey()
   
@@ -15,11 +15,39 @@ def call(yamlName){
       return   
     }
   } 
-
-  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-  
+    
   try{
-    build(yaml: yamlName)  
+      
+    build(yaml)  
+
+    if(!yaml.steps){
+      currentBuild.description = 'test/update'
+      currentBuild.result = 'SUCCESS'
+      return    
+    }  
+      
+    else {
+      list steplist = yaml.steps
+      steplist.each{step->
+        common.stage(step.name){
+          list commands = step.command
+          commands.each{command->
+            common.execute(cmd: command, server: step.server) 
+          }
+        }
+      }  
+    }
+  } 
+  catch(err){
+      def msg = "execution failed with the following error\n"
+      println err
+      currentBuild.result = 'FAILURE'
+      deleteDir()      
+  }
+
+  deleteDir()  
+}
+
       
     /*
     if(yaml.parameters){          
@@ -51,30 +79,3 @@ def call(yamlName){
       )
     }
    */
-    if(!yaml.steps){
-      currentBuild.description = 'test/update'
-      currentBuild.result = 'SUCCESS'
-      return    
-    }  
-      
-    else {
-      list steplist = yaml.steps
-      steplist.each{step->
-        common.stage(step.name){
-          list commands = step.command
-          commands.each{command->
-            common.execute(cmd: command, server: step.server) 
-          }
-        }
-      }  
-    }
-  } 
-  catch(err){
-      def msg = "execution failed with the following error\n"
-      println err
-      currentBuild.result = 'FAILURE'
-      deleteDir()      
-  }
-
-  deleteDir()  
-}
