@@ -19,18 +19,19 @@ def call(yamlName){
 
     if(yaml.parameters){
       def inputPrompt = parseParams yaml.parameters
+      list params = yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         //yaml.parameters.each{params->  
           input parameters: inputPrompt     
       }             
-      
+    
       println snapshot_date
       println choicesample
       println username
       println yaml.parameters.args.name
       
     }
-    }
+    
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
