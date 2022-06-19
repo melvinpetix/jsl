@@ -1,6 +1,6 @@
 def call() {
   timeout(time: 10, unit: 'MINUTES') {
-    echo "[Groovy Shell] ***** Starting interactive Groovy shell *****"
+    echo "[Groovy Shell]"
     String gscript = ''
     while (true) {
       gscript = input(id: 'gscript', message: 'Groovy Script:', parameters: [
