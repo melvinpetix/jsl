@@ -1,4 +1,3 @@
-@Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
 import com.webops.*;
 
 def call(yamlName){
