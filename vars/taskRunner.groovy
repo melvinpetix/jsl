@@ -15,9 +15,9 @@ def call(yamlName){
       return   
     }
   } 
-
-  build(yaml)  
-
+  try{
+    build(yaml)  
+    
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
