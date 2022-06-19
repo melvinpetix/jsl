@@ -29,7 +29,7 @@ def call(yamlName){
       println username
       
     }
-    
+    }
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
