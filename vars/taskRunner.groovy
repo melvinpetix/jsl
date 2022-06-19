@@ -4,9 +4,7 @@ def call(yamlName){
   
   def common = new Common()
   common.loadKey()
-  
-  def userInput
-  
+
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
       currentBuild.description = 'test/debug'
@@ -14,7 +12,9 @@ def call(yamlName){
       return   
     }
   } 
+  
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
   try{
     
     if(yaml.parameters){
@@ -57,14 +57,14 @@ def parseParams(parameters) {
     this.invokeMethod params.type, 
     params.args.collectEntries { name, value ->
       [
-        name, value instanceof String ? interp(value) : value
+        name, value instanceof String ? exportEnv(value) : value
       ]
     }
   }
 }
 
 @NonCPS
-def interp(value) {
+def exportEnv(value) {
   new groovy.text.GStringTemplateEngine()
     .createTemplate(value)
     .make([env:env])
