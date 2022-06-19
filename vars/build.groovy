@@ -4,23 +4,35 @@ import com.webops.*
 def call(yaml){
    def common = new Common()
    if(yaml.parameters){
-      def var
+      def userInput
       stage('pipeline parameters'){
         timeout(time: 120, unit: 'SECONDS') {  
            yaml.parameters.each{params->
             switch(params.type){
                case 'string':
-                 var = input parameters: [string(name: params.args.name)]; break    
+                 userInput = input parameters: [string(name: params.args.name)]; break    
                case 'choice':
-                 var = input parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
+                 userInput = input parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
                case 'password':
-                 var = input parameters: [password(name: params.args.name)]; break           
+                 userInput = input parameters: [password(name: params.args.name)]; break           
              }  
-             return env."${params.args.name}" = var
+             return env."${params.args.name}" = userInput
            }     
          }
       }
    }
+   
+   println """
+   
+   ${choicesample}
+   
+   ${username}
+   
+   ${password}
+   
+   ${snapshot_date}
+   
+   """
    
   if(yaml.notification){    
     def userName = "${currentBuild.getBuildCauses()[0].userId}"
