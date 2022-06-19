@@ -20,13 +20,14 @@ def call(yamlName){
     if(yaml.parameters){
       def inputPrompt = parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
-        yaml.parameters.collect{p->  
-        p.args.name = input parameters: inputPrompt     
+        //yaml.parameters.each{params->  
+          input parameters: inputPrompt     
       }             
       
       println snapshot_date
       println choicesample
       println username
+      println yaml.parameters.args.name
       
     }
     }
