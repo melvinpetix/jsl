@@ -20,7 +20,8 @@ def call(yamlName){
     if(yaml.parameters){
       def inputPrompt = parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
-          yaml.parameters.args.name = input parameters: inputPrompt     
+        yaml.parameters.collect{p->  
+        p.args.name = input parameters: inputPrompt     
       }             
       
       println snapshot_date
