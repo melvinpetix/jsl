@@ -1,4 +1,4 @@
-@Library(value="github.com/melvinpetix/jsl@main", changelog=false)_
+@Library(value="webops@main")_
 
 def call(){
   node(jenkins_agent){        
