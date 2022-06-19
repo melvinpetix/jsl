@@ -3,8 +3,6 @@ import com.webops.*
 
 def call(yaml){
    def common = new Common()
-  // def yaml = readYaml file: yaml
-  
    if(yaml.parameters){
       def var
       stage('pipeline parameters'){
@@ -12,9 +10,9 @@ def call(yaml){
            yaml.parameters.each{params->
             switch(params.type){
                case 'string':
-                 var = input message: '', parameters: [string(name: params.args.name)]; break    
+                 var = input parameters: [string(name: params.args.name)]; break    
                case 'choice':
-                 var = input message: '', parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
+                 var = input parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
                case 'password':
                  var = input parameters: [password(name: params.args.name)]; break           
              }  
@@ -24,13 +22,12 @@ def call(yaml){
       }
    }
    
-   if(yaml.notification){    
-      def userName = "${currentBuild.getBuildCauses()[0].userId}"
-      common.sendTeamsNotif(
-        msg: "Started by: ${userName}", 
-        job: "${yaml.project_name}", 
-        url: "${yaml.notification.webhook}"
-      )
-    } 
+  if(yaml.notification){    
+    def userName = "${currentBuild.getBuildCauses()[0].userId}"
+    common.sendTeamsNotif(
+      msg: "Started by: ${userName}", 
+      job: "${yaml.project_name}", 
+      url: "${yaml.notification.webhook}"
+    )
+  } 
 }
-
