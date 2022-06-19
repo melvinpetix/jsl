@@ -19,10 +19,10 @@ def call(yamlName){
 
     if(yaml.parameters){
       def userInput
-      def myProps = readMyProps yaml.parameters
+      def inputPrompt = parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         yaml.parameters.each{->
-          userInput = input parameters: myProps 
+          userInput = input parameters: inputPrompt 
             env[yaml.parameters.args.name] = userInput
         }      
       }             
