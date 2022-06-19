@@ -2,7 +2,7 @@
 import com.webops.*;
 
 def call(yamlName){
-  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
   def common = new Common()
   common.loadKey()
   
@@ -15,7 +15,9 @@ def call(yamlName){
       return   
     }
   } 
+  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   try{
+    
     build(yaml)  
     
     if(!yaml.steps){
