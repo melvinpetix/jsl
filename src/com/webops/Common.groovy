@@ -10,14 +10,6 @@ import org.yaml.snakeyaml.DumperOptions
 
 
 @NonCPS
-def exportEnv(value) {
-  new GStringTemplateEngine()
-    .createTemplate(value)
-    .make([env:env])
-    .toString()
-}
-
-@NonCPS
 def constructString(ArrayList options, String keyOption, String separator = ' ') {
     return options.collect { keyOption + it }.join(separator).replaceAll('\n', '')
 }
@@ -71,7 +63,7 @@ def execute(Map config){
   
   if(!config.server){
     echo 'local[SHELL]'
-    sh config.cmd
+    config.cmd
   } else {  
     def slist = config.server.toString().split(',')
     if(slist.size() > 1){ 
