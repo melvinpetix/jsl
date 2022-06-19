@@ -20,7 +20,7 @@ def call(yamlName){
     if(yaml.parameters){
       def inputProp = parseParams yaml.parameters
       stage 'parameters'
-       yaml.parameters.name = input parameters: inputProp   
+       input parameters: inputProp   
        println "${params.snapshot_date}"
        println "${params.username}"
        println "${params.password}"
