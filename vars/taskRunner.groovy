@@ -17,7 +17,15 @@ def call(yamlName){
   
   try{ 
 
-    build(yaml)
+    if(yaml.parameters){
+      def userInput
+      def myProps = readMyProps yaml.parameters
+      timeout(time: 120, unit: 'SECONDS') {
+        yaml.parameters.each{->
+          userInput = input parameters: myProps 
+          env[yaml.parameters.args.name] = userInput
+      }      
+    }             
 
     if(!yaml.steps){
       currentBuild.description = 'test/update'
