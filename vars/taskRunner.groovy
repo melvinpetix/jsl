@@ -23,7 +23,7 @@ def call(yamlName){
       timeout(time: 120, unit: 'SECONDS') {
         yaml.parameters.each{->
           userInput = input parameters: inputPrompt 
-            env[yaml.parameters.args.name] = userInput
+            env.${yaml.parameters.args.name} = userInput
         }      
       }             
     }
