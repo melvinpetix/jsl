@@ -15,25 +15,10 @@ def call(yamlName){
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  try{
-    
-    if(yaml.parameters){
-      def inputProp = parseParams yaml.parameters
-      stage 'parameters'
-       input parameters: inputProp   
-       println "${params.snapshot_date}"
-       println "${params.username}"
-       println "${params.password}"
-       println "${params.choicesample}"
-       println env.snapshot_date
-       println env.username
-       println env.choicesample
-       
-        params.each {param ->
-          println "${param.key} -> ${param.value} "
-        }
-      
-    }
+  try{ 
+
+    build(yaml)
+
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
