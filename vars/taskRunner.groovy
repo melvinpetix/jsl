@@ -65,9 +65,11 @@ def readMyProps(parameters) {
 
 @NonCPS
 def interp(value) {
-  def engine = new groovy.text.GStringTemplateEngine()    
-  template = engine.createTemplate(value).make([env:env]).toString()
-}            
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+}        
      
     /*
     if(yaml.parameters){          
