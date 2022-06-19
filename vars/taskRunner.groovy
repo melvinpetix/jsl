@@ -18,12 +18,8 @@ def call(yamlName){
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   try{
     
-    if(yaml.parameters){
-      def myProp = readMyProps yaml.parameters
-      stage 'parameters'
-      input parameters: myProp
-      
-    }
+    build(yaml)  
+    
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
@@ -52,24 +48,7 @@ def call(yamlName){
   deleteDir()  
 }
 
-@NonCPS
-def readMyProps(parameters) {
-    parameters.collect { params ->
-      this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [
-          name, 
-          value instanceof String ? interp(value) : value
-        ]
-      }
-    }
-}
-
-@NonCPS
-def interp(value) {
-  def engine = new groovy.text.GStringTemplateEngine()    
-  template = engine.createTemplate(value).make([env:env]).toString()
-}            
-     
+      
     /*
     if(yaml.parameters){          
       def myProps = common.parseParams yaml.parameters
