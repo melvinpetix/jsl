@@ -17,8 +17,14 @@ def call(yamlName){
   } 
     
   try{
-      
-    build(yaml)  
+    if(yaml.parameters){
+      def test = yaml.parameters.collect {params->
+        params.type, params.args.collectEntries{ name, value -> [name, value] }
+      }
+      input parameters: test
+    }
+    
+    //build(yaml)  
 
     if(!yaml.steps){
       currentBuild.description = 'test/update'
