@@ -25,9 +25,9 @@ def call(yamlName){
           input parameters: inputPrompt     
       }             
     
-      println snapshot_date
-      println choicesample
-      println username
+      println "${snapshot_date}"
+      println "${choicesample}"
+      println "${username}"
       println yaml.parameters.args.name
       
     }
