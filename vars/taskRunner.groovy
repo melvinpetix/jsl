@@ -20,8 +20,11 @@ def call(yamlName){
     if(yaml.parameters){
       def inputProp = parseParams yaml.parameters
       stage 'parameters'
-      input parameters: inputProp
-      
+       yaml.parameters.name = input parameters: inputProp   
+       println "${params.snapshot_date}"
+       println "${params.username}"
+       println "${params.password}"
+       println "${params.choicesample}"
     }
     if(!yaml.steps){
       currentBuild.description = 'test/update'
@@ -61,6 +64,7 @@ def parseParams(parameters) {
       ]
     }
   }
+  env.${params.name} = params.name
 }
 
 @NonCPS
