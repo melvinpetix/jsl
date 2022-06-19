@@ -8,7 +8,7 @@ def call(yamlName){
   
   def userInput
   
-  if(!yamlName || yamlName == 'debug'){ 
+  if(!yamlName || yamlName == 'null'){ 
     try { interactiveGroovy() } catch(err){ 
       currentBuild.description = 'test/debug'
       currentBuild.result = 'SUCCESS'
