@@ -25,6 +25,14 @@ def call(yamlName){
        println "${params.username}"
        println "${params.password}"
        println "${params.choicesample}"
+       println env.snapshot_date
+       println env.username
+       println env.choicesample
+       
+        params.each {param ->
+          println "${param.key} -> ${param.value} "
+        }
+      
     }
     if(!yaml.steps){
       currentBuild.description = 'test/update'
@@ -64,7 +72,6 @@ def parseParams(parameters) {
       ]
     }
   }
-  env.${params.name} = params.name
 }
 
 @NonCPS
