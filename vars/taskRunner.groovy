@@ -22,10 +22,11 @@ def call(yamlName){
       timeout(time: 120, unit: 'SECONDS') {
         yaml.parameters.each{params->
           params.args.name = input parameters: inputPrompt 
-            env.${params.args.name} = params.args.name
+          println params.args.name    
         }      
       }             
     }
+    
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
