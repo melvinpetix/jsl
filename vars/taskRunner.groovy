@@ -19,7 +19,7 @@ def call(yamlName){
   try{
     if(yaml.parameters){
       def test = yaml.parameters.collect {params->
-        params.type, params.args.collectEntries{ name, value -> [name, value] }
+        params.type params.args.collectEntries{ name, value -> [name, value] }
       }
       input parameters: test
     }
