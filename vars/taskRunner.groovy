@@ -18,9 +18,9 @@ def call(yamlName){
   try{
     
     if(yaml.parameters){
-      def myProp = readMyProps yaml.parameters
+      def inputProp = parseParams yaml.parameters
       stage 'parameters'
-      input parameters: myProp
+      input parameters: inputProp
       
     }
     if(!yaml.steps){
