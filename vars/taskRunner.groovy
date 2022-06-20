@@ -14,13 +14,13 @@ def call(yamlName){
       return   
     }
   } 
- 
-  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
-
   def userInput
   
+  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
+  ProjectConfiguration projectConfig = PipelineBuilder.parse(yaml, env);
+
   try{ 
 
     if(yaml.parameters){
