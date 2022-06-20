@@ -9,7 +9,6 @@ import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
 
-
 @NonCPS
 def parseParams(parameters) {
   parameters.collect { params ->
@@ -187,27 +186,5 @@ def sshScp(source, destination, options=null){
   def sshArgs = '-F +'
     sshCmd("scp ${sshArgs} ${source} ${destination}")
 }
-
-
-@NonCPS
-def parseParams(parameters) {
-    parameters.collect { params ->
-      this.invokeMethod params.type, params.args.collectEntries { name, value ->
-        [
-          name, 
-          value.toString()
-        ]
-      }
-    }
-}
-
-@NonCPS
-def interp(value) {
-  new groovy.text.GStringTemplateEngine()
-    .createTemplate(value)
-    .make([env:env])
-    .toString()
-}
-
 
     
