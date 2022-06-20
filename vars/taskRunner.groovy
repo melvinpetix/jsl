@@ -1,5 +1,8 @@
-@Library('webops@main')_
-import com.webops.*;
+import com.webops.Common;
+
+import com.wenops.PipelineBuilder;
+
+import com.webops.ProjectConfiguration;
 
 
 def call(yamlName){
