@@ -22,13 +22,10 @@ def call(yamlName){
       list params = yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         userInput = input parameters: inputPrompt     
-      }             
-    
-      println "${userInput.snapshot_date}"
-      println "${userInput.choicesample}"
-      println "${userInput.username}"
-      println yaml.parameters.args.name
-      
+      } 
+      userInput.each{->
+        println userInput
+      }
     }
     
     if(!yaml.steps){
