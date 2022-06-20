@@ -17,9 +17,10 @@ def call(yamlName){
   def userInput
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-  PipelineBuilder = new PipelineBuilder()
-  .parseParameters(yaml.parameters)
-  .parseNotification(yaml.notification)
+  
+  PipelineBuilder builder = new PipelineBuilder()
+  builder.parseParameters(yaml.parameters)
+  builder.parseNotification(yaml.notification)
   
   try{ 
 
