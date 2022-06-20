@@ -70,3 +70,4 @@ def parseNotification(yaml){
     }
     return yaml.project_name
   }
+}
