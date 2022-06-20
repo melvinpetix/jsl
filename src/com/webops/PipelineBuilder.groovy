@@ -7,10 +7,8 @@ class PipelineBuilder implements Serializable {
 
 def yaml  
   
-def parameters
-
 def userInput
-  
+
 def parseParameters(def parameters){
   def userInput
   if(yaml.parameters){ 
@@ -19,8 +17,8 @@ def parseParameters(def parameters){
       userInput = step.input parameters: inputPrompt     
     } 
     userInput.each{x,v-> env."$x"="$v"}      
-}
-  
+  }
+}  
 @NonCPS
 def parseParams(parameters) {
   parameters.collect { params ->
