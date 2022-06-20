@@ -23,9 +23,10 @@ def call(yamlName){
       timeout(time: 120, unit: 'SECONDS') {
         userInput = input parameters: inputPrompt     
       } 
-      userInput.each{->
-        println userInput
-      }
+      userInput.each{x,v-> env."$x"="$v"}
+      println snapshot_date
+      println username
+      
     }
     
     if(!yaml.steps){
