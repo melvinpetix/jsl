@@ -14,7 +14,7 @@ class PipelineBuilder implements Serializable {
     return projectConfiguration;
  }
   
-def parseParameters(yaml.parameters){
+def parseParameters(def parameters){
   def userInput
   if(yaml.parameters){ 
     def inputPrompt = parseParams yaml.parameters
