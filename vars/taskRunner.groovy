@@ -1,6 +1,6 @@
 import com.webops.Common;
 
-import com.wenops.PipelineBuilder;
+import com.webops.PipelineBuilder;
 
 import com.webops.ProjectConfiguration;
 
