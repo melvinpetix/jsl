@@ -5,13 +5,11 @@ import com.webops.Common;
 
 class PipelineBuilder implements Serializable {
 
-  ProjectConfiguration parse(yaml) {
-    ProjectConfiguration projectConfiguration = new ProjectConfiguration();  
-    projectConfiguration.parseProjectName = parseProjectName(yaml.project_name);
-    projectConfiguration.parameters = parseParameters(yaml.parameters);
-    projectConfiguration.notification = parseNotification(yaml.notification);    
-    return projectConfiguration;
- }
+def yaml  
+  
+def parameters
+
+def userInput
   
 def parseParameters(def parameters){
   def userInput
