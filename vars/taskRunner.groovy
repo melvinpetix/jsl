@@ -12,7 +12,7 @@ def call(yamlName){
       return   
     }
   } 
-  
+  def userInput
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
   try{ 
@@ -21,13 +21,12 @@ def call(yamlName){
       def inputPrompt = parseParams yaml.parameters
       list params = yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
-        //yaml.parameters.each{params->  
-          input parameters: inputPrompt     
+        userInput = input parameters: inputPrompt     
       }             
     
-      println "${snapshot_date}"
-      println "${choicesample}"
-      println "${username}"
+      println "${userInput.snapshot_date}"
+      println "${userInput.choicesample}"
+      println "${userInput.username}"
       println yaml.parameters.args.name
       
     }
