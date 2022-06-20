@@ -56,17 +56,13 @@ def parseNotification(yaml){
     } 
   }
 
-  def parseEnvironment(def environment) {
-    if (!environment) {
-      return ''
-    }
-    
+  def parseEnvironment(def environment) {    
     return environment.collect { k, v -> "${k}=${v}"}
   }
 
   def parseProjectName(def project_name) {
     if (!yaml.project_name) {
-      return "webops"
+        return "webopsInitiative"
     }
     return yaml.project_name
   }
