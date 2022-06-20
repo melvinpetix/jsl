@@ -1,10 +1,3 @@
-import com.webops.Common;
-
-import com.webops.PipelineBuilder;
-
-import com.webops.ProjectConfiguration;
-
-
 def call(yamlName){
   
   def common = new Common()
@@ -21,9 +14,10 @@ def call(yamlName){
   def userInput
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  PipelineBuilder = new PipelineBuilder()
+  .parseParameters(yaml.parameters)
+  .parseNotification(yaml.notification)
   
-  ProjectConfiguration projectConfig = PipelineBuilder.parse(yaml, env);
-
   try{ 
 
     if(yaml.parameters){
