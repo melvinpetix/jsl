@@ -6,47 +6,48 @@ import com.webops.Common;
 
 class PipelineBuilder implements Serializable {
 
-  def script
-
   ProjectConfiguration parse(yaml) {
-
-    ProjectConfiguration projectConfiguration = new ProjectConfiguration();
-    
+    ProjectConfiguration projectConfiguration = new ProjectConfiguration();  
     projectConfiguration.parseProjectName = parseProjectName(yaml.project_name);
-
     projectConfiguration.parameters = parseParameters(yaml.parameters);
-
-    projectConfiguration.notification = parseNotification(yaml.notification);
-    
+    projectConfiguration.notification = parseNotification(yaml.notification);    
     return projectConfiguration;
-
-  }
-
-   def parseParameters(yaml.parameters){
-    def userInput
-    if(yaml.parameters){    
-      steps.stage('pipeline parameters'){
-        timeout(time: 120, unit: 'SECONDS') {  
-          yaml.parameters.each{params->
-            switch(params.type){
-              case 'string':
-              userInput = input parameters: [string(name: params.args.name)]; break    
-              case 'choice':
-              userInput = input parameters: [choice(name: params.args.name, choices: params.args.choices)]; break
-              case 'password':
-              userInput = input parameters: [password(name: params.args.name)]; break           
-            }  
-            return env."${params.args.name}" = userInput
-          }     
-        }
-      }
+ }
+  
+def parseParameters(yaml.parameters){
+  def userInput
+  if(yaml.parameters){ 
+    def inputPrompt = parseParams yaml.parameters
+    timeout(time: 120, unit: 'SECONDS') {
+      userInput = step.input parameters: inputPrompt     
+    } 
+    userInput.each{x,v-> env."$x"="$v"}      
+}
+  
+@NonCPS
+def parseParams(parameters) {
+  parameters.collect { params ->
+    this.invokeMethod params.type, 
+    params.args.collectEntries { name, value ->
+      [
+        name, value instanceof String ? exportEnv(value) : value
+      ]
     }
   }
+}
 
-  def parseNotification(yaml){
-    if(yaml.notification){    
-      def common = new com.webops.Common()
-      def userName = "${currentBuild.getBuildCauses()[0].userId}"
+@NonCPS
+def exportEnv(value) {
+  new groovy.text.GStringTemplateEngine()
+    .createTemplate(value)
+    .make([env:env])
+    .toString()
+} 
+     
+def parseNotification(yaml){
+  if(yaml.notification){    
+    def common = new com.webops.Common()
+    def userName = "${currentBuild.getBuildCauses()[0].userId}"
       common.sendTeamsNotif(
         msg: "Started by: ${userName}", 
         job: "${yaml.project_name}", 
