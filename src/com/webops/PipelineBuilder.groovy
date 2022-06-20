@@ -60,10 +60,11 @@ def parseNotification(yaml){
     if (!environment) {
       return ''
     }
-      return environment.collect { k, v -> "${k}=${v}"}
+    
+    return environment.collect { k, v -> "${k}=${v}"}
   }
 
-  def parseProjectName(yaml) {
+  def parseProjectName(def project_name) {
     if (!yaml.project_name) {
       return "webops"
     }
