@@ -12,21 +12,21 @@ def call(yamlName){
       return   
     }
   } 
-  def userInput
+ 
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
+  ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env);
+
+  def userInput
   
   try{ 
 
     if(yaml.parameters){
       def inputPrompt = parseParams yaml.parameters
-      list params = yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         userInput = input parameters: inputPrompt     
       } 
-      userInput.each{x,v-> env."$x"="$v"}
-      println snapshot_date
-      println username
-      
+      userInput.each{x,v-> env."$x"="$v"}      
     }
     
     if(!yaml.steps){
@@ -56,26 +56,7 @@ def call(yamlName){
 
   deleteDir()  
 }
-
-@NonCPS
-def parseParams(parameters) {
-  parameters.collect { params ->
-    this.invokeMethod params.type, 
-    params.args.collectEntries { name, value ->
-      [
-        name, value instanceof String ? exportEnv(value) : value
-      ]
-    }
-  }
-}
-
-@NonCPS
-def exportEnv(value) {
-  new groovy.text.GStringTemplateEngine()
-    .createTemplate(value)
-    .make([env:env])
-    .toString()
-}        
+       
      
     /*
     if(yaml.parameters){          
