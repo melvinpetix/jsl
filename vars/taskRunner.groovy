@@ -21,16 +21,22 @@ def call(yamlName){
   try{ 
 
     if(yaml.parameters){
-     common.buildParams(yaml.parameters)
-      
-      /*def inputPrompt = common.parseParams yaml.parameters
+      def inputPrompt = common.parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         userInput = input parameters: inputPrompt     
       } 
       userInput.each{x,v-> env."$x"="$v"}      
     }
-    */
-    }  
+    
+    if(yaml.notification){
+      def userName = "${currentBuild.getBuildCauses()[0].userId}"
+      common.sendTeamsNotif(
+        msg: "Started by: ${userName}", 
+        job: "${yaml.project_name}", 
+        url: "${yaml.notification.webhook}"
+      )
+    }
+    
     if(!yaml.steps){
       currentBuild.description = 'test/update'
       currentBuild.result = 'SUCCESS'
