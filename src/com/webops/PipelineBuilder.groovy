@@ -9,7 +9,7 @@ def yaml
   
 def userInput
 
-def parseParameters(def parameters){
+def parseParameters(yaml.parameters){
   def userInput
   if(yaml.parameters){ 
     def inputPrompt = parseParams yaml.parameters
