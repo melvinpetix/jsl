@@ -3,25 +3,23 @@ import com.webops.*;
 
 def call(yamlName){
   
-  def common = new Common()
-  common.loadKey()
-
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
       currentBuild.description = 'test/debug'
       currentBuild.result = 'SUCCESS'
       return   
     }
-  } 
+  }
   
   def userInput
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  def builder = new PipelineBuilder()
+  def common = new Common()
+  .loadKey()
   .parseParameters(yaml.parameters)
   .parseNotification(yaml.notification)
-  
+ 
   try{ 
 
     if(yaml.parameters){
