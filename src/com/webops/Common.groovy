@@ -9,15 +9,9 @@ import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
 
-def parseParameters(yaml){
-  def useerInput
-  if(yaml.parameters){ 
-    def inputPrompt = parseParams yaml.parameters
-    timeout(time: 120, unit: 'SECONDS') {
-      userInput = step.input parameters: inputPrompt     
-    } 
-    userInput.each{x,v-> env."$x"="$v"}      
-  }
+def pipelineConfig(yamlName){
+  Map pipelineConfig = readYaml file: 'runbook/' + yamlName + '.yml'
+  return pipelineConfig
 }
 
 @NonCPS
