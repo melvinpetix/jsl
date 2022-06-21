@@ -4,11 +4,9 @@ import com.webops.Common;
 
 
 class PipelineBuilder implements Serializable {
-
-def yaml  
-  
+def yaml    
 def userInput
-
+}
 def parseParameters(yaml.parameters){
   def userInput
   if(yaml.parameters){ 
@@ -61,4 +59,4 @@ def parseNotification(yaml){
     }
     return yaml.project_name
   }
-}
+
