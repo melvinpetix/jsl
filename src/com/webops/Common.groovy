@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.DumperOptions
 
 def buildParams(params){
  def userInput
+ def common = new Common()
  def inputPrompt = common.parseParams params
     timeout(time: 120, unit: 'SECONDS') {
       userInput = input parameters: inputPrompt     
