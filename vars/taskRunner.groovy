@@ -5,7 +5,7 @@ def call(yamlName){
   def common = new Common()
   .loadKey()
   
-  def yaml = common.pipelineConfig(yamlName)
+  def yaml = readYaml file: '/runbook/' + yamlName + '.yml'
   
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
