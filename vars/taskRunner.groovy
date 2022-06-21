@@ -1,4 +1,4 @@
-import com.webops.*;
+import com.webops.Common;
 
 
 def call(yamlName){
