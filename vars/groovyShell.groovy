@@ -31,6 +31,7 @@ def call() {
           sh "rm $scriptFilename"
         } catch(e) {
           echo "[Groovy Shell] Failed to delete temporary script file '${scriptFilename}': $e"
+          deleteDir()
         }
       }
     }
