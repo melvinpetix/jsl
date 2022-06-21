@@ -17,7 +17,7 @@ def buildParams(params){
     } 
       userInput.each{x,v-> env."$x"="$v"}      
   }    
-}
+
 
 @NonCPS
 def parseParams(parameters) {
