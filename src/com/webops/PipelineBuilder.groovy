@@ -2,11 +2,6 @@ package com.webops;
 import com.webops.ProjectConfiguration;
 import com.webops.Common;
 
-
-class PipelineBuilder implements Serializable {
-def yaml    
-def userInput
-}
 def parseParameters(yaml.parameters){
   def userInput
   if(yaml.parameters){ 
