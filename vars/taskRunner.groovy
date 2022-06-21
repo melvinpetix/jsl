@@ -21,7 +21,7 @@ def call(yamlName){
   try{ 
 
     if(yaml.parameters){
-      def inputPrompt = parseParams yaml.parameters
+      def inputPrompt = common.parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         userInput = input parameters: inputPrompt     
       } 
