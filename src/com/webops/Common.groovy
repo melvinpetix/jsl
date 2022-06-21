@@ -9,10 +9,6 @@ import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
 
-def pipelineConfig(yamlName){
-  Map pipelineConfig = readYaml file: 'runbook/' + yamlName + '.yml'
-  return pipelineConfig
-}
 
 @NonCPS
 def parseParams(parameters) {
