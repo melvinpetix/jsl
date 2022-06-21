@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.DumperOptions
 
 
 
-def parseParameters(parameters){
+def parseParameters(String parameters){
   def userInput
   if(yaml.parameters){ 
     def inputPrompt = parseParams yaml.parameters
