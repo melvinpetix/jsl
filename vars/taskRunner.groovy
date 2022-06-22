@@ -2,10 +2,11 @@ import com.webops.*;
 
 
 def call(yamlName){
+  def userInput
   
   def common = new Common()
   common.loadKey()
-
+  
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
       currentBuild.description = 'test/debug'
@@ -13,9 +14,7 @@ def call(yamlName){
       return   
     }
   } 
-  
-  
-  
+    
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
   try{ 
@@ -24,7 +23,7 @@ def call(yamlName){
       common.stage('define job parameters'){
         def inputPrompt = common.parseParams yaml.parameters
         timeout(time: 120, unit: 'SECONDS') {
-          def userInput = input parameters: inputPrompt     
+          userInput = input parameters: inputPrompt     
        } 
        userInput.each{x,v-> env."$x"="$v"}      
       }
