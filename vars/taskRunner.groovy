@@ -2,12 +2,8 @@ import com.webops.*;
 
 def call(yamlName){  
   
-  def common = new Common()
-  
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  common.loadKey()
-
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
       currentBuild.description = 'test/debug'
@@ -19,6 +15,7 @@ def call(yamlName){
   try{ 
 
     if(yaml.parameters){
+      common.stage 'build pipeline'
       def inputPrompt = parseParams yaml.parameters
       timeout(time: 120, unit: 'SECONDS') {
         yaml.parameters.each{params->
