@@ -1,6 +1,6 @@
 def call(){
   node(jenkins_agent){        
-     checkout scm
+     //checkout scm
      taskRunner params.runbook 
   }
 }
