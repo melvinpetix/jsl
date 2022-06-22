@@ -1,4 +1,4 @@
-import com.wenops.*;
+import com.webops.*;
 
 def call(){
   node(jenkins_agent){        
