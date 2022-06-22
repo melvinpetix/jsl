@@ -5,7 +5,7 @@ def call(){
     checkout scm
     def common = new Common() 
     .loadKey() 
-    .stage(params.runbook){
+    stage(params.runbook){
        taskRunner params.runbook 
     }
   }
