@@ -4,9 +4,9 @@ import com.webops.PipelineConfig;
 
 class Parser {
 
-    static PipelineConfig parse(def yaml) {
+    static ProjectConfiguration parse(def yaml) {
       
-        PipelineConfig pipelineConfig = new PipelineConfig();
+        ProjectConfiguration pipelineConfig = new ProjectConfiguration();
 
         pipelineConfig.steps = parseSteps(yaml.steps);
 
