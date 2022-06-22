@@ -1,8 +1,11 @@
 import com.webops.*;
 
-def call(yamlName){
+def call(yamlName){  
   
   def common = new Common()
+  
+  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
   common.loadKey()
 
   if(!yamlName || yamlName == 'null'){ 
@@ -13,8 +16,6 @@ def call(yamlName){
     }
   } 
   
-  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-  
   try{ 
 
     if(yaml.parameters){
@@ -22,7 +23,6 @@ def call(yamlName){
       timeout(time: 120, unit: 'SECONDS') {
         yaml.parameters.each{params->
           params.args.name = input parameters: inputPrompt 
-          println params.args.name    
         }      
       }             
     }
