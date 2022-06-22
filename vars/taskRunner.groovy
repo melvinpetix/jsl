@@ -21,11 +21,13 @@ def call(yamlName){
   try{ 
 
     if(yaml.parameters){
-      def inputPrompt = common.parseParams yaml.parameters
-      timeout(time: 120, unit: 'SECONDS') {
-        userInput = input parameters: inputPrompt     
-      } 
-      userInput.each{x,v-> env."$x"="$v"}      
+      common.stage('build parameters'){
+        def inputPrompt = common.parseParams yaml.parameters
+        timeout(time: 120, unit: 'SECONDS') {
+          userInput = input parameters: inputPrompt     
+        } 
+        userInput.each{x,v-> env."$x"="$v"}      
+      }
     }
     
     if(yaml.notification){
