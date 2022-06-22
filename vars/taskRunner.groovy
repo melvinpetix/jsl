@@ -2,10 +2,9 @@ import com.webops.*;
 
 
 def call(yamlName){
-  
-  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-  
+
   def common = new Common()
+  .loadKey()
   
   if(!yamlName || yamlName == 'null'){ 
     try { groovyShell() } catch(err){ 
@@ -15,17 +14,20 @@ def call(yamlName){
     }
   } 
   
+  def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+  
   try{ 
-
-    if(yaml.parameters){
-     def userInput    
-     def inputPrompt = common.parseParams yaml.parameters
-     timeout(time: 120, unit: 'SECONDS') {
-       userInput = input parameters: inputPrompt     
-     } 
-      userInput.each{x,v-> env."$x"="$v"}      
-   }
     
+    if(yaml.parameters){
+      def userInput
+      common.stage('define build parameters'){
+        def inputPrompt = common.parseParams yaml.parameters
+        timeout(time: 120, unit: 'SECONDS') {
+          userInput = input parameters: inputPrompt     
+        } 
+        userInput.each{x,v-> env."$x"="$v"}      
+      }
+    }
     if(yaml.notification){
       def userName = "${currentBuild.getBuildCauses()[0].userId}"
       common.sendTeamsNotif(
