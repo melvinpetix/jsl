@@ -17,7 +17,9 @@ def call(yamlName){
   def userInput
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
-
+  
+  test()
+  
   try{ 
 
     if(yaml.parameters){
