@@ -18,7 +18,7 @@ def call(yamlName){
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
-  test()
+  test(yaml)
   
   try{ 
 
