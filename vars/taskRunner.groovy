@@ -20,7 +20,7 @@ def call(yamlName){
     
     if(yaml.parameters){
       def userInput
-      common.stage('define build parameters'){
+      stage('define build parameters'){
         def inputPrompt = common.parseParams yaml.parameters
         timeout(time: 120, unit: 'SECONDS') {
           userInput = input parameters: inputPrompt     
