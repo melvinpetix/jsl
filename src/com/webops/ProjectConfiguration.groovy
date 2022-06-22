@@ -1,7 +1,8 @@
 package com.webops;
 
-class ProjectConfiguration {
+class PipelineConfig {
     def project_name;
     def parameters;
     def notification;
+    def step;
 }
