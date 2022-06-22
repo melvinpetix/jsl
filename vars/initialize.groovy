@@ -1,6 +1,6 @@
 def call(){
   node(jenkins_agent){        
-     checkout scm  
+     sh 'ls -al'
      taskRunner params.runbook 
   }
 }
