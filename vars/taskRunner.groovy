@@ -18,7 +18,7 @@ def call(yamlName){
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
    
-  ProjectConfig projectConfig = Parser.parse(yaml, env)
+  ProjectConfiguration projectConfig = Parser.parse(yaml, env)
   
   try{ 
 
