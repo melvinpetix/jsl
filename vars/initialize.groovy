@@ -6,7 +6,6 @@ def call(){
     checkout scm
 
        taskRunner params.runbook 
-    }
   }
 }
 
