@@ -1,4 +1,4 @@
-import com.webops.Common;
+import com.webops.*;
 
 
 def call(yamlName){
@@ -17,6 +17,8 @@ def call(yamlName){
   def userInput
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
+   
+  ProjectConfig projectConfig = Parser.parse(yaml, env)
   
   try{ 
 
