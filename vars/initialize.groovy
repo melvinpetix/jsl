@@ -9,7 +9,7 @@ def call(){
           groovyShell()    
       }
     } catch(err){ 
-       currentBuild.description = 'test/debug'
+       currentBuild.description = 'update'
        currentBuild.result = 'SUCCESS'
        return   
     }
