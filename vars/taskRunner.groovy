@@ -10,6 +10,8 @@ def call(yamlName){
   
   def yaml = readYaml file: 'runbook/' + yamlName + '.yml'
   
+  println yaml.toString()
+  
   try{ 
     
     if(yaml.parameters){
