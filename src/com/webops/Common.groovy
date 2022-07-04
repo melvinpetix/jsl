@@ -131,7 +131,7 @@ def gitClone(String branch='master', String repoUrl){
 
 def sshCmd(String server, String command){
     def common = new com.webops.Common()
-    def sshArgs = 'ssh -F +'
+    def sshArgs = 'set +x; ssh -F +'
     /*if (!options){
         options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
     }
@@ -142,7 +142,7 @@ def sshCmd(String server, String command){
 */
 sh """
 #!/bin/bash; 
-set +x; ${sshArgs} ${server} \"export TERM=xterm-256color; 
+${sshArgs} ${server} \"export TERM=xterm-256color; 
 set -x; ${command}\"
 """
 }
