@@ -131,7 +131,7 @@ def gitClone(String branch='master', String repoUrl){
 
 def sshCmd(String server, String command){
     def common = new com.webops.Common()
-    def sshArgs = 'set +x; ssh -F +'
+    def sshArgs = 'set +x; ssh -F + -tt'
     /*if (!options){
         options = ['StrictHostKeyChecking': 'no', 'UserKnownHostsFile': '/dev/null']
     }
